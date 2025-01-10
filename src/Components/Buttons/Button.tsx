@@ -1,7 +1,12 @@
 import React from "react";
+import { Button as MuiButton } from "@mui/material";
 
 const Button = ({ text, onClick }: { text: string; onClick: () => void }) => {
-	return <button onClick={onClick}>{text}</button>;
+	return (
+		<MuiButton variant="contained" onClick={onClick}>
+			{text}
+		</MuiButton>
+	);
 };
 
 export default Button;
