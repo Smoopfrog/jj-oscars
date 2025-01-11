@@ -1,9 +1,19 @@
 import React from "react";
-import { Button as MuiButton } from "@mui/material";
+import { ButtonProps, Button as MuiButton } from "@mui/material";
 
-const Button = ({ text, onClick }: { text: string; onClick: () => void }) => {
+interface IButtonProps extends ButtonProps {
+	text: string;
+	onClick: () => void;
+}
+
+const Button: React.FC<IButtonProps> = ({ text, onClick, sx }) => {
 	return (
-		<MuiButton variant="contained" onClick={onClick}>
+		<MuiButton
+			variant="contained"
+			color="primary"
+			onClick={onClick}
+			sx={{ borderRadius: "2px", ...sx }}
+		>
 			{text}
 		</MuiButton>
 	);
