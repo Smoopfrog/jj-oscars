@@ -1,8 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import Button from "../../Components/Buttons/Button";
+import { useNavigate } from "react-router-dom";
 
 const UserSelection = () => {
+	const navigate = useNavigate();
+
 	return (
 		<Box
 			sx={{
@@ -26,7 +29,9 @@ const UserSelection = () => {
 			<Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
 				<Button
 					sx={{ width: "30%", background: "#c79f27", color: "#ffffff" }}
-					onClick={() => {}}
+					onClick={() => {
+						navigate("/guesses/jordan");
+					}}
 					text="Jordan"
 				/>
 				<Button
@@ -35,7 +40,9 @@ const UserSelection = () => {
 						background: "#c79f27",
 						color: "#ffffff",
 					}}
-					onClick={() => {}}
+					onClick={() => {
+						navigate("/guesses/jeff");
+					}}
 					text="Jeff"
 				/>
 			</Box>
