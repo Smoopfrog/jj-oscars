@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import Question from "../../Components/Questions/Question";
 import { Form, Formik } from "formik";
 import Button from "../../Components/Buttons/Button";
+import { nominations } from "../../MockData/Nominations";
+import { ICategory } from "../../types/Category";
 
 const Guesses = () => {
 	const { name } = useParams();
@@ -44,16 +46,13 @@ const Guesses = () => {
 				</Typography>
 				<Formik initialValues={{}} onSubmit={onSubmit}>
 					<Form>
-						<Question
-							category="Best Picture"
-							nominees={[
-								"Gladiator",
-								"The Avengers",
-								"The Dark Knight",
-								"Inception",
-								"The Social Network",
-							]}
-						/>
+						{nominations.map((category: ICategory) => (
+							<Question
+								key={category.title}
+								category={category.title}
+								nominees={category.nominees}
+							/>
+						))}
 						<Button type="submit">Submit</Button>
 					</Form>
 				</Formik>

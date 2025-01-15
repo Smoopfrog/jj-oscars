@@ -7,16 +7,20 @@ import {
 	RadioGroup,
 	Typography,
 } from "@mui/material";
+import { useField } from "formik";
 import React from "react";
+import { INomination } from "../../types/Nomination";
 
 interface IQuestionProps {
 	/** The Oscar category */
 	category: string;
 	/** The nominees for the category */
-	nominees: string[];
+	nominees: INomination[];
 }
 
 const Question = ({ category, nominees }: IQuestionProps) => {
+	const [field] = useField(category);
+
 	return (
 		<Box
 			sx={{ display: "flex", flexDirection: "column", width: "100%", mb: 2 }}
@@ -33,15 +37,35 @@ const Question = ({ category, nominees }: IQuestionProps) => {
 			<FormControl>
 				<RadioGroup
 					aria-labelledby={`${category}-radio-buttons-group-label`}
-					name="radio-buttons-group"
+					name={field.name}
+					value={field.value || ""}
+					onChange={field.onChange}
+					sx={{ display: "flex", flexDirection: "column", gap: 2 }}
 				>
 					{nominees.map((nominee, i) => (
 						<FormControlLabel
 							key={i}
-							value={nominee}
-							control={<Radio sx={{ color: "white" }} />}
-							label={nominee}
-							sx={{ fontSize: 16, color: "white" }}
+							value={nominee.title}
+							control={
+								<Radio
+									sx={{
+										color: "white",
+										"&.Mui-checked": {
+											color: "white",
+										},
+									}}
+								/>
+							}
+							label={
+								<Box>
+									<Typography sx={{ fontSize: 16, color: "white" }}>
+										{nominee.title}
+									</Typography>
+									<Typography sx={{ fontSize: 12, color: "white" }}>
+										{nominee.subtitle}
+									</Typography>
+								</Box>
+							}
 						/>
 					))}
 				</RadioGroup>
