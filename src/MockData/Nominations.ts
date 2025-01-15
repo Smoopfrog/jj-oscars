@@ -17,10 +17,6 @@ export const nominations: ICategory[] = [
                 subtitle: "Christopher Nolan",
             },
             {
-                title: "Inception",
-                subtitle: "Christopher Nolan",
-            },
-            {
                 title: "The Social Network",
 				subtitle: "David Fincher",
 			},
@@ -40,10 +36,6 @@ export const nominations: ICategory[] = [
 			{
 				title: "Christopher Nolan",
 				subtitle: "The Dark Knight",
-			},
-			{
-				title: "Christopher Nolan",
-				subtitle: "Inception",
 			},
 			{
 				title: "David Fincher",
