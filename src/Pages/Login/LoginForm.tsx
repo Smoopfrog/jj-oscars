@@ -36,7 +36,7 @@ const LoginForm = () => {
 				value={password}
 				onChange={(e) => setPassword(e.target.value)}
 			/>
-			<Button text="Click me" onClick={handleLogin} />
+			<Button onClick={handleLogin}>Click me</Button>
 		</Card>
 	);
 };

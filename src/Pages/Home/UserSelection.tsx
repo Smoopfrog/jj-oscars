@@ -28,22 +28,20 @@ const UserSelection = () => {
 			</Typography>
 			<Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
 				<Button
-					sx={{ width: "30%", background: "#c79f27", color: "#ffffff" }}
+					sx={{ width: "30%" }}
 					onClick={() => {
 						navigate("/guesses/jordan");
 					}}
-					text="Jordan"
+					children="Jordan"
 				/>
 				<Button
 					sx={{
 						width: "30%",
-						background: "#c79f27",
-						color: "#ffffff",
 					}}
 					onClick={() => {
 						navigate("/guesses/jeff");
 					}}
-					text="Jeff"
+					children="Jeff"
 				/>
 			</Box>
 		</Box>
