@@ -1,19 +1,27 @@
-import { Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Question from "../../Components/Questions/Question";
-import { Form, Formik } from "formik";
-import Button from "../../Components/Buttons/Button";
-import { nominations } from "../../MockData/Nominations";
-import { ICategory } from "../../types/Category";
+import axios from "axios";
+import GuessesForm from "./GuessesForm";
 
 const Guesses = () => {
 	const { name } = useParams();
+	const [isLoading, setIsLoading] = useState(true);
+	const [guesses, setGuesses] = useState<any>([]);
 
-	const onSubmit = (values: any) => {
-		console.log(values);
-	};
+	useEffect(() => {
+		const fetchGuesses = async () => {
+			setIsLoading(true);
+
+			await axios.get(`/api/${name}/data`).then(({ data }) => {
+				setGuesses(data);
+				setIsLoading(false);
+			});
+		};
+
+		fetchGuesses();
+	}, [name]);
 
 	return (
 		<Box
@@ -33,7 +41,7 @@ const Guesses = () => {
 					alignItems: "start",
 					backgroundColor: "rgba(0, 0, 0, 0.5)",
 					width: "50%",
-					height: "100%",
+					minHeight: "100vh",
 				}}
 			>
 				<Typography
@@ -44,18 +52,21 @@ const Guesses = () => {
 				>
 					{name}'s Guesses
 				</Typography>
-				<Formik initialValues={{}} onSubmit={onSubmit}>
-					<Form>
-						{nominations.map((category: ICategory) => (
-							<Question
-								key={category.title}
-								category={category.title}
-								nominees={category.nominees}
-							/>
-						))}
-						<Button type="submit">Submit</Button>
-					</Form>
-				</Formik>
+				{!isLoading && guesses && name ? (
+					<GuessesForm name={name} guesses={guesses} />
+				) : (
+					<Box
+						sx={{
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							width: "100%",
+							marginY: "auto",
+						}}
+					>
+						<CircularProgress sx={{ color: "rgb(199, 159, 39)" }} />
+					</Box>
+				)}
 			</Box>
 		</Box>
 	);
