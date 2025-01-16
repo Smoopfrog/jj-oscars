@@ -1,6 +1,6 @@
 import { ICategory } from "../types/Category";
 
-export const nominations: ICategory[] = [
+export const Nominees: ICategory[] = [
 	{
 		title: "Best Picture",
 		nominees: [

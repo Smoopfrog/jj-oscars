@@ -1,21 +1,20 @@
 import {
 	Box,
 	FormControl,
-	FormControlLabel,
 	FormLabel,
-	Radio,
 	RadioGroup,
 	Typography,
 } from "@mui/material";
 import { useField } from "formik";
 import React from "react";
-import { INomination } from "../../types/Nomination";
+import Nominee from "./Nominee";
+import { INominee } from "../../types/Nominee";
 
 interface ICategoryProps {
 	/** The Oscar category */
 	category: string;
 	/** The nominees for the category */
-	nominees: INomination[];
+	nominees: INominee[];
 }
 
 const Category: React.FC<ICategoryProps> = ({ category, nominees }) => {
@@ -28,7 +27,7 @@ const Category: React.FC<ICategoryProps> = ({ category, nominees }) => {
 			<FormLabel id={`${category}-radio-buttons-group-label`}>
 				<Typography
 					color="rgb(199, 159, 39)"
-					fontSize={40}
+					fontSize={32}
 					textTransform="uppercase"
 				>
 					{category}
@@ -43,30 +42,7 @@ const Category: React.FC<ICategoryProps> = ({ category, nominees }) => {
 					sx={{ display: "flex", flexDirection: "column", gap: 2 }}
 				>
 					{nominees.map((nominee, i) => (
-						<FormControlLabel
-							key={i}
-							value={nominee.title}
-							control={
-								<Radio
-									sx={{
-										color: "white",
-										"&.Mui-checked": {
-											color: "white",
-										},
-									}}
-								/>
-							}
-							label={
-								<Box>
-									<Typography sx={{ fontSize: 16, color: "white" }}>
-										{nominee.title}
-									</Typography>
-									<Typography sx={{ fontSize: 12, color: "white" }}>
-										{nominee.subtitle}
-									</Typography>
-								</Box>
-							}
-						/>
+						<Nominee nominee={nominee} key={i} />
 					))}
 				</RadioGroup>
 			</FormControl>
