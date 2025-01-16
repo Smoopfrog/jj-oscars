@@ -1,27 +1,14 @@
 import { CircularProgress, Typography } from "@mui/material";
+import React from "react";
 import Box from "@mui/material/Box";
-import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { useGetPredictions } from "../../hooks/predictions/useGetPredictions";
 import GuessesForm from "./GuessesForm";
 
 const Guesses = () => {
 	const { name } = useParams();
-	const [isLoading, setIsLoading] = useState(true);
-	const [guesses, setGuesses] = useState<any>([]);
 
-	useEffect(() => {
-		const fetchGuesses = async () => {
-			setIsLoading(true);
-
-			await axios.get(`/api/${name}/data`).then(({ data }) => {
-				setGuesses(data);
-				setIsLoading(false);
-			});
-		};
-
-		fetchGuesses();
-	}, [name]);
+	const { data: guesses, isLoading } = useGetPredictions(name as string);
 
 	return (
 		<Box

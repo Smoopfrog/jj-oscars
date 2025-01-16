@@ -15,7 +15,7 @@ def home():
     return "Welcome to the Flask Backend!"
 
 
-@app.route('/api/<username>/data', methods=['GET'])
+@app.route('/api/predictions/<username>', methods=['GET'])
 def get_data(username):
     # Read the data from the JSON file
     try:
@@ -26,7 +26,7 @@ def get_data(username):
     return jsonify(data)
 
 
-@app.route('/api/<username>/data', methods=['POST'])
+@app.route('/api/predictions/<username>', methods=['POST'])
 def post_data(username):
     new_data = request.json
     # Save the new data to a local JSON file

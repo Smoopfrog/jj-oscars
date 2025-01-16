@@ -22,7 +22,7 @@ const Category: React.FC<ICategoryProps> = ({ category, nominees }) => {
 
 	return (
 		<Box
-			sx={{ display: "flex", flexDirection: "column", width: "100%", mb: 2 }}
+			sx={{ display: "flex", flexDirection: "column", width: "100%", mb: 1 }}
 		>
 			<FormLabel id={`${category}-radio-buttons-group-label`}>
 				<Typography

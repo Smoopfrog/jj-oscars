@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { ICategory } from "../../types/Category";
 import { Form, Formik } from "formik";
 import Button from "../../Components/Buttons/Button";
-import axios from "axios";
 import Category from "../../Components/Category/Catergory";
 import { Nominees } from "../../MockData/Nominees";
+import { postPredictions } from "../../hooks/predictions/postPredictions";
 
 interface IGuessesForm {
 	name: string;
@@ -16,9 +16,7 @@ const GuessesForm = ({ name, guesses }: IGuessesForm) => {
 
 	const onSubmit = async (values: any) => {
 		setIsLoading(true);
-		await axios.post(`/api/${name}/data`, values).then((res) => {
-			console.log(`Saved ${name} picks!`);
-		});
+		postPredictions(name, values);
 		setIsLoading(false);
 	};
 
