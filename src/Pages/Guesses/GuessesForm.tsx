@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { ICategory } from "../../types/Category";
 import { Form, Formik } from "formik";
-import Question from "../../Components/Questions/Question";
 import Button from "../../Components/Buttons/Button";
 import axios from "axios";
 import { nominations } from "../../MockData/Nominations";
+import Category from "../../Components/Category/Catergory";
 
 interface IGuessesForm {
 	name: string;
@@ -26,7 +26,7 @@ const GuessesForm = ({ name, guesses }: IGuessesForm) => {
 		<Formik initialValues={guesses} onSubmit={onSubmit}>
 			<Form>
 				{nominations.map((category: ICategory, i: number) => (
-					<Question
+					<Category
 						key={i}
 						category={category.title}
 						nominees={category.nominees}

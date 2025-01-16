@@ -11,14 +11,14 @@ import { useField } from "formik";
 import React from "react";
 import { INomination } from "../../types/Nomination";
 
-interface IQuestionProps {
+interface ICategoryProps {
 	/** The Oscar category */
 	category: string;
 	/** The nominees for the category */
 	nominees: INomination[];
 }
 
-const Question = ({ category, nominees }: IQuestionProps) => {
+const Category: React.FC<ICategoryProps> = ({ category, nominees }) => {
 	const [field] = useField(category);
 
 	return (
@@ -74,4 +74,4 @@ const Question = ({ category, nominees }: IQuestionProps) => {
 	);
 };
 
-export default Question;
+export default Category;
