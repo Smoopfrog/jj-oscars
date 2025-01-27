@@ -1,7 +1,9 @@
 export interface INominee {
-	/** The title of the Nominee */
-	title: string;
-	/** The subtitle of the Nominee */
-	subtitle: string;
+	/** The movie title */
+	Movie: string;
+	/** If the movie isnt the main nominee, this is the title */
+	title?: string;
+	/** If the movie is the main nominee, this is the subtitle */
+	subtitle?: string;
 }
 

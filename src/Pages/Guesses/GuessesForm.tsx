@@ -3,7 +3,7 @@ import { ICategory } from "../../types/Category";
 import { Form, Formik } from "formik";
 import Button from "../../Components/Buttons/Button";
 import Category from "../../Components/Category/Catergory";
-import { Nominees } from "../../MockData/Nominees";
+import { categories } from "../../Data/Nominees";
 import { postPredictions } from "../../hooks/predictions/postPredictions";
 
 interface IGuessesForm {
@@ -23,7 +23,7 @@ const GuessesForm = ({ name, guesses }: IGuessesForm) => {
 	return (
 		<Formik initialValues={guesses} onSubmit={onSubmit}>
 			<Form>
-				{Nominees.map((category: ICategory, i: number) => (
+				{categories.map((category: ICategory, i: number) => (
 					<Category
 						key={i}
 						category={category.title}
