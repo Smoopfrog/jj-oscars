@@ -148,13 +148,17 @@ export const categories: ICategory[] = [
       { Movie: "Conclave", subtitle: "Volker Bertelmann" },
       { Movie: "Emilia Pérez", subtitle: "Clément Ducol and Camille" },
       { Movie: "Wicked", subtitle: "John Powell and Stephen Schwartz" },
-	  { Movie: "The Wild Robot", subtitle: "Kris Bowers" },
-	],
-   },
-   {
-    title: "Music (Original Song)",
-    nominees: [
-      { Movie: "Emilia Pérez", subtitle: "El Mal; Music by Clément Ducol and Camille; Lyric by Clément Ducol, Camille and Jacques Audiard" },
+	    { Movie: "The Wild Robot", subtitle: "Kris Bowers" },
+	  ],
+	},
+	{
+		title: "Music (Original Song)",
+		nominees: [
+			{
+				Movie: "Emilia Pérez",
+				subtitle:
+					"El Mal; Music by Clément Ducol and Camille; Lyric by Clément Ducol, Camille and Jacques Audiard",
+			},
       { Movie: "The Six Triple Eight", subtitle: "The Journey; Music and Lyric by Diane Warren" },
       { Movie: "Sing Sing", subtitle: "Like A Bird; Music and Lyric by Abraham Alexander and Adrian Quesada" },
       { Movie: "Emilia Pérez", subtitle: "Mi Camino; Music and Lyric by Camille and Clément Ducol" },
