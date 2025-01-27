@@ -16,22 +16,48 @@ def home():
 
 
 @app.route('/api/predictions/<username>', methods=['GET'])
-def get_data(username):
+def get_predictions(username):
     # Read the data from the JSON file
     try:
         with open(f'{username}.json', 'r') as f:
             data = json.load(f)
+            # Return only the 'picks' key
+            return jsonify(data.get("picks", {}))
     except FileNotFoundError:
         return jsonify({})
-    return jsonify(data)
 
 
 @app.route('/api/predictions/<username>', methods=['POST'])
-def post_data(username):
+def post_predictions(username):
     new_data = request.json
     # Save the new data to a local JSON file
     with open(f'{username}.json', 'w') as f:  # Open the file in append mode
-        json.dump(new_data, f)  # Write the new data
+        # Write the new data with the key 'picks'
+        print(new_data)
+        json.dump({"picks": new_data}, f)
+    return jsonify(new_data), 201
+
+
+@app.route('/api/watchlist/<username>', methods=['GET'])
+def get_watchlist(username):
+    # Read the data from the JSON file
+    try:
+        with open(f'{username}.json', 'r') as f:
+            data = json.load(f)
+            # Return only the 'picks' key
+            return jsonify(data.get("watchlist", {}))
+    except FileNotFoundError:
+        return jsonify({"watchlist": {}})
+
+
+@app.route('/api/watchlist/<username>', methods=['POST'])
+def put_watchlist(username):
+    new_data = request.json
+    # Save the new data to a local JSON file
+    with open(f'{username}.json', 'w') as f:  # Open the file in append mode
+        # Write the new data with the key 'picks'
+        print(new_data)
+        json.dump({"watchlist": new_data}, f)
     return jsonify(new_data), 201
 
 
