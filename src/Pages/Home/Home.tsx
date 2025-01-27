@@ -6,6 +6,7 @@ import UserSelection from "./UserSelection";
 const Home = () => {
 	return (
 		<Box
+			className="home-background"
 			sx={{
 				display: "flex",
 				flexDirection: "column",
@@ -17,7 +18,6 @@ const Home = () => {
 				sx={{
 					width: "40%",
 					gap: 2,
-					mt: 30,
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "center",
