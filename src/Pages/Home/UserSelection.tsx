@@ -30,7 +30,7 @@ const UserSelection = () => {
 				<Button
 					sx={{ width: "30%" }}
 					onClick={() => {
-						navigate("/guesses/jordan");
+						navigate("/jordan/guesses");
 					}}
 					children="Jordan"
 				/>
@@ -39,7 +39,7 @@ const UserSelection = () => {
 						width: "30%",
 					}}
 					onClick={() => {
-						navigate("/guesses/jeff");
+						navigate("/jeff/guesses");
 					}}
 					children="Jeff"
 				/>
