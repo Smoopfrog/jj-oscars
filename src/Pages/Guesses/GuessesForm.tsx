@@ -25,8 +25,15 @@ const GuessesForm = ({ name, guesses }: IGuessesForm) => {
 	return (
 		<Formik initialValues={guesses} onSubmit={onSubmit}>
 			<Form>
-				<Box sx={{ display: "flex", gap: 2, position: "relative" }}>
-					<Box>
+				<Box
+					sx={{
+						display: "flex",
+						gap: 2,
+						position: "relative",
+						mt: "10vh",
+					}}
+				>
+					<Box sx={{ flex: 1, ml: "15vw" }}>
 						{categories.map((category: ICategory, i: number) => (
 							<Category
 								key={i}
@@ -42,8 +49,7 @@ const GuessesForm = ({ name, guesses }: IGuessesForm) => {
 							flexDirection: "column",
 							alignItems: "flex-end",
 							position: "fixed",
-							top: "10%",
-							right: "10%",
+							right: "15vw",
 						}}
 					>
 						<GuessesSelector />
