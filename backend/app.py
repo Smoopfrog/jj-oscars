@@ -33,7 +33,6 @@ def post_predictions(username):
     # Save the new data to a local JSON file
     with open(f'{username}.json', 'w') as f:  # Open the file in append mode
         # Write the new data with the key 'picks'
-        print(new_data)
         json.dump({"picks": new_data}, f)
     return jsonify(new_data), 201
 
@@ -50,15 +49,23 @@ def get_watchlist(username):
         return jsonify({"watchlist": {}})
 
 
-@app.route('/api/watchlist/<username>', methods=['POST'])
+@app.route('/api/watchlist/<username>', methods=['PUT'])
 def put_watchlist(username):
     new_data = request.json
-    # Save the new data to a local JSON file
-    with open(f'{username}.json', 'w') as f:  # Open the file in append mode
-        # Write the new data with the key 'picks'
-        print(new_data)
-        json.dump({"watchlist": new_data}, f)
-    return jsonify(new_data), 201
+    # Read the existing data from the JSON file
+    try:
+        with open(f'{username}.json', 'r') as f:
+            existing_data = json.load(f)
+    except FileNotFoundError:
+        existing_data = {"watchlist": {}}  # Initialize if file does not exist
+
+    # Add new_data to the existing watchlist
+    existing_data["watchlist"].update(new_data)  # Assuming new_data is a list
+
+    # Save the updated data back to the JSON file
+    with open(f'{username}.json', 'w') as f:
+        json.dump(existing_data, f)
+    return jsonify(existing_data["watchlist"]), 201
 
 
 if __name__ == '__main__':

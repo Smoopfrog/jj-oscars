@@ -1,9 +1,17 @@
-import { Box, Checkbox, FormControlLabel } from "@mui/material";
+import {
+	Box,
+	Checkbox,
+	CircularProgress,
+	FormControlLabel,
+} from "@mui/material";
 import React from "react";
 import TopNav from "../../Components/TopNav/TopNav";
 import { categories } from "../../Data/Nominees";
 import NominatedMovie from "./NominatedMovie";
 import { Formik } from "formik";
+import { useParams } from "react-router-dom";
+import { useGetWatchlist } from "../../hooks/watchlist/useGetWatchlist";
+import { putWatchlist } from "../../api/service/watchlistService";
 
 export interface IMovieCategory {
 	category: string;
@@ -12,6 +20,9 @@ export interface IMovieCategory {
 
 const Watchlist = () => {
 	const movies: { [key: string]: IMovieCategory[] } = {};
+	const { name } = useParams();
+
+	const { data, isLoading } = useGetWatchlist(name as string);
 
 	categories.forEach((category) => {
 		category.nominees.forEach((nominee) => {
@@ -34,9 +45,9 @@ const Watchlist = () => {
 	const handleSubmit = (values: any) => {
 		console.log(values);
 	};
-
+	console.log(data);
 	const handleCheckboxChange = (movie: string, event: any) => {
-		handleSubmit({ [movie]: event.target.checked });
+		putWatchlist(name as string, { [movie]: event.target.checked });
 	};
 
 	return (
@@ -50,24 +61,39 @@ const Watchlist = () => {
 					alignItems: "center",
 				}}
 			>
-				<Formik initialValues={{}} onSubmit={handleSubmit}>
-					<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-						{Object.entries(movies)
-							.sort((a, b) => a[0].localeCompare(b[0]))
-							.map(([movie, categories], i) => (
-								<FormControlLabel
-									key={i}
-									control={<Checkbox color="default" />}
-									value={movie}
-									label={
-										<NominatedMovie movie={movie} categories={categories} />
-									}
-									onChange={(e) => handleCheckboxChange(movie, e)}
-									sx={{ alignItems: "flex-start" }}
-								/>
-							))}
-					</Box>
-				</Formik>
+				{!isLoading && data ? (
+					<Formik initialValues={data} onSubmit={handleSubmit}>
+						{({ values, setFieldValue }) => (
+							<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+								{Object.entries(movies)
+									.sort((a, b) => a[0].localeCompare(b[0]))
+									.map(([movie, categories], i) => (
+										<FormControlLabel
+											key={i}
+											control={
+												<Checkbox
+													color="default"
+													checked={!!values[movie]}
+													onChange={(e) => {
+														setFieldValue(movie, e.target.checked);
+														handleCheckboxChange(movie, e);
+													}}
+												/>
+											}
+											value={movie}
+											label={
+												<NominatedMovie movie={movie} categories={categories} />
+											}
+											onChange={(e) => handleCheckboxChange(movie, e)}
+											sx={{ alignItems: "flex-start" }}
+										/>
+									))}
+							</Box>
+						)}
+					</Formik>
+				) : (
+					<CircularProgress sx={{ color: "rgb(199, 159, 39)" }} />
+				)}
 			</Box>
 		</Box>
 	);
