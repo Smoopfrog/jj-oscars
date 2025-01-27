@@ -5,5 +5,6 @@ export interface INominee {
 	title?: string;
 	/** If the movie is the main nominee, this is the subtitle */
 	subtitle?: string;
+	/** If the movie is the winner */
+	winner?: boolean;
 }
-
