@@ -21,8 +21,8 @@ const NominatedMovie = ({ movie, categories }: INominatedMovieProps) => {
 					{movie}
 				</Typography>
 			</Box>
-			{categories.map((category) => (
-				<Box key={category.category} sx={{ display: "flex", gap: 1 }}>
+			{categories.map((category, i) => (
+				<Box key={i} sx={{ display: "flex", gap: 1 }}>
 					<Typography fontSize={12} color="rgb(46, 46, 46)" fontWeight="bold">
 						{category.category}
 					</Typography>
