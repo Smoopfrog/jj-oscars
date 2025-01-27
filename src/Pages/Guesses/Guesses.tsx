@@ -21,14 +21,19 @@ const Guesses = () => {
 		>
 			<Box
 				sx={{
+					width: "100%",
+					height: "100%",
+					backgroundColor: "rgba(0, 0, 0, 0.5)",
+				}}
+			></Box>
+			<Box
+				sx={{
 					top: 0,
 					gap: 2,
-					p: 15,
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "start",
-					backgroundColor: "rgba(0, 0, 0, 0.5)",
-					width: "50%",
+					width: "60%",
 					minHeight: "100vh",
 				}}
 			>
@@ -42,10 +47,7 @@ const Guesses = () => {
 				</Typography>
 
 				{!isLoading && guesses && name ? (
-					<>
-						<GuessesSelector />
-						<GuessesForm name={name} guesses={guesses} />
-					</>
+					<GuessesForm name={name} guesses={guesses} />
 				) : (
 					<Box
 						sx={{

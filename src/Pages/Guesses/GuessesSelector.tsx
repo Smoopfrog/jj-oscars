@@ -27,7 +27,7 @@ const GuessesSelector = () => {
 	};
 
 	return (
-		<FormControl sx={{ width: "50%" }}>
+		<FormControl sx={{ minWidth: 400 }}>
 			<InputLabel id="select-category-label" sx={{ color: "#c79f27" }}>
 				Select a Category
 			</InputLabel>
@@ -40,8 +40,7 @@ const GuessesSelector = () => {
 				sx={{
 					borderRadius: "2px",
 					background: "#ffffff",
-					color: "#c79f27",
-					border: "1px solid #c79f27",
+					color: "rgb(46, 46, 46)",
 				}}
 			>
 				{categories.map((category, i) => (
