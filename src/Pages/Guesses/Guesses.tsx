@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import { useParams } from "react-router-dom";
 import { useGetPredictions } from "../../hooks/predictions/useGetPredictions";
 import GuessesForm from "./GuessesForm";
+import GuessesSelector from "./GuessesSelector";
 
 const Guesses = () => {
 	const { name } = useParams();
@@ -39,8 +40,12 @@ const Guesses = () => {
 				>
 					{name}'s Guesses
 				</Typography>
+
 				{!isLoading && guesses && name ? (
-					<GuessesForm name={name} guesses={guesses} />
+					<>
+						<GuessesSelector />
+						<GuessesForm name={name} guesses={guesses} />
+					</>
 				) : (
 					<Box
 						sx={{
