@@ -30,7 +30,6 @@ const GuessesForm = ({ name, guesses }: IGuessesForm) => {
 						display: "flex",
 						gap: 2,
 						position: "relative",
-						mt: "10vh",
 					}}
 				>
 					<Box sx={{ flex: 1, ml: "15vw" }}>
