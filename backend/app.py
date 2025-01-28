@@ -5,8 +5,8 @@ import json
 import logging
 
 app = Flask(__name__)
-CORS(app)
 # Set up logging
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 logging.basicConfig(level=logging.INFO)
 
 
@@ -15,29 +15,39 @@ def home():
     return "Welcome to the Flask Backend!"
 
 
-@app.route('/api/predictions/<username>', methods=['GET'])
+@app.route('/api/<username>/predictions/', methods=['GET'])
 def get_predictions(username):
-    # Read the data from the JSON file
     try:
         with open(f'{username}.json', 'r') as f:
             data = json.load(f)
-            # Return only the 'picks' key
             return jsonify(data.get("picks", {}))
-    except FileNotFoundError:
+    # Handle both file not found and invalid JSON
+    except (FileNotFoundError, json.JSONDecodeError):
         return jsonify({})
 
 
-@app.route('/api/predictions/<username>', methods=['POST'])
+@app.route('/api/<username>/predictions/', methods=['POST'])
 def post_predictions(username):
     new_data = request.json
     # Save the new data to a local JSON file
-    with open(f'{username}.json', 'w') as f:  # Open the file in append mode
-        # Write the new data with the key 'picks'
-        json.dump({"picks": new_data}, f)
-    return jsonify(new_data), 201
+    try:
+        with open(f'{username}.json', 'r') as f:
+            existing_data = json.load(f)
+            if "picks" not in existing_data:
+                existing_data["picks"] = {}
+    except (FileNotFoundError, json.JSONDecodeError):
+        existing_data = {"picks": {}}
+
+    # Add new_data to the existing watchlist
+    existing_data["picks"].update(new_data)
+
+    # Save the updated data back to the JSON file
+    with open(f'{username}.json', 'w') as f:
+        json.dump(existing_data, f)
+    return jsonify(existing_data["picks"]), 201
 
 
-@app.route('/api/watchlist/<username>', methods=['GET'])
+@app.route('/api/<username>/watchlist/', methods=['GET'])
 def get_watchlist(username):
     # Read the data from the JSON file
     try:
@@ -45,22 +55,24 @@ def get_watchlist(username):
             data = json.load(f)
             # Return only the 'picks' key
             return jsonify(data.get("watchlist", {}))
-    except FileNotFoundError:
-        return jsonify({"watchlist": {}})
+    # Handle both file not found and invalid JSON
+    except (FileNotFoundError, json.JSONDecodeError):
+        return jsonify({})
 
 
-@app.route('/api/watchlist/<username>', methods=['PUT'])
+@app.route('/api/<username>/watchlist/', methods=['PUT'])
 def put_watchlist(username):
     new_data = request.json
-    # Read the existing data from the JSON file
     try:
         with open(f'{username}.json', 'r') as f:
             existing_data = json.load(f)
-    except FileNotFoundError:
-        existing_data = {"watchlist": {}}  # Initialize if file does not exist
+            if "watchlist" not in existing_data:
+                existing_data["watchlist"] = {}
+    except (FileNotFoundError, json.JSONDecodeError):
+        existing_data = {"watchlist": {}}
 
     # Add new_data to the existing watchlist
-    existing_data["watchlist"].update(new_data)  # Assuming new_data is a list
+    existing_data["watchlist"].update(new_data)
 
     # Save the updated data back to the JSON file
     with open(f'{username}.json', 'w') as f:

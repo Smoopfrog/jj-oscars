@@ -18,7 +18,7 @@ const TopNav = () => {
 			alignItems={"center"}
 			gap={3}
 			mb={3}
-			px={2}
+			px={3}
 		>
 			<Box display={"flex"} alignItems={"center"} gap={1}>
 				<Link to="/" style={{ textDecoration: "none", marginTop: 1 }}>
