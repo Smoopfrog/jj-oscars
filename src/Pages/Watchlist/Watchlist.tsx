@@ -4,13 +4,14 @@ import {
 	CircularProgress,
 	FormControlLabel,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { categories } from "../../Data/Nominees";
 import NominatedMovie from "./NominatedMovie";
 import { Formik } from "formik";
 import { useParams } from "react-router-dom";
 import { useGetWatchlist } from "../../hooks/watchlist/useGetWatchlist";
 import { putWatchlist } from "../../api/service/watchlistService";
+import WatchListStats from "./WatchListStats";
 
 export interface IMovieCategory {
 	category: string;
@@ -19,6 +20,7 @@ export interface IMovieCategory {
 
 const Watchlist = () => {
 	const movies: { [key: string]: IMovieCategory[] } = {};
+	const [watchedMoviesCount, setWatchedMoviesCount] = useState<number>(0);
 	const { name } = useParams();
 
 	const { data, isLoading } = useGetWatchlist(name as string);
@@ -41,25 +43,40 @@ const Watchlist = () => {
 		});
 	});
 
+	useEffect(() => {
+		if (data) {
+			setWatchedMoviesCount(
+				Object.keys(data).filter((key) => data[key]).length
+			);
+		}
+	}, [data]);
+
 	const handleSubmit = (values: any) => {
 		console.log(values);
 	};
-	console.log(data);
+
 	const handleCheckboxChange = (movie: string, event: any) => {
+		// if the checkbox is checked, increment the watchedMoviesCount
+		setWatchedMoviesCount((prev) => prev + (event.target.checked ? 1 : -1));
 		putWatchlist(name as string, { [movie]: event.target.checked });
 	};
 
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
-			<Box
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					gap: 2,
-					alignItems: "center",
-				}}
-			>
-				{!isLoading && data ? (
+			{!isLoading && data ? (
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						gap: 2,
+						alignItems: "center",
+						position: "relative",
+					}}
+				>
+					<WatchListStats
+						watchedMoviesCount={watchedMoviesCount}
+						movies={movies}
+					/>
 					<Formik initialValues={data} onSubmit={handleSubmit}>
 						{({ values, setFieldValue }) => (
 							<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -89,10 +106,10 @@ const Watchlist = () => {
 							</Box>
 						)}
 					</Formik>
-				) : (
-					<CircularProgress sx={{ color: "rgb(199, 159, 39)" }} />
-				)}
-			</Box>
+				</Box>
+			) : (
+				<CircularProgress sx={{ color: "rgb(199, 159, 39)" }} />
+			)}
 		</Box>
 	);
 };
