@@ -15,8 +15,17 @@ def home():
     return "Welcome to the Flask Backend!"
 
 
+def validate_username(username):
+    if username not in ["jordan", "jeff"]:
+        return jsonify({"error": "Unauthorized user"}), 403
+    return None
+
+
 @app.route('/api/<username>/predictions/', methods=['GET'])
 def get_predictions(username):
+    validation_response = validate_username(username)
+    if validation_response:
+        return validation_response
     try:
         with open(f'{username}.json', 'r') as f:
             data = json.load(f)
@@ -28,6 +37,10 @@ def get_predictions(username):
 
 @app.route('/api/<username>/predictions/', methods=['POST'])
 def post_predictions(username):
+    validation_response = validate_username(username)
+    if validation_response:
+        return validation_response
+
     new_data = request.json
     # Save the new data to a local JSON file
     try:
@@ -49,6 +62,10 @@ def post_predictions(username):
 
 @app.route('/api/<username>/watchlist/', methods=['GET'])
 def get_watchlist(username):
+    validation_response = validate_username(username)
+    if validation_response:
+        return validation_response
+
     # Read the data from the JSON file
     try:
         with open(f'{username}.json', 'r') as f:
@@ -62,6 +79,10 @@ def get_watchlist(username):
 
 @app.route('/api/<username>/watchlist/', methods=['PUT'])
 def put_watchlist(username):
+    validation_response = validate_username(username)
+    if validation_response:
+        return validation_response
+
     new_data = request.json
     try:
         with open(f'{username}.json', 'r') as f:
