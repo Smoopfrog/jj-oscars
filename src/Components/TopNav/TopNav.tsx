@@ -38,7 +38,7 @@ const TopNav = () => {
 				</Typography>
 			</Box>
 			<Box display={"flex"} alignItems={"center"} gap={2}>
-				<Link to={`/${name}/guesses`} style={{ textDecoration: "none" }}>
+				<Link to={`/user/${name}/guesses`} style={{ textDecoration: "none" }}>
 					<Typography
 						color="#696969"
 						fontSize={20}
@@ -49,7 +49,7 @@ const TopNav = () => {
 						Picks
 					</Typography>
 				</Link>
-				<Link to={`/${name}/watchlist`} style={{ textDecoration: "none" }}>
+				<Link to={`/user/${name}/watchlist`} style={{ textDecoration: "none" }}>
 					<Typography
 						color="#696969"
 						fontSize={20}

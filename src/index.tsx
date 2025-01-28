@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import Guesses from "./Pages/Guesses/Guesses";
 import Watchlist from "./Pages/Watchlist/Watchlist";
+import User from "./Pages/User/User";
+import ErrorPage from "./Pages/Error/ErrorPage";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
@@ -13,9 +15,14 @@ const root = ReactDOM.createRoot(
 root.render(
 	<BrowserRouter>
 		<Routes>
-			<Route path="/" element={<Home />} />
-			<Route path="/:name/guesses" element={<Guesses />} />
-			<Route path="/:name/watchlist" element={<Watchlist />} />
+			<Route index element={<Home />} />
+			<Route path="/user/:name" element={<User />}>
+				<Route index element={<Guesses />} />
+				<Route path="guesses" element={<Guesses />} />
+				<Route path="watchlist" element={<Watchlist />} />
+				<Route path="*" element={<ErrorPage />} />
+			</Route>
+			<Route path="*" element={<Home />} />
 		</Routes>
 	</BrowserRouter>
 );

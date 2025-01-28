@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import { useParams } from "react-router-dom";
 import { useGetPredictions } from "../../hooks/predictions/useGetPredictions";
 import GuessesForm from "./GuessesForm";
-import TopNav from "../../Components/TopNav/TopNav";
 
 const Guesses = () => {
 	const { name } = useParams();
@@ -18,7 +17,6 @@ const Guesses = () => {
 				flexDirection: "column",
 			}}
 		>
-			<TopNav />
 			{!isLoading && guesses && name ? (
 				<GuessesForm name={name} guesses={guesses} />
 			) : (

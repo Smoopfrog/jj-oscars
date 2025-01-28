@@ -5,7 +5,6 @@ import {
 	FormControlLabel,
 } from "@mui/material";
 import React from "react";
-import TopNav from "../../Components/TopNav/TopNav";
 import { categories } from "../../Data/Nominees";
 import NominatedMovie from "./NominatedMovie";
 import { Formik } from "formik";
@@ -52,7 +51,6 @@ const Watchlist = () => {
 
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
-			<TopNav />
 			<Box
 				sx={{
 					display: "flex",
