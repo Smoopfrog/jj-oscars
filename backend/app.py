@@ -3,14 +3,15 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import logging
 from flask_sqlalchemy import SQLAlchemy
-
+import os
 
 app = Flask(__name__)
 # Set up logging
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 logging.basicConfig(level=logging.INFO)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://jeffstinson:postgres@localhost/oscars'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
+    'DATABASE_URL', 'postgresql://jeffstinson:postgres@localhost/oscars')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
