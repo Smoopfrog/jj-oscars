@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import logging
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.postgresql import JSON
 import os
 
 app = Flask(__name__)
@@ -11,7 +12,7 @@ CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 logging.basicConfig(level=logging.INFO)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
-    'DATABASE_URL', 'postgresql://jeffstinson:postgres@localhost/oscars')
+    'DATABASE_URL', 'postgresql+psycopg://jeffstinson:postgres@localhost/oscars')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -19,8 +20,8 @@ db = SQLAlchemy(app)
 class UserData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
-    picks = db.Column(db.JSON, nullable=True)
-    watchlist = db.Column(db.JSON, nullable=True)
+    picks = db.Column(JSON, nullable=True)
+    watchlist = db.Column(JSON, nullable=True)
 
 
 @app.route('/')
