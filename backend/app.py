@@ -1,13 +1,25 @@
 # app.py
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import json
 import logging
+from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
 # Set up logging
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 logging.basicConfig(level=logging.INFO)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://jeffstinson:postgres@localhost/oscars'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+
+class UserData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    picks = db.Column(db.JSON, nullable=True)
+    watchlist = db.Column(db.JSON, nullable=True)
 
 
 @app.route('/')
@@ -26,13 +38,10 @@ def get_predictions(username):
     validation_response = validate_username(username)
     if validation_response:
         return validation_response
-    try:
-        with open(f'{username}.json', 'r') as f:
-            data = json.load(f)
-            return jsonify(data.get("picks", {}))
-    # Handle both file not found and invalid JSON
-    except (FileNotFoundError, json.JSONDecodeError):
-        return jsonify({})
+    user_data = UserData.query.filter_by(username=username).first()
+    if user_data:
+        return jsonify(user_data.picks or {})
+    return jsonify({})
 
 
 @app.route('/api/<username>/predictions/', methods=['POST'])
@@ -42,22 +51,14 @@ def post_predictions(username):
         return validation_response
 
     new_data = request.json
-    # Save the new data to a local JSON file
-    try:
-        with open(f'{username}.json', 'r') as f:
-            existing_data = json.load(f)
-            if "picks" not in existing_data:
-                existing_data["picks"] = {}
-    except (FileNotFoundError, json.JSONDecodeError):
-        existing_data = {"picks": {}}
-
-    # Add new_data to the existing watchlist
-    existing_data["picks"].update(new_data)
-
-    # Save the updated data back to the JSON file
-    with open(f'{username}.json', 'w') as f:
-        json.dump(existing_data, f)
-    return jsonify(existing_data["picks"]), 201
+    user_data = UserData.query.filter_by(username=username).first()
+    if user_data:
+        user_data.picks = {**user_data.picks, **new_data}
+    else:
+        user_data = UserData(username=username, picks=new_data)
+        db.session.add(user_data)
+    db.session.commit()
+    return jsonify(user_data.picks), 201
 
 
 @app.route('/api/<username>/watchlist/', methods=['GET'])
@@ -65,16 +66,10 @@ def get_watchlist(username):
     validation_response = validate_username(username)
     if validation_response:
         return validation_response
-
-    # Read the data from the JSON file
-    try:
-        with open(f'{username}.json', 'r') as f:
-            data = json.load(f)
-            # Return only the 'picks' key
-            return jsonify(data.get("watchlist", {}))
-    # Handle both file not found and invalid JSON
-    except (FileNotFoundError, json.JSONDecodeError):
-        return jsonify({})
+    user_data = UserData.query.filter_by(username=username).first()
+    if user_data:
+        return jsonify(user_data.watchlist or {})
+    return jsonify({})
 
 
 @app.route('/api/<username>/watchlist/', methods=['PUT'])
@@ -84,21 +79,19 @@ def put_watchlist(username):
         return validation_response
 
     new_data = request.json
-    try:
-        with open(f'{username}.json', 'r') as f:
-            existing_data = json.load(f)
-            if "watchlist" not in existing_data:
-                existing_data["watchlist"] = {}
-    except (FileNotFoundError, json.JSONDecodeError):
-        existing_data = {"watchlist": {}}
+    user_data = UserData.query.filter_by(username=username).first()
+    if user_data:
+        user_data.watchlist = {**user_data.watchlist, **new_data}
+    else:
+        user_data = UserData(username=username, watchlist=new_data)
+        db.session.add(user_data)
+    db.session.commit()
+    return jsonify(user_data.watchlist), 201
 
-    # Add new_data to the existing watchlist
-    existing_data["watchlist"].update(new_data)
 
-    # Save the updated data back to the JSON file
-    with open(f'{username}.json', 'w') as f:
-        json.dump(existing_data, f)
-    return jsonify(existing_data["watchlist"]), 201
+# Create the database tables
+with app.app_context():
+    db.create_all()
 
 
 if __name__ == '__main__':
