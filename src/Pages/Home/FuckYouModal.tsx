@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
+import axiosInstance from "../../api/axiosInstance";
 import Modal from "../../Components/Modal/Modal";
 import Button from "../../Components/Buttons/Button";
-import axios from "axios";
 
 interface IFuckYouModalProps {
 	/** Whether the modal is open */
@@ -14,12 +14,8 @@ interface IFuckYouModalProps {
 const FuckYouModal: React.FC<IFuckYouModalProps> = ({ isOpen, onClose }) => {
 	useEffect(() => {
 		if (isOpen) {
-			axios
-				.post("https://textbelt.com/text", {
-					phone: process.env.REACT_APP_NUMBER,
-					message: "Jordan is such a scumbag!",
-					key: "textbelt",
-				})
+			axiosInstance
+				.post("send-text")
 				.then((res) => console.log("Text response:", res.data))
 				.catch((err) => console.error("Error sending text:", err));
 		}

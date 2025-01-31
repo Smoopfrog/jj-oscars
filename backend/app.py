@@ -5,6 +5,7 @@ import logging
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSON
 import os
+import requests
 
 app = Flask(__name__)
 # Set up logging
@@ -27,7 +28,23 @@ class UserData(db.Model):
 
 @app.route('/')
 def home():
-    return "Welcome to the Flask Backend!"
+    return "Oscars and stuff!"
+
+
+@app.route('/api/send-text', methods=['POST'])
+def send_text():
+    try:
+        response = requests.post(
+            'https://textbelt.com/text',
+            data={
+                'phone': os.getenv('PHONE_NUMBER'),
+                'message': 'Jordan is such a scumbag!',
+                'key': 'textbelt'  # textbelt free tier key
+            }
+        )
+        return jsonify(response.json())
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 def validate_username(username):
