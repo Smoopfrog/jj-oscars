@@ -3,33 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import Button from "../../Components/Buttons/Button";
 import FuckYouModal from "./FuckYouModal";
+import { konamiCodeArray } from "../../constants/homeConstants";
+import { handleKeyPress } from "../../utils/homeUtils";
 
 const UserSelection = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 
-	// Konami code sequence
-	const konamiCode =
-		"ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight,b,a";
-	const konamiCodeArray = konamiCode.split(",");
 	useEffect(() => {
 		let index = 0;
 
-		const handleKeyPress = (event: KeyboardEvent) => {
-			if (event.key === konamiCodeArray[index]) {
-				index++;
-				if (index === konamiCodeArray.length) {
-					navigate("/user/jeff"); // Navigate to Jeff's page
-					index = 0; // Reset index
-				}
-			} else {
-				index = 0; // Reset index if the sequence is broken
-			}
+		const keyPressHandler = (event: KeyboardEvent) => {
+			index = handleKeyPress(event, index, konamiCodeArray, navigate);
 		};
 
-		window.addEventListener("keydown", handleKeyPress);
+		window.addEventListener("keydown", keyPressHandler);
 		return () => {
-			window.removeEventListener("keydown", handleKeyPress);
+			window.removeEventListener("keydown", keyPressHandler);
 		};
 	}, [navigate]);
 
