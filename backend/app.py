@@ -8,7 +8,8 @@ import os
 
 app = Flask(__name__)
 # Set up logging
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={
+     r"/api/*": {"origins": ["http://localhost:3000", "https://jjoscars.netlify.app"]}})
 logging.basicConfig(level=logging.INFO)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
