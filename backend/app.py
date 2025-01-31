@@ -6,6 +6,10 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSON
 import os
 import requests
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 # Set up logging
@@ -34,6 +38,7 @@ def home():
 @app.route('/api/send-text', methods=['POST'])
 def send_text():
     try:
+        print(os.getenv('PHONE_NUMBER'))
         response = requests.post(
             'https://textbelt.com/text',
             data={
