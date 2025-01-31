@@ -44,7 +44,7 @@ def send_text():
             data={
                 'phone': os.getenv('PHONE_NUMBER'),
                 'message': 'Jordan is such a scumbag!',
-                'key': 'textbelt'  # textbelt free tier key
+                'key': os.getenv('TEXT_BELT_KEY')
             }
         )
         return jsonify(response.json())
