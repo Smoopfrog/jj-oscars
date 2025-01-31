@@ -1,9 +1,4 @@
-import {
-	Box,
-	Checkbox,
-	CircularProgress,
-	FormControlLabel,
-} from "@mui/material";
+import { Box, Checkbox, FormControlLabel } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { categories } from "../../Data/Nominees";
 import NominatedMovie from "./NominatedMovie";
@@ -12,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useGetWatchlist } from "../../hooks/watchlist/useGetWatchlist";
 import { putWatchlist } from "../../api/service/watchlistService";
 import WatchListStats from "./WatchListStats";
+import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 
 export interface IMovieCategory {
 	category: string;
@@ -63,7 +59,7 @@ const Watchlist = () => {
 
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
-			{!isLoading && data ? (
+			{isLoading && data ? (
 				<Box
 					sx={{
 						display: "flex",
@@ -108,7 +104,7 @@ const Watchlist = () => {
 					</Formik>
 				</Box>
 			) : (
-				<CircularProgress sx={{ color: "rgb(199, 159, 39)" }} />
+				<LoadingSpinner />
 			)}
 		</Box>
 	);
