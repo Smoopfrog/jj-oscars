@@ -59,7 +59,7 @@ const Watchlist = () => {
 
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
-			{isLoading && data ? (
+			{!isLoading && data ? (
 				<Box
 					sx={{
 						display: "flex",

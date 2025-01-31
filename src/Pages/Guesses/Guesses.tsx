@@ -17,7 +17,7 @@ const Guesses = () => {
 				flexDirection: "column",
 			}}
 		>
-			{isLoading && guesses && name ? (
+			{!isLoading && guesses && name ? (
 				<GuessesForm name={name} guesses={guesses} />
 			) : (
 				<LoadingSpinner />

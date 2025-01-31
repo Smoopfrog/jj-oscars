@@ -33,6 +33,20 @@ const Home = () => {
 					variant="h2"
 					color="white"
 					textTransform="uppercase"
+					fontWeight="bold"
+					sx={{
+						textAlign: "center",
+						fontSize: "1.8rem",
+						lineHeight: "1",
+						mb: 0,
+					}}
+				>
+					Oscar Battle 2024
+				</Typography>
+				<Typography
+					variant="h2"
+					color="white"
+					textTransform="uppercase"
 					fontWeight="medium"
 					sx={{
 						textAlign: "center",
@@ -41,9 +55,8 @@ const Home = () => {
 						mb: 1,
 					}}
 				>
-					Welcome to the Oscar Battle 2024
-					<br />
-					where winners become losers and losers become winners
+					53 movies, 23 categories, and a year of bragging rights. May the more
+					sophisticated and pretentious cinephile win.
 				</Typography>
 				<UserSelection />
 			</Box>

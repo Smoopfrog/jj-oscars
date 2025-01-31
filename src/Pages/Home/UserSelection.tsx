@@ -12,7 +12,7 @@ const UserSelection = () => {
 				display: "flex",
 				flexDirection: "column",
 				justifyContent: "center",
-				gap: 2,
+				gap: 1,
 				width: "100%",
 			}}
 		>
