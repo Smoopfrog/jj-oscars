@@ -55,7 +55,7 @@ const Home = () => {
 					}}
 				>
 					53 movies, 23 categories, and a year of bragging rights. May the more
-					sophisticated and pretentious cinephile win.
+					sophisticated, pretentious cinephile win.
 				</Typography>
 				<UserSelection />
 			</Box>
