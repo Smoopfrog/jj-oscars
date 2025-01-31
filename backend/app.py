@@ -38,7 +38,6 @@ def home():
 @app.route('/api/send-text', methods=['POST'])
 def send_text():
     try:
-        print(os.getenv('PHONE_NUMBER'))
         response = requests.post(
             'https://textbelt.com/text',
             data={
