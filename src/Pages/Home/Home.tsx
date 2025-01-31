@@ -7,12 +7,11 @@ const Home = () => {
 	return (
 		<Box
 			className="home-background"
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "center",
-				justifyContent: "center",
-			}}
+			display="flex"
+			flexDirection="column"
+			alignItems="center"
+			justifyContent="center"
+			position="relative"
 		>
 			<Box
 				sx={{
