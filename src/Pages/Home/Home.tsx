@@ -46,7 +46,6 @@ const Home = () => {
 				<Typography
 					variant="h2"
 					color="white"
-					textTransform="uppercase"
 					fontWeight="medium"
 					sx={{
 						textAlign: "center",
