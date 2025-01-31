@@ -12,7 +12,7 @@ CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 logging.basicConfig(level=logging.INFO)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
-    'DATABASE_URL', 'postgresql+psycopg://jeffstinson:postgres@localhost/oscars')
+    'DATABASE_URL', 'postgresql://jeffstinson:postgres@localhost/oscars')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
