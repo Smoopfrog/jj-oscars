@@ -124,11 +124,11 @@ export const categories: ICategory[] = [
   {
     title: "International Feature Film",
     nominees: [
-      { movie: "Brazil", title: "I'm Still Here" },
-      { movie: "Denmark", title: "The Girl with the Needle" },
-      { movie: "France", title: "Emilia Pérez" },
-      { movie: "Germany", title: "The Seed of the Sacred Fig" },
-      { movie: "Latvia", title: "Flow" }
+      { movie: "I'm Still Here", title: "Brazil" },
+      { movie: "The Girl with the Needle", title: "Denmark" },
+      { movie: "Emilia Pérez", title: "France" },
+      { movie: "The Seed of the Sacred Fig", title: "Germany" },
+      { movie: "Flow", title: "Latvia" }
     ]
   },
   {
