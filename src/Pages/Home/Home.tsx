@@ -53,7 +53,7 @@ const Home = () => {
 						mb: 1,
 					}}
 				>
-					53 movies, 23 categories, and a year of bragging rights. May the more
+					50 movies, 23 categories, and a year of bragging rights. May the more
 					sophisticated, pretentious cinephile win.
 				</Typography>
 				<UserSelection />
