@@ -3,6 +3,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import oscarLogo from "../../Images/oscar-logo.png";
 import { capitalize } from "../../utils/formatString";
+import Countdown from "../Countdown/Countdown";
 const TopNav = () => {
 	const { name } = useParams();
 
@@ -36,6 +37,9 @@ const TopNav = () => {
 				<Typography color="#696969" fontSize={20}>
 					{capitalize(name || "")}
 				</Typography>
+			</Box>
+			<Box>
+				<Countdown />
 			</Box>
 			<Box display={"flex"} alignItems={"center"} gap={2}>
 				<Link to={`/user/${name}/guesses`} style={{ textDecoration: "none" }}>
