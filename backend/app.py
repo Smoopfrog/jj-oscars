@@ -1,8 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
-from sqlalchemy.orm import joinedload
 from sqlalchemy import text
 from dotenv import load_dotenv
 import os
@@ -236,20 +234,6 @@ def update_watch_status(username):
 
     db.session.commit()
     return jsonify({"movie_id": movie_id, "viewed": viewed}), 200
-
-
-# �� Calculate Scores
-@app.route('/api/scores/', methods=['GET'])
-def calculate_scores():
-    scores = db.session.query(
-        Prediction.username,
-        func.count(Prediction.id).label('correct_guesses')
-    ).join(Nominee, Prediction.nominee_id == Nominee.id) \
-     .join(Category, Prediction.category_id == Category.id) \
-     .join(Result, (Prediction.category_id == Result.category_id) & (Prediction.nominee_id == Result.winner_id)) \
-     .group_by(Prediction.username).all()
-
-    return jsonify({user: score for user, score in scores})
 
 
 # Initialize tables
