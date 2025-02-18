@@ -23,7 +23,13 @@ const Category: React.FC<ICategoryProps> = ({ id, title, nominees }) => {
 	const [field] = useField(id);
 
 	return (
-		<Box display={"flex"} flexDirection={"column"} width={"100%"} mb={1}>
+		<Box
+			id={title}
+			display={"flex"}
+			flexDirection={"column"}
+			width={"100%"}
+			mb={1}
+		>
 			<FormLabel id={`${title}-radio-buttons-group-label`}>
 				<Typography
 					color="rgb(199, 159, 39)"
