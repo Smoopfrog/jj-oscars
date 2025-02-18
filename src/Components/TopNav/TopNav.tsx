@@ -7,6 +7,10 @@ import Countdown from "../Countdown/Countdown";
 const TopNav = () => {
 	const { name } = useParams();
 
+	if (!name) {
+		return null;
+	}
+
 	return (
 		<Box
 			width={"100%"}
@@ -35,11 +39,11 @@ const TopNav = () => {
 					</Box>
 				</Link>
 				<Typography color="#696969" fontSize={20}>
-					{capitalize(name || "")}
+					{capitalize(name)}
 				</Typography>
 			</Box>
 			<Box>
-				<Countdown />
+				<Countdown userName={name} />
 			</Box>
 			<Box display={"flex"} alignItems={"center"} gap={2}>
 				<Link to={`/user/${name}/guesses`} style={{ textDecoration: "none" }}>
