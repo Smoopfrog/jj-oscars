@@ -65,10 +65,10 @@ const Watchlist = () => {
 						position: "relative",
 					}}
 				>
-					{/* <WatchListStats
+					<WatchListStats
 						watchedMoviesCount={watchedMoviesCount}
-						movies={movies}
-					/> */}
+						movies={data}
+					/>
 					<Formik initialValues={initialValues} onSubmit={handleSubmit}>
 						{({ values, setFieldValue }) => (
 							<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
