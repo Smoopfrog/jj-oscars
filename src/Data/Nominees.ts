@@ -1,6 +1,6 @@
 import { ICategory } from "../types/Category";
 
-export const categories: ICategory[] = [
+export const categories: any[] = [
   {
     title: "Actor in a Leading Role",
     nominees: [

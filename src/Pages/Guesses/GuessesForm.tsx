@@ -3,17 +3,18 @@ import { ICategory } from "../../types/Category";
 import { Form, Formik } from "formik";
 import Button from "../../Components/Buttons/Button";
 import Category from "../../Components/Category/Catergory";
-import { categories } from "../../Data/Nominees";
 import { postPredictions } from "../../hooks/predictions/postPredictions";
 import { Box } from "@mui/material";
 import GuessesSelector from "./GuessesSelector";
 
 interface IGuessesForm {
+	/** The name of the user */
 	name: string;
-	guesses: Record<string, string>;
+	/** The categories to display */
+	categories: ICategory[];
 }
 
-const GuessesForm = ({ name, guesses }: IGuessesForm) => {
+const GuessesForm = ({ name, categories }: IGuessesForm) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const onSubmit = async (values: any) => {
@@ -22,8 +23,13 @@ const GuessesForm = ({ name, guesses }: IGuessesForm) => {
 		setIsLoading(false);
 	};
 
+	const initialValues = categories.reduce((acc: any, category: ICategory) => {
+		acc[category.id] = category.prediction;
+		return acc;
+	}, {});
+
 	return (
-		<Formik initialValues={guesses} onSubmit={onSubmit}>
+		<Formik initialValues={initialValues} onSubmit={onSubmit}>
 			<Form>
 				<Box
 					sx={{
@@ -36,7 +42,8 @@ const GuessesForm = ({ name, guesses }: IGuessesForm) => {
 						{categories.map((category: ICategory, i: number) => (
 							<Category
 								key={i}
-								category={category.title}
+								id={category.id}
+								title={category.title}
 								nominees={category.nominees}
 							/>
 						))}

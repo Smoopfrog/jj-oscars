@@ -9,7 +9,7 @@ interface INomineeProps {
 const Nominee = ({ nominee }: INomineeProps) => {
 	return (
 		<FormControlLabel
-			value={nominee.title || nominee.movie}
+			value={nominee.id}
 			control={
 				<Radio
 					sx={{
@@ -23,10 +23,10 @@ const Nominee = ({ nominee }: INomineeProps) => {
 			label={
 				<Box>
 					<Typography sx={{ fontSize: 16, color: "rgb(46, 46, 46)" }}>
-						{nominee.title || nominee.movie}
+						{nominee.title}
 					</Typography>
 					<Typography sx={{ fontSize: 12, color: "rgb(46, 46, 46)" }}>
-						{nominee.subtitle || nominee.movie}
+						{nominee.subtitle}
 					</Typography>
 				</Box>
 			}

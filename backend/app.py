@@ -37,6 +37,11 @@ class Movie(db.Model):
     title = db.Column(db.String(255), nullable=False, unique=True)
     nomination_year = db.Column(db.Integer, nullable=False)
 
+    @classmethod
+    def get_title_by_id(cls, movie_id):
+        movie = cls.query.get(movie_id)
+        return movie.title if movie else None
+
 
 class Nominee(db.Model):
     __tablename__ = 'nominees'
@@ -57,7 +62,7 @@ class Prediction(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey(
         'categories.id'), nullable=False)
     nominee_id = db.Column(db.Integer, db.ForeignKey(
-        'nominees.id'), nullable=False)
+        'nominees.id'), nullable=True)
 
 
 class MovieWatched(db.Model):
@@ -99,16 +104,39 @@ def post_predictions(username):
 
 @app.route('/api/<username>/predictions/', methods=['GET'])
 def get_predictions(username):
-    predictions = db.session.query(
-        Category.name, Nominee.name
-    ).join(Prediction, Prediction.category_id == Category.id) \
-     .join(Nominee, Prediction.nominee_id == Nominee.id) \
-     .filter(Prediction.username == username).all()
+    # Fetch all categories and their nominees
+    categories = db.session.query(Category).all()
 
-    return jsonify({category: nominee for category, nominee in predictions})
+    # Fetch predictions for the user
+    user_predictions = db.session.query(Prediction).filter(
+        Prediction.username == username).all()
+    user_prediction_dict = {
+        pred.category_id: pred.nominee_id for pred in user_predictions}
+
+    # Structure the response
+    structured_predictions = []
+    for category in categories:
+        nominees = [
+            {
+                "id": nominee.id,
+                "title": Movie.get_title_by_id(nominee.movie_id) if category.title_source == 'movie' else nominee.name,
+                "subtitle": nominee.name if category.title_source == 'movie' else Movie.get_title_by_id(nominee.movie_id),
+                "watched": nominee.movie_id in [mw.movie_id for mw in MovieWatched.query.filter_by(username=username).all()]
+            }
+            for nominee in category.nominees
+        ]
+        # Get the user's prediction for this category
+        prediction = user_prediction_dict.get(category.id)
+        structured_predictions.append({
+            "id": category.id,
+            "title": category.name,
+            "nominees": nominees,
+            "prediction": prediction
+        })
+
+    return jsonify(structured_predictions)
 
 
-# # 🎬 Movie Watchlist
 def get_watchlist(username):
     user_watchlist = []
 

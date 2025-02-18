@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import * as predictionsService from '../../api/service/predictionsSerivce';
+import { ICategory } from '../../types/Category';
 
 export const useGetPredictions = (name: string) => {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState<ICategory[] | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
         

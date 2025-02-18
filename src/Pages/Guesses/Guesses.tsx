@@ -8,7 +8,7 @@ import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 const Guesses = () => {
 	const { name } = useParams();
 
-	const { data: guesses, isLoading } = useGetPredictions(name as string);
+	const { data, isLoading } = useGetPredictions(name as string);
 
 	return (
 		<Box
@@ -17,8 +17,8 @@ const Guesses = () => {
 				flexDirection: "column",
 			}}
 		>
-			{!isLoading && guesses && name ? (
-				<GuessesForm name={name} guesses={guesses} />
+			{!isLoading && data && name ? (
+				<GuessesForm name={name} categories={data} />
 			) : (
 				<LoadingSpinner />
 			)}

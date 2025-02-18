@@ -11,32 +11,31 @@ import Nominee from "./Nominee";
 import { INominee } from "../../types/Nominee";
 
 interface ICategoryProps {
-	/** The Oscar category */
-	category: string;
+	/** The id of the category */
+	id: number;
+	/** The title of the category */
+	title: string;
 	/** The nominees for the category */
 	nominees: INominee[];
 }
 
-const Category: React.FC<ICategoryProps> = ({ category, nominees }) => {
-	const [field] = useField(category);
+const Category: React.FC<ICategoryProps> = ({ id, title, nominees }) => {
+	const [field] = useField(id);
 
 	return (
-		<Box
-			id={category}
-			sx={{ display: "flex", flexDirection: "column", width: "100%", mb: 1 }}
-		>
-			<FormLabel id={`${category}-radio-buttons-group-label`}>
+		<Box display={"flex"} flexDirection={"column"} width={"100%"} mb={1}>
+			<FormLabel id={`${title}-radio-buttons-group-label`}>
 				<Typography
 					color="rgb(199, 159, 39)"
 					fontSize={32}
 					textTransform="uppercase"
 				>
-					{category}
+					{title}
 				</Typography>
 			</FormLabel>
 			<FormControl>
 				<RadioGroup
-					aria-labelledby={`${category}-radio-buttons-group-label`}
+					aria-labelledby={`${title}-radio-buttons-group-label`}
 					name={field.name}
 					value={field.value || ""}
 					onChange={field.onChange}
