@@ -1,10 +1,13 @@
 import { Box, Checkbox, FormControlLabel } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { categories } from "../../Data/Nominees";
 import NominatedMovie from "./NominatedMovie";
 import { Formik } from "formik";
 import { useParams } from "react-router-dom";
-import { useGetWatchlist } from "../../hooks/watchlist/useGetWatchlist";
+import {
+	useGetWatchlist,
+	WatchlistData,
+} from "../../hooks/watchlist/useGetWatchlist";
 import { putWatchlist } from "../../api/service/watchlistService";
 import WatchListStats from "./WatchListStats";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
@@ -15,35 +18,14 @@ export interface IMovieCategory {
 }
 
 const Watchlist = () => {
-	const movies: { [key: string]: IMovieCategory[] } = {};
 	const [watchedMoviesCount, setWatchedMoviesCount] = useState<number>(0);
 	const { name } = useParams();
 
 	const { data, isLoading } = useGetWatchlist(name as string);
 
-	categories.forEach((category) => {
-		category.nominees.forEach((nominee) => {
-			if (movies[nominee.movie]) {
-				movies[nominee.movie].push({
-					category: category.title,
-					nominee: nominee.title || nominee.subtitle || "",
-				});
-			} else {
-				movies[nominee.movie] = [
-					{
-						category: category.title,
-						nominee: nominee.title || nominee.subtitle || "",
-					},
-				];
-			}
-		});
-	});
-
 	useEffect(() => {
 		if (data) {
-			setWatchedMoviesCount(
-				Object.keys(data).filter((key) => data[key]).length
-			);
+			setWatchedMoviesCount(data.filter((movie) => movie.viewed).length);
 		}
 	}, [data]);
 
@@ -51,11 +33,25 @@ const Watchlist = () => {
 		console.log(values);
 	};
 
-	const handleCheckboxChange = (movie: string, event: any) => {
+	const handleCheckboxChange = (movie_id: number, event: any) => {
 		// if the checkbox is checked, increment the watchedMoviesCount
 		setWatchedMoviesCount((prev) => prev + (event.target.checked ? 1 : -1));
-		putWatchlist(name as string, { [movie]: event.target.checked });
+		putWatchlist(name as string, {
+			movie_id: movie_id,
+			viewed: event.target.checked,
+		});
 	};
+
+	// Memoize initialValues and check if data exists
+	const initialValues = useMemo(() => {
+		if (data) {
+			return data.reduce((acc: any, movie: WatchlistData) => {
+				acc[movie.title] = movie.viewed; // Use the movie title as the key
+				return acc;
+			}, {});
+		}
+		return {}; // Return an empty object if data does not exist
+	}, [data]);
 
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
@@ -69,36 +65,34 @@ const Watchlist = () => {
 						position: "relative",
 					}}
 				>
-					<WatchListStats
+					{/* <WatchListStats
 						watchedMoviesCount={watchedMoviesCount}
 						movies={movies}
-					/>
-					<Formik initialValues={data} onSubmit={handleSubmit}>
+					/> */}
+					<Formik initialValues={initialValues} onSubmit={handleSubmit}>
 						{({ values, setFieldValue }) => (
 							<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-								{Object.entries(movies)
-									.sort((a, b) => a[0].localeCompare(b[0]))
-									.map(([movie, categories], i) => (
-										<FormControlLabel
-											key={i}
-											control={
-												<Checkbox
-													color="default"
-													checked={!!values[movie]}
-													onChange={(e) => {
-														setFieldValue(movie, e.target.checked);
-														handleCheckboxChange(movie, e);
-													}}
-												/>
-											}
-											value={movie}
-											label={
-												<NominatedMovie movie={movie} categories={categories} />
-											}
-											onChange={(e) => handleCheckboxChange(movie, e)}
-											sx={{ alignItems: "flex-start" }}
-										/>
-									))}
+								{data.map(({ id, title, nominations }, i) => (
+									<FormControlLabel
+										key={i}
+										control={
+											<Checkbox
+												color="default"
+												checked={!!values[title]}
+												onChange={(e) => {
+													setFieldValue(title, e.target.checked);
+													handleCheckboxChange(id, e);
+												}}
+											/>
+										}
+										value={id}
+										label={
+											<NominatedMovie movie={title} categories={nominations} />
+										}
+										onChange={(e) => handleCheckboxChange(id, e)}
+										sx={{ alignItems: "flex-start" }}
+									/>
+								))}
 							</Box>
 						)}
 					</Formik>
