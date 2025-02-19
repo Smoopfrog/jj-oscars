@@ -119,7 +119,6 @@ def get_predictions(username):
                 "id": nominee.id,
                 "title": Movie.get_title_by_id(nominee.movie_id) if category.title_source == 'movie' else nominee.name,
                 "subtitle": nominee.name if category.title_source == 'movie' else Movie.get_title_by_id(nominee.movie_id),
-                "watched": nominee.movie_id in [mw.movie_id for mw in MovieWatched.query.filter_by(username=username).all()]
             }
             for nominee in category.nominees
         ]
