@@ -1,25 +1,33 @@
-import { Box } from "@mui/material";
-import { Typography } from "@mui/material";
 import React from "react";
+import { Typography, TableCell, TableRow } from "@mui/material";
 
-const BattleTableItem = () => {
+interface BattleTableItemProps {
+	/** The index of the item in the table */
+	index: number;
+}
+
+const BattleTableItem: React.FC<BattleTableItemProps> = ({ index }) => {
 	return (
-		<Box display={"flex"} flexDirection={"column"}>
-			<Typography variant="h6" textAlign={"center"}>
-				Category name
-			</Typography>
-			<Box display={"flex"} gap={2}>
-				<Typography variant="h6" width={"33%"} flexWrap={"wrap"}>
-					Movie namasdfasdfasdfasdfsfasfsde 1
-				</Typography>
-				<Typography variant="h6" width={"33%"} flexWrap={"wrap"}>
-					Winning movie name
-				</Typography>
-				<Typography variant="h6" width={"33%"} flexWrap={"wrap"}>
-					Movie name 2
-				</Typography>
-			</Box>
-		</Box>
+		<TableRow
+			sx={
+				index % 2 !== 0
+					? { backgroundColor: "rgb(199, 159, 39, 0.05)" }
+					: { backgroundColor: undefined }
+			}
+		>
+			<TableCell>
+				<Typography fontStyle="italic">Category</Typography>
+			</TableCell>
+			<TableCell>
+				<Typography align="right">Winner movie name</Typography>
+			</TableCell>
+			<TableCell>
+				<Typography align="right">Jordans pick name</Typography>
+			</TableCell>
+			<TableCell>
+				<Typography align="right">Jeffs pick name</Typography>
+			</TableCell>
+		</TableRow>
 	);
 };
 

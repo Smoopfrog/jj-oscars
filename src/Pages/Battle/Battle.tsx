@@ -9,7 +9,7 @@ const Battle = () => {
 			flexDirection={"column"}
 			alignItems={"center"}
 			gap={2}
-			width={"100%"}
+			mb={5}
 		>
 			<Typography variant="h4">Oscar Battle 2025</Typography>
 			<BattleTable />

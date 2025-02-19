@@ -37,7 +37,7 @@ const Countdown: React.FC<ICountdownProps> = ({ userName }) => {
 	}, []);
 
 	return (
-		<Box display={"flex"} gap={1}>
+		<Box display={{ xs: "none", sm: "flex" }} gap={1}>
 			{timeLeft.total > 0 ? (
 				<>
 					<CountdownUnit value={timeLeft.days} unit="Days" />
