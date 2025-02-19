@@ -102,8 +102,9 @@ def post_predictions(username):
 
 @app.route('/api/<username>/predictions/', methods=['GET'])
 def get_predictions(username):
-    # Fetch all categories and their nominees
-    categories = db.session.query(Category).all()
+    # Fetch all categories and their nominees with eager loading
+    categories = db.session.query(Category).options(
+        db.joinedload(Category.nominees)).all()
 
     # Fetch predictions for the user
     user_predictions = db.session.query(Prediction).filter(
