@@ -7,6 +7,4 @@ export interface INominee {
 	subtitle: string;
 	/** If the movie is the winner */
 	winner?: boolean;
-	/** If the movie has been watched */
-	watched: boolean;
 }
