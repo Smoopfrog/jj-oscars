@@ -25,7 +25,7 @@ const TopNav = () => {
 			mb={3}
 			px={3}
 		>
-			<Box display={"flex"} alignItems={"center"} gap={1}>
+			<Box display={"flex"} alignItems={"center"} gap={1} flex={1}>
 				<Link to="/" style={{ textDecoration: "none", marginTop: 1 }}>
 					<Box width={36} height={"10%"}>
 						<img
@@ -42,10 +42,16 @@ const TopNav = () => {
 					{capitalize(name)}
 				</Typography>
 			</Box>
-			<Box>
+			<Box flex={1} display={"flex"} justifyContent={"center"}>
 				<Countdown userName={name} />
 			</Box>
-			<Box display={"flex"} alignItems={"center"} gap={2}>
+			<Box
+				display={"flex"}
+				alignItems={"center"}
+				justifyContent={"flex-end"}
+				gap={2}
+				flex={1}
+			>
 				<Link to={`/user/${name}/guesses`} style={{ textDecoration: "none" }}>
 					<Typography
 						color="#696969"
