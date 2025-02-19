@@ -15,7 +15,7 @@ const Home = () => {
 		>
 			<Box
 				sx={{
-					width: "40%",
+					width: { xs: "90%", sm: "40%" },
 					gap: 2,
 					display: "flex",
 					flexDirection: "column",
@@ -40,7 +40,7 @@ const Home = () => {
 						mb: 0,
 					}}
 				>
-					Oscar Battle 2024
+					Oscar Battle 2025
 				</Typography>
 				<Typography
 					variant="h2"
