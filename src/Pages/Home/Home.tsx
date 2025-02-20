@@ -2,16 +2,24 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import OscarsLogo from "../../Images/OscarsLogo.png";
 import UserSelection from "./UserSelection";
+import jordan from "../../Images/jordan.jpg";
 
 const Home = () => {
 	return (
 		<Box
-			className="home-background"
 			display="flex"
 			flexDirection="column"
 			alignItems="center"
 			justifyContent="center"
 			position="relative"
+			height="100vh"
+			sx={{
+				backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+			url(${jordan})`,
+				backgroundSize: "cover",
+				backgroundRepeat: "no-repeat",
+				backgroundAttachment: "fixed",
+			}}
 		>
 			<Box
 				sx={{

@@ -18,11 +18,3 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
 }
-
-.home-background {
-	background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-		url(./Images/jordan.jpg);
-	background-size: cover;
-	background-attachment: fixed;
-	height: 100vh;
-}
