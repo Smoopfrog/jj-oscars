@@ -80,7 +80,23 @@ class Score(db.Model):
 
 @app.route('/')
 def home():
-    return "Welcome to the Oscars Prediction Game!"
+    return "Oscars and stuff!"
+
+
+@app.route('/api/send-text', methods=['POST'])
+def send_text():
+    try:
+        response = requests.post(
+            'https://textbelt.com/text',
+            data={
+                'phone': os.getenv('PHONE_NUMBER'),
+                'message': 'Jordan is such a scumbag!',
+                'key': os.getenv('TEXT_BELT_KEY')
+            }
+        )
+        return jsonify(response.json())
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 # 🎯 Predictions
