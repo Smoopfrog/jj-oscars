@@ -54,6 +54,7 @@ const WatchlistForm: React.FC<IWatchlistForm> = ({
 								<Checkbox
 									color="default"
 									checked={!!values[title]}
+									sx={{ pointerEvents: "auto" }}
 									onChange={(e) => {
 										setFieldValue(title, e.target.checked);
 										handleCheckboxChange(id, e);
@@ -62,8 +63,10 @@ const WatchlistForm: React.FC<IWatchlistForm> = ({
 							}
 							value={id}
 							label={<NominatedMovie movie={title} categories={nominations} />}
-							onChange={(e) => handleCheckboxChange(id, e)}
-							sx={{ alignItems: "flex-start" }}
+							sx={{
+								alignItems: "flex-start",
+								pointerEvents: "none",
+							}}
 						/>
 					))}
 				</Box>
