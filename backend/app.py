@@ -12,7 +12,7 @@ load_dotenv()
 # Initialize app
 app = Flask(__name__)
 CORS(app, resources={
-     r"/api/*": {"origins": ["http://localhost:3000", "https://jjoscars.netlify.app"]}})
+     r"/api/*": {"origins": ["http://localhost:3000", "https://jjoscars.netlify.app", "https://jjoscars.com"]}})
 logging.basicConfig(level=logging.INFO)
 
 # Configure DB
