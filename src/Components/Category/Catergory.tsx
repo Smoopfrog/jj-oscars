@@ -23,18 +23,14 @@ const Category: React.FC<ICategoryProps> = ({ id, title, nominees }) => {
 	const [field] = useField(id);
 
 	return (
-		<Box
-			id={title}
-			display={"flex"}
-			flexDirection={"column"}
-			width={"100%"}
-			mb={1}
-		>
+		<Box id={title} display={"flex"} flexDirection={"column"}>
 			<FormLabel id={`${title}-radio-buttons-group-label`}>
 				<Typography
 					color="rgb(199, 159, 39)"
 					fontSize={32}
 					textTransform="uppercase"
+					lineHeight={1.2}
+					mb={0.5}
 				>
 					{title}
 				</Typography>
@@ -45,7 +41,7 @@ const Category: React.FC<ICategoryProps> = ({ id, title, nominees }) => {
 					name={field.name}
 					value={field.value || ""}
 					onChange={field.onChange}
-					sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+					sx={{ display: "flex", flexDirection: "column", gap: 1 }}
 				>
 					{nominees.map((nominee, i) => (
 						<Nominee nominee={nominee} key={i} />

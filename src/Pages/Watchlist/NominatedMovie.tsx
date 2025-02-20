@@ -16,7 +16,7 @@ const NominatedMovie = ({ movie, categories }: INominatedMovieProps) => {
 				color="rgb(199, 159, 39)"
 				fontSize={32}
 				textTransform="uppercase"
-				lineHeight={1}
+				lineHeight={1.2}
 			>
 				{movie}
 			</Typography>

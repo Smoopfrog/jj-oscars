@@ -5,7 +5,6 @@ import Button from "../../Components/Buttons/Button";
 import Category from "../../Components/Category/Catergory";
 import { postPredictions } from "../../hooks/predictions/postPredictions";
 import { Box } from "@mui/material";
-import GuessesSelector from "./GuessesSelector";
 
 interface IGuessesForm {
 	/** The name of the user */
@@ -32,13 +31,13 @@ const GuessesForm = ({ name, categories }: IGuessesForm) => {
 		<Formik initialValues={initialValues} onSubmit={onSubmit}>
 			<Form>
 				<Box
-					sx={{
-						display: "flex",
-						gap: 2,
-						position: "relative",
-					}}
+					display="flex"
+					flexDirection="column"
+					gap={2}
+					alignItems="center"
+					mx={{ xs: 2, md: 0 }}
 				>
-					<Box sx={{ flex: 1, ml: "15vw" }}>
+					<Box display="flex" flexDirection="column" gap={3}>
 						{categories.map((category: ICategory, i: number) => (
 							<Category
 								key={i}
@@ -47,23 +46,7 @@ const GuessesForm = ({ name, categories }: IGuessesForm) => {
 								nominees={category.nominees}
 							/>
 						))}
-					</Box>
-					<Box
-						sx={{
-							display: "flex",
-							gap: 2,
-							flexDirection: "column",
-							alignItems: "flex-end",
-							position: "fixed",
-							right: "15vw",
-						}}
-					>
-						<GuessesSelector />
-						<Button
-							type="submit"
-							disabled={isLoading}
-							sx={{ width: "min-content" }}
-						>
+						<Button type="submit" disabled={isLoading} sx={{ fontSize: 24 }}>
 							{isLoading ? "Saving..." : "Submit"}
 						</Button>
 					</Box>

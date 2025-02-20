@@ -17,12 +17,7 @@ const Guesses = () => {
 	const { data, isLoading } = useGetPredictions(name as string);
 
 	return (
-		<Box
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-			}}
-		>
+		<Box mb={5}>
 			{!isLoading ? (
 				data ? (
 					<GuessesForm name={name} categories={data} />
