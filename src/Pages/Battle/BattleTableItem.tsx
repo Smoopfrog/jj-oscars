@@ -19,13 +19,13 @@ const BattleTableItem: React.FC<BattleTableItemProps> = ({ index }) => {
 				<Typography fontStyle="italic">Category</Typography>
 			</TableCell>
 			<TableCell>
-				<Typography align="right">Winner movie name</Typography>
+				<Typography align="right">-</Typography>
 			</TableCell>
 			<TableCell>
-				<Typography align="right">Jordans pick name</Typography>
+				<Typography align="right">-</Typography>
 			</TableCell>
 			<TableCell>
-				<Typography align="right">Jeffs pick name</Typography>
+				<Typography align="right">-</Typography>
 			</TableCell>
 		</TableRow>
 	);
