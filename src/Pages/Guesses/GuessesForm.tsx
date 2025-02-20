@@ -5,6 +5,7 @@ import Button from "../../Components/Buttons/Button";
 import Category from "../../Components/Category/Catergory";
 import { postPredictions } from "../../hooks/predictions/postPredictions";
 import { Box } from "@mui/material";
+import ScrollToError from "../../Components/Error/ScrollToError";
 
 interface IGuessesForm {
 	/** The name of the user */
@@ -30,6 +31,7 @@ const GuessesForm = ({ name, categories }: IGuessesForm) => {
 	return (
 		<Formik initialValues={initialValues} onSubmit={onSubmit}>
 			<Form>
+				<ScrollToError />
 				<Box
 					display="flex"
 					flexDirection="column"

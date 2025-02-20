@@ -20,10 +20,24 @@ interface ICategoryProps {
 }
 
 const Category: React.FC<ICategoryProps> = ({ id, title, nominees }) => {
-	const [field] = useField(id);
+	const [field, meta] = useField({
+		name: id,
+		validate: (value: string) => {
+			let error;
+			if (!value) {
+				error = "You missed this one dumb dumb!";
+			}
+			return error;
+		},
+	});
 
 	return (
-		<Box id={title} display={"flex"} flexDirection={"column"}>
+		<Box
+			id={title}
+			display={"flex"}
+			flexDirection={"column"}
+			className={meta.touched && meta.error ? "error" : ""}
+		>
 			<FormLabel id={`${title}-radio-buttons-group-label`}>
 				<Typography
 					color="rgb(199, 159, 39)"
@@ -35,7 +49,12 @@ const Category: React.FC<ICategoryProps> = ({ id, title, nominees }) => {
 					{title}
 				</Typography>
 			</FormLabel>
-			<FormControl>
+			{meta.touched && meta.error && (
+				<Typography color="error" mb={1}>
+					{meta.error}
+				</Typography>
+			)}
+			<FormControl error={Boolean(meta.touched && meta.error)}>
 				<RadioGroup
 					aria-labelledby={`${title}-radio-buttons-group-label`}
 					name={field.name}
