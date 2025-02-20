@@ -1,13 +1,7 @@
-import { Box, Checkbox, FormControlLabel } from "@mui/material";
-import React, { useEffect, useMemo, useState } from "react";
-import NominatedMovie from "./NominatedMovie";
-import { Formik } from "formik";
+import React, { useState } from "react";
+import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
-import {
-	useGetWatchlist,
-	WatchlistData,
-} from "../../hooks/watchlist/useGetWatchlist";
-import { putWatchlist } from "../../api/service/watchlistService";
+import { useGetWatchlist } from "../../hooks/watchlist/useGetWatchlist";
 import WatchListStats from "./WatchListStats";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 import WatchlistForm from "./WatchlistForm";
@@ -30,17 +24,16 @@ const Watchlist = () => {
 	const { data, isLoading } = useGetWatchlist(name as string);
 
 	return (
-		<Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
+		<Box>
 			{!isLoading ? (
 				data ? (
 					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "column",
-							gap: 2,
-							alignItems: "center",
-							position: "relative",
-						}}
+						display="flex"
+						flexDirection="column"
+						gap={2}
+						alignItems="center"
+						position="relative"
+						mx={{ xs: 2, md: 0 }}
 					>
 						<WatchListStats
 							data={data}

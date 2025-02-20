@@ -54,7 +54,7 @@ const WatchlistForm: React.FC<IWatchlistForm> = ({
 								<Checkbox
 									color="default"
 									checked={!!values[title]}
-									sx={{ pointerEvents: "auto" }}
+									sx={{ pointerEvents: "auto", py: 0.5 }}
 									onChange={(e) => {
 										setFieldValue(title, e.target.checked);
 										handleCheckboxChange(id, e);

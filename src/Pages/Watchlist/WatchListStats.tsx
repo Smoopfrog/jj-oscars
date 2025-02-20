@@ -27,12 +27,9 @@ const WatchListStats: React.FC<WatchListStatsProps> = ({
 	return (
 		<Box
 			display="flex"
-			alignItems="center"
-			justifyContent="flex-end"
 			gap={1}
-			marginLeft="auto"
-			position="fixed"
-			right="10%"
+			position={{ xs: "relative", lg: "fixed" }}
+			right={{ lg: "10%" }}
 		>
 			{watchedMoviesCount === Object.keys(data).length && (
 				<StarIcon
