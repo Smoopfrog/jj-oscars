@@ -254,6 +254,59 @@ def update_watch_status(username):
     return jsonify({"movie_id": movie_id, "viewed": viewed}), 200
 
 
+# 🎉 Get Category Winners and User Predictions for specific users
+@app.route('/api/winners/<int:nominee_year>/<username1>/<username2>/', methods=['GET'])
+def get_winners_and_user_predictions(nominee_year, username1, username2):
+    # Fetch all categories for the given year
+    categories = db.session.query(Category).all()
+    results = []  # Initialize an array to hold the results
+
+    for category in categories:
+        winner = db.session.query(Nominee).filter_by(
+            category_id=category.id, nominee_year=nominee_year, winner=True).first()
+
+        # Determine the winner's name based on the category's title_source
+        if winner:
+            if category.title_source == 'movie':
+                winner_name = Movie.get_title_by_id(
+                    winner.movie_id) if winner else None
+            else:
+                winner_name = winner.name
+        else:
+            winner_name = None
+
+        # Fetch predictions for the specified users
+        user_preds = {username: None for username in [username1, username2]}
+        for username in [username1, username2]:
+            user_prediction = db.session.query(Prediction).filter_by(
+                username=username, nominee_year=nominee_year, category_id=category.id).first()
+            nominee_id = user_prediction.nominee_id if user_prediction else None
+
+            # Get the movie name associated with the nominee
+            if nominee_id:
+                nominee = db.session.query(Nominee).get(nominee_id)
+                if category.title_source == 'movie':
+                    movie_name = Movie.get_title_by_id(
+                        nominee.movie_id) if nominee else None
+                else:
+                    movie_name = nominee.name
+            else:
+                movie_name = None
+
+            user_preds[username] = movie_name
+
+        # Append the structured data to results
+        results.append({
+            "id": category.id,
+            "name": category.name,
+            "winner": winner_name,
+            username1: user_preds[username1],
+            username2: user_preds[username2]
+        })
+
+    return jsonify(results)
+
+
 # Initialize tables
 with app.app_context():
     db.create_all()

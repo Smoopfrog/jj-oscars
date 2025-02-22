@@ -52,7 +52,7 @@ const Battle = () => {
 					<MenuItem value={2025}>2025</MenuItem>
 				</Select>
 			</Box>
-			<BattleTable />
+			<BattleTable year={year} />
 		</Box>
 	);
 };

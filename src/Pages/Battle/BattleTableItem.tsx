@@ -1,12 +1,23 @@
 import React from "react";
 import { Typography, TableCell, TableRow } from "@mui/material";
+import { IWinnerAPI } from "../../hooks/winners/getWinners";
 
 interface BattleTableItemProps {
 	/** The index of the item in the table */
 	index: number;
+	/** The category to display */
+	category: IWinnerAPI;
 }
 
-const BattleTableItem: React.FC<BattleTableItemProps> = ({ index }) => {
+const getColor = (winner: string | null, prediction: string | null) => {
+	if (!winner || !prediction) return "";
+	return winner === prediction ? "success" : "error";
+};
+
+const BattleTableItem: React.FC<BattleTableItemProps> = ({
+	index,
+	category,
+}) => {
 	return (
 		<TableRow
 			sx={
@@ -16,16 +27,26 @@ const BattleTableItem: React.FC<BattleTableItemProps> = ({ index }) => {
 			}
 		>
 			<TableCell>
-				<Typography fontStyle="italic">Category</Typography>
+				<Typography fontStyle="italic">{category.name}</Typography>
 			</TableCell>
 			<TableCell>
-				<Typography align="right">-</Typography>
+				<Typography align="right">{category.winner || "-"}</Typography>
 			</TableCell>
 			<TableCell>
-				<Typography align="right">-</Typography>
+				<Typography
+					align="right"
+					color={getColor(category.winner, category.jordan)}
+				>
+					{category.jordan || "-"}
+				</Typography>
 			</TableCell>
 			<TableCell>
-				<Typography align="right">-</Typography>
+				<Typography
+					align="right"
+					color={getColor(category.winner, category.jeff)}
+				>
+					{category.jeff || "-"}
+				</Typography>
 			</TableCell>
 		</TableRow>
 	);
