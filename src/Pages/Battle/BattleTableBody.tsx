@@ -7,22 +7,12 @@ import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 
 interface IBattleTableBodyProps {
 	data: IWinnerAPI[] | null;
-	isLoading: boolean;
 }
 
-const BattleTableBody: React.FC<IBattleTableBodyProps> = ({
-	data,
-	isLoading,
-}) => {
+const BattleTableBody: React.FC<IBattleTableBodyProps> = ({ data }) => {
 	return (
 		<TableBody>
-			{isLoading ? (
-				<TableRow>
-					<TableCell colSpan={4}>
-						<LoadingSpinner />
-					</TableCell>
-				</TableRow>
-			) : data ? (
+			{data ? (
 				data.map((category, i) => (
 					<BattleTableItem key={category.id} index={i} category={category} />
 				))
