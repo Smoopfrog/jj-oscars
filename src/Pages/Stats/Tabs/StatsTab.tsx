@@ -1,6 +1,6 @@
 import React from "react";
 import StatisticsCard from "../../../Components/Statistics/StatisticsCard";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useGetStats } from "../../../hooks/stats/useGetStats";
 import LoadingSpinner from "../../../Components/loading/LoadingSpinner";
 
@@ -19,7 +19,7 @@ const StatsTab: React.FC<IStatsTabProps> = ({ name, year }) => {
 	const { data, isLoading } = useGetStats(name, year);
 	console.log(data);
 	return (
-		<Box display="flex" flexDirection="column" gap={1}>
+		<Box display="flex" flexDirection="column" gap={1} p={2}>
 			{!isLoading ? (
 				<>
 					{/* {year ? (
@@ -48,6 +48,11 @@ const StatsTab: React.FC<IStatsTabProps> = ({ name, year }) => {
 						value={formatStatValue(data?.watched_movies, data?.total_movies)}
 						isLoading={isLoading}
 					/>
+					{!data && (
+						<Typography color="error" textAlign="center">
+							Refresh it, something got frigged up
+						</Typography>
+					)}
 				</>
 			) : (
 				<Box display="flex" justifyContent="center" alignItems="center">
