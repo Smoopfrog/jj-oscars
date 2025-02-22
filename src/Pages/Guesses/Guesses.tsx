@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useGetPredictions } from "../../hooks/predictions/useGetPredictions";
 import GuessesForm from "./GuessesForm";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
@@ -11,7 +11,7 @@ const Guesses = () => {
 	const { name } = useParams();
 
 	if (!name) {
-		return null;
+		return <Navigate to="/" />;
 	}
 
 	const { data, isLoading } = useGetPredictions(name as string);

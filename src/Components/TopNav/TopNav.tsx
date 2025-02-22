@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import oscarLogo from "../../Images/oscar-logo.png";
 import { capitalize } from "../../utils/formatString";
 import Countdown from "../Countdown/Countdown";
@@ -8,7 +8,7 @@ const TopNav = () => {
 	const { name } = useParams();
 
 	if (!name) {
-		return null;
+		return <Navigate to="/" />;
 	}
 
 	return (

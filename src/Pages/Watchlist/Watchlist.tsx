@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useGetWatchlist } from "../../hooks/watchlist/useGetWatchlist";
 import WatchListStats from "./WatchListStats";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
@@ -18,7 +18,7 @@ const Watchlist = () => {
 	const { name } = useParams();
 
 	if (!name) {
-		return null;
+		return <Navigate to="/" />;
 	}
 
 	const { data, isLoading } = useGetWatchlist(name as string);

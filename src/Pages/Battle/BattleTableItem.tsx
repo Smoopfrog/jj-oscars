@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, TableCell, TableRow } from "@mui/material";
 import { IWinnerAPI } from "../../hooks/winners/getWinners";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 interface BattleTableItemProps {
 	/** The index of the item in the table */
@@ -20,6 +20,10 @@ const BattleTableItem: React.FC<BattleTableItemProps> = ({
 	category,
 }) => {
 	const { name } = useParams();
+
+	if (!name) {
+		return <Navigate to="/" />;
+	}
 
 	return (
 		<TableRow
