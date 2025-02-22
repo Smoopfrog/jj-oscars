@@ -8,11 +8,10 @@ import { Link } from "react-router-dom";
 dayjs.extend(duration);
 
 interface ICountdownProps {
-	/** The name of the user */
-	userName: string;
+	name: string;
 }
 
-const Countdown: React.FC<ICountdownProps> = ({ userName }) => {
+const Countdown: React.FC<ICountdownProps> = ({ name }) => {
 	const targetDate = dayjs("2025-03-02T16:00:00-08:00");
 	const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
@@ -36,19 +35,30 @@ const Countdown: React.FC<ICountdownProps> = ({ userName }) => {
 		return () => clearInterval(timer);
 	}, []);
 
-	const showCountdown = timeLeft.total > 0;
-
 	return (
-		<Box display={{ xs: "none", sm: "flex" }} gap={1}>
-			{showCountdown && (
-				<>
-					<CountdownUnit value={timeLeft.days} unit="Days" />
-					<CountdownUnit value={timeLeft.hours} unit="Hours" />
-					<CountdownUnit value={timeLeft.minutes} unit="Minutes" />
-					<CountdownUnit value={timeLeft.seconds} unit="Seconds" />
-				</>
-			)}
-		</Box>
+		<Link to={`/user/${name}/battle`} style={{ textDecoration: "none" }}>
+			<Box
+				display={{ xs: "none", sm: "flex" }}
+				gap={1}
+				color="#696969"
+				sx={{
+					"&:hover": { color: "rgb(199, 159, 39)" },
+				}}
+			>
+				{timeLeft.total >= 0 ? (
+					<Box display={"flex"} gap={1}>
+						<CountdownUnit value={timeLeft.days} unit="Days" />
+						<CountdownUnit value={timeLeft.hours} unit="Hours" />
+						<CountdownUnit value={timeLeft.minutes} unit="Minutes" />
+						<CountdownUnit value={timeLeft.seconds} unit="Seconds" />
+					</Box>
+				) : (
+					<Typography variant="h1" fontSize={28}>
+						{`Oscar Battle ${dayjs().year()}`}
+					</Typography>
+				)}
+			</Box>
+		</Link>
 	);
 };
 

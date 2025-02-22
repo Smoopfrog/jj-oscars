@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
 import TabPanel from "../../../Components/Tabs/TabPanel";
-import StatisticsCard from "../../../Components/Statistics/StatisticsCard";
+import StatsTab from "./StatsTab";
 
 const StatsTabs = () => {
 	const [tabValue, setTabValue] = useState<number>(0);
@@ -11,29 +11,57 @@ const StatsTabs = () => {
 	};
 
 	return (
-		<>
+		<Box>
 			<Tabs
 				value={tabValue}
 				onChange={handleChange}
-				aria-label="basic tabs example"
+				aria-label="Oscar Battle Stats"
+				sx={{
+					textTransform: "none",
+					border: "1px solid black",
+					borderLeft: "none",
+					borderRight: "none",
+				}}
+				TabIndicatorProps={{
+					style: {
+						display: "none",
+					},
+				}}
 			>
-				<Tab label="2025" />
-				<Tab label="All Time" />
+				<Tab
+					label="All Time"
+					sx={{
+						textTransform: "none",
+						color: "black",
+						"&.Mui-selected": {
+							color: "rgb(199, 159, 39)",
+						},
+						"&:hover": {
+							color: "rgb(199, 159, 39, 0.5)",
+						},
+					}}
+				/>
+				<Tab
+					label="2025"
+					sx={{
+						color: "black",
+						"&.Mui-selected": {
+							color: "rgb(199, 159, 39)",
+						},
+						"&:hover": {
+							color: "rgb(199, 159, 39, 0.5)",
+						},
+					}}
+				/>
 			</Tabs>
 
 			<TabPanel value={tabValue} index={0}>
-				<Box display="flex" flexDirection="column" gap={2}>
-					<StatisticsCard title="Guess Percentage" value="23/50 (46%)" />
-					<StatisticsCard title="Movies Watched" value="23/50 (46%)" />
-				</Box>
+				<StatsTab />
 			</TabPanel>
 			<TabPanel value={tabValue} index={1}>
-				<Box display="flex" flexDirection="column" gap={2}>
-					<StatisticsCard title="Guess Percentage" value="23/50 (46%)" />
-					<StatisticsCard title="Movies Watched" value="23/50 (46%)" />
-				</Box>
+				<StatsTab year={2025} />
 			</TabPanel>
-		</>
+		</Box>
 	);
 };
 

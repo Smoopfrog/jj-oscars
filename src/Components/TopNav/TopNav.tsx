@@ -24,7 +24,6 @@ const TopNav = () => {
 			justifyContent={"space-between"}
 			alignItems={"center"}
 			gap={3}
-			mb={3}
 			px={3}
 		>
 			<Box display={"flex"} alignItems={"center"} gap={1} flex={1}>

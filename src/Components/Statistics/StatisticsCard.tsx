@@ -14,10 +14,10 @@ const StatisticsCard: React.FC<IStatisticsCardProps> = ({ title, value }) => {
 			alignItems="center"
 			justifyContent="space-between"
 		>
-			<Typography variant="h1" fontSize={28}>
+			<Typography variant="h1" fontSize={24}>
 				{title}
 			</Typography>
-			<Typography variant="h1" fontSize={24}>
+			<Typography variant="h1" fontSize={24} fontWeight={400}>
 				{value}
 			</Typography>
 		</Box>
