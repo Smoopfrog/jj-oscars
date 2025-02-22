@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, TableCell, TableRow } from "@mui/material";
 import { IWinnerAPI } from "../../hooks/winners/getWinners";
+import { useParams } from "react-router-dom";
 
 interface BattleTableItemProps {
 	/** The index of the item in the table */
@@ -18,6 +19,8 @@ const BattleTableItem: React.FC<BattleTableItemProps> = ({
 	index,
 	category,
 }) => {
+	const { name } = useParams();
+
 	return (
 		<TableRow
 			sx={
@@ -37,7 +40,7 @@ const BattleTableItem: React.FC<BattleTableItemProps> = ({
 					align="right"
 					color={getColor(category.winner, category.jordan)}
 				>
-					{category.jordan || "-"}
+					{(name === "jordan" && category.jordan) || "-"}
 				</Typography>
 			</TableCell>
 			<TableCell>
@@ -45,7 +48,7 @@ const BattleTableItem: React.FC<BattleTableItemProps> = ({
 					align="right"
 					color={getColor(category.winner, category.jeff)}
 				>
-					{category.jeff || "-"}
+					{(name === "jeff" && category.jeff) || "-"}
 				</Typography>
 			</TableCell>
 		</TableRow>
