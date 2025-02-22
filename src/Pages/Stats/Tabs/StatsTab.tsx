@@ -9,19 +9,20 @@ interface IStatsTabProps {
 	year?: number;
 }
 const formatStatValue = (value: number, total: number) => {
-	if (value !== 0 || !total) return null;
+	console.log(value, total);
+	if (value === undefined || !total) return null;
 
-	return `${value}/${total} (${(value / total) * 100}%)`;
+	return `${value}/${total} (${((value / total) * 100).toFixed(2)}%)`;
 };
 
 const StatsTab: React.FC<IStatsTabProps> = ({ name, year }) => {
 	const { data, isLoading } = useGetStats(name, year);
-
+	console.log(data);
 	return (
 		<Box display="flex" flexDirection="column" gap={1}>
 			{!isLoading ? (
 				<>
-					{year ? (
+					{/* {year ? (
 						<StatisticsCard
 							title="Winner"
 							value={data?.winner}
@@ -33,10 +34,13 @@ const StatsTab: React.FC<IStatsTabProps> = ({ name, year }) => {
 							value={formatStatValue(data?.correct_guesses, data?.nominations)}
 							isLoading={isLoading}
 						/>
-					)}
+					)} */}
 					<StatisticsCard
 						title="Guess Percentage"
-						value={formatStatValue(data?.correct_guesses, data?.total_movies)}
+						value={formatStatValue(
+							data?.total_correct_guesses,
+							data?.total_categories
+						)}
 						isLoading={isLoading}
 					/>
 					<StatisticsCard
