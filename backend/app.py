@@ -307,6 +307,29 @@ def get_winners_and_user_predictions(nominee_year, username1, username2):
     return jsonify(results)
 
 
+# 🎉 Get User Stats and Winner for a Specific Year
+@app.route('/api/stats/<username>/', methods=['GET'])
+@app.route('/api/stats/<username>/<int:nominee_year>/', methods=['GET'])
+def get_user_stats_and_winner(username, nominee_year=None):
+    # Fetch watched movies for the specific year if nominee_year is provided
+    watched_movies = MovieWatched.query.join(Movie).filter(
+        MovieWatched.username == username,
+        # Conditional filter
+        (Movie.nomination_year == nominee_year) if nominee_year is not None else True
+    ).count()
+
+    # If nominee_year is provided, count total watched movies for that year
+    total_movies = Movie.query.filter(
+        # Conditional filter
+        (Movie.nomination_year == nominee_year) if nominee_year is not None else True
+    ).count()
+
+    return jsonify({
+        "watched_movies": watched_movies,
+        "total_movies": total_movies,
+    })
+
+
 # Initialize tables
 with app.app_context():
     db.create_all()

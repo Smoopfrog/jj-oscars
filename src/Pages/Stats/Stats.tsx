@@ -31,7 +31,7 @@ const Stats = () => {
 		>
 			<Card sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
 				<Countdown name={name} />
-				<StatsTabs />
+				<StatsTabs name={name} />
 			</Card>
 		</Box>
 	);

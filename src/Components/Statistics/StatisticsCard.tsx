@@ -1,27 +1,30 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 interface IStatisticsCardProps {
 	title: string;
-	value: string | number;
+	value: string | number | null;
+	isLoading?: boolean;
 }
 
-const StatisticsCard: React.FC<IStatisticsCardProps> = ({ title, value }) => {
-	return (
-		<Box
-			display="flex"
-			gap={2}
-			alignItems="center"
-			justifyContent="space-between"
-		>
-			<Typography variant="h1" fontSize={24}>
-				{title}
-			</Typography>
-			<Typography variant="h1" fontSize={24} fontWeight={400}>
-				{value}
-			</Typography>
-		</Box>
-	);
-};
+const StatisticsCard: React.FC<IStatisticsCardProps> = ({
+	title,
+	value,
+	isLoading,
+}) => (
+	<Box
+		display="flex"
+		gap={2}
+		alignItems="center"
+		justifyContent="space-between"
+	>
+		<Typography variant="h1" fontSize={24}>
+			{title}
+		</Typography>
+		<Typography variant="h1" fontSize={24} fontWeight={400}>
+			{value || "-"}
+		</Typography>
+	</Box>
+);
 
 export default StatisticsCard;

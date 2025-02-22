@@ -3,7 +3,11 @@ import React, { useState } from "react";
 import TabPanel from "../../../Components/Tabs/TabPanel";
 import StatsTab from "./StatsTab";
 
-const StatsTabs = () => {
+interface IStatsTabsProps {
+	name: string;
+}
+
+const StatsTabs: React.FC<IStatsTabsProps> = ({ name }) => {
 	const [tabValue, setTabValue] = useState<number>(0);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -56,10 +60,10 @@ const StatsTabs = () => {
 			</Tabs>
 
 			<TabPanel value={tabValue} index={0}>
-				<StatsTab />
+				<StatsTab name={name} />
 			</TabPanel>
 			<TabPanel value={tabValue} index={1}>
-				<StatsTab year={2025} />
+				<StatsTab name={name} year={2025} />
 			</TabPanel>
 		</Box>
 	);
