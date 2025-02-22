@@ -48,7 +48,8 @@ class Nominee(db.Model):
         'categories.id'), nullable=False)
     name = db.Column(db.String(255), nullable=False)
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=True)
-
+    nominee_year = db.Column(db.Integer, nullable=True)
+    winner = db.Column(db.Boolean, default=False, nullable=False)
     category = db.relationship('Category', backref='nominees')
     movie = db.relationship('Movie', backref='nominees')
 
@@ -57,6 +58,7 @@ class Prediction(db.Model):
     __tablename__ = 'predictions'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False, index=True)
+    nominee_year = db.Column(db.Integer, nullable=True)
     category_id = db.Column(db.Integer, db.ForeignKey(
         'categories.id'), nullable=False)
     nominee_id = db.Column(db.Integer, db.ForeignKey(
