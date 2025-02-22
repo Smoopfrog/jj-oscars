@@ -36,30 +36,17 @@ const Countdown: React.FC<ICountdownProps> = ({ userName }) => {
 		return () => clearInterval(timer);
 	}, []);
 
+	const showCountdown = timeLeft.total > 0;
+
 	return (
 		<Box display={{ xs: "none", sm: "flex" }} gap={1}>
-			{timeLeft.total > 0 ? (
+			{showCountdown && (
 				<>
 					<CountdownUnit value={timeLeft.days} unit="Days" />
 					<CountdownUnit value={timeLeft.hours} unit="Hours" />
 					<CountdownUnit value={timeLeft.minutes} unit="Minutes" />
 					<CountdownUnit value={timeLeft.seconds} unit="Seconds" />
 				</>
-			) : (
-				<Link
-					to={`/user/${userName}/battle`}
-					style={{ textDecoration: "none" }}
-				>
-					<Typography
-						color="#696969"
-						fontSize={20}
-						sx={{
-							"&:hover": { color: "rgb(199, 159, 39)" },
-						}}
-					>
-						BATTLE TIME
-					</Typography>
-				</Link>
 			)}
 		</Box>
 	);
