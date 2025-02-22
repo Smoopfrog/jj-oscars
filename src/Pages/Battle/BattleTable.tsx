@@ -1,16 +1,13 @@
 import React from "react";
-import { Table, TableBody, TableContainer } from "@mui/material";
-import TableHeader from "./TableHeader";
-import BattleTableItem from "./BattleTableItem";
-import Card from "../../Components/Cards/Card";
+import { Table, TableContainer } from "@mui/material";
 import { useGetWinners } from "../../hooks/winners/getWinners";
+import Card from "../../Components/Cards/Card";
+import TableHeader from "./TableHeader";
 import BattleTableBody from "./BattleTableBody";
-import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 
 const BattleTable = ({ year }: { year: number }) => {
 	const { data, isLoading } = useGetWinners(year, "jordan", "jeff");
 
-	console.log(data);
 	return (
 		<TableContainer
 			sx={{

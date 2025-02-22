@@ -2,11 +2,16 @@ import { useEffect, useState } from 'react';
 import * as winnersService from '../../api/service/winnersService';
 
 export interface IWinnerAPI {
+    /** The id of the category */
 	id: number;
+	/** The name of the category */
 	name: string;
-	jeff: string | null;
-	jordan: string | null;
+	/** The winner of the category */
 	winner: string | null;
+	/** The prediction of Jeff */
+	jeff: string | null;
+	/** The prediction of Jordan */
+	jordan: string | null;
 }
 
 export const useGetWinners = (year: number, username1: string, username2: string) => {
