@@ -4,6 +4,8 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import oscarLogo from "../../Images/oscar-logo.png";
 import { capitalize } from "../../utils/formatString";
 import Countdown from "../Countdown/Countdown";
+import TopNavLink from "./TopNavLink";
+
 const TopNav = () => {
 	const { name } = useParams();
 
@@ -38,12 +40,7 @@ const TopNav = () => {
 						/>
 					</Box>
 				</Link>
-				<Typography color="#696969" fontSize={20}>
-					{capitalize(name)}
-				</Typography>
-			</Box>
-			<Box flex={1} display={"flex"} justifyContent={"center"}>
-				<Countdown userName={name} />
+				<TopNavLink to={`/user/${name}`} text={capitalize(name)} />
 			</Box>
 			<Box
 				display={"flex"}
@@ -52,28 +49,9 @@ const TopNav = () => {
 				gap={2}
 				flex={1}
 			>
-				<Link to={`/user/${name}/guesses`} style={{ textDecoration: "none" }}>
-					<Typography
-						color="#696969"
-						fontSize={20}
-						sx={{
-							"&:hover": { color: "rgb(199, 159, 39)" },
-						}}
-					>
-						Picks
-					</Typography>
-				</Link>
-				<Link to={`/user/${name}/watchlist`} style={{ textDecoration: "none" }}>
-					<Typography
-						color="#696969"
-						fontSize={20}
-						sx={{
-							"&:hover": { color: "rgb(199, 159, 39)" },
-						}}
-					>
-						Watchlist
-					</Typography>
-				</Link>
+				<TopNavLink to={`/user/${name}/battle`} text="Battle" />
+				<TopNavLink to={`/user/${name}/guesses`} text="Picks" />
+				<TopNavLink to={`/user/${name}/watchlist`} text="Watchlist" />
 			</Box>
 		</Box>
 	);
