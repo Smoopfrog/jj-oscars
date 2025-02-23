@@ -9,11 +9,15 @@ import urls from "../../api/endpoint";
 import { IBattle } from "../../types/api/Battle";
 
 const BattleTable = ({ year }: { year: number }) => {
-	const { data, isLoading } = useGetRequest<IBattle[]>(urls.winners, {
-		year,
-		username: "jordan",
-		opponent: "jeff",
-	});
+	const { data, isLoading } = useGetRequest<IBattle[]>(
+		urls.winners,
+		{
+			year,
+			username: "jordan",
+			opponent: "jeff",
+		},
+		[year]
+	);
 
 	return isLoading ? (
 		<LoadingSpinner />

@@ -48,11 +48,10 @@ const WatchlistForm: React.FC<IWatchlistForm> = ({
 		<Formik initialValues={initialValues} onSubmit={() => {}}>
 			{({ values, setFieldValue }) => (
 				<Box
-					sx={{
-						display: "flex",
-						flexDirection: "column",
-						gap: 2,
-					}}
+					display="flex"
+					flexDirection="column"
+					gap={2}
+					maxWidth={{ xs: "100%", lg: "50%" }}
 				>
 					{data.map(({ id, title, nominations }, i) => (
 						<FormControlLabel

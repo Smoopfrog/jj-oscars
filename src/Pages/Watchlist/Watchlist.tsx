@@ -42,7 +42,7 @@ const Watchlist = () => {
 				gap={2}
 				alignItems="center"
 				position="relative"
-				mx={{ xs: 2, md: 0 }}
+				mx={{ xs: 2, lg: 0 }}
 				maxHeight="calc(100vh - 80px)"
 				overflow="auto"
 			>
