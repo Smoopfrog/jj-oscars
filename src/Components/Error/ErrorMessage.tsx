@@ -1,12 +1,24 @@
-import { Typography } from "@mui/material";
+import { Typography, TypographyProps } from "@mui/material";
 import React from "react";
 
-const ErrorMessage = () => (
-	<Typography align="center" color="#696969" fontSize={20}>
-		Oops something went wrong!
-		<br />
-		Bummer...
-	</Typography>
-);
+interface IErrorMessageProps extends TypographyProps {
+	message?: React.ReactNode;
+}
+
+const ErrorMessage = ({ message, ...props }: IErrorMessageProps) => {
+	const defaultMessage = (
+		<>
+			Oops something went wrong!
+			<br />
+			Bummer...
+		</>
+	);
+
+	return (
+		<Typography textAlign="center" color="#696969" fontSize={20} {...props}>
+			{message || defaultMessage}
+		</Typography>
+	);
+};
 
 export default ErrorMessage;
