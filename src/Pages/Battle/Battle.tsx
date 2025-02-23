@@ -1,14 +1,13 @@
+import React, { useState } from "react";
 import {
 	Box,
 	MenuItem,
 	Select,
 	SelectChangeEvent,
-	Table,
 	Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import BattleTable from "./BattleTable";
 import dayjs from "dayjs";
+import BattleTable from "./BattleTable";
 
 const Battle = () => {
 	const [year, setYear] = useState<number>(dayjs().year());
@@ -51,6 +50,7 @@ const Battle = () => {
 					}}
 				>
 					<MenuItem value={2025}>2025</MenuItem>
+					<MenuItem value={2024}>2024</MenuItem>
 				</Select>
 			</Box>
 			<BattleTable year={year} />
