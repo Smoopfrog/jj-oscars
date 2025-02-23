@@ -15,19 +15,19 @@ const StatsTabs: React.FC<IStatsTabsProps> = ({ name }) => {
 		setTabValue(newValue);
 	};
 
+	const years: string[] = ["2025", "2024", "2023", "2022", "2021", "2020"];
+
 	return (
 		<Box>
-			<Tabs
-				tabs={["All Time", "2025"]}
-				tabValue={tabValue}
-				handleChange={handleChange}
-			/>
+			<Tabs tabs={years} tabValue={tabValue} handleChange={handleChange} />
 			<TabPanel value={tabValue} index={0}>
 				<StatsTab name={name} />
 			</TabPanel>
-			<TabPanel value={tabValue} index={1}>
-				<StatsTab name={name} year={2025} />
-			</TabPanel>
+			{years.map((year, index) => (
+				<TabPanel value={tabValue} index={index + 1} key={year}>
+					<StatsTab name={name} year={Number(year)} />
+				</TabPanel>
+			))}
 		</Box>
 	);
 };

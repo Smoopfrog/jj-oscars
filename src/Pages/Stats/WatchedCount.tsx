@@ -26,7 +26,9 @@ const WatchedCount: React.FC<IWatchedCountProps> = ({ username, year }) => {
 	return (
 		<StatisticsCard
 			title="Movies Watched"
-			value={formatStatValue(data?.watched_movies, data?.total_movies)}
+			value={
+				data ? formatStatValue(data.watched_movies, data.total_movies) : null
+			}
 			isLoading={isLoading}
 		/>
 	);

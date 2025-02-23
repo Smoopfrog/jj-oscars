@@ -27,7 +27,11 @@ const GuessAccuracy: React.FC<IGuessAccuracyProps> = ({ username, year }) => {
 	return (
 		<StatisticsCard
 			title="Guess Accuracy"
-			value={formatStatValue(data?.correct_guesses, data?.total_categories)}
+			value={
+				data
+					? formatStatValue(data.correct_guesses, data.total_categories)
+					: null
+			}
 			isLoading={isLoading}
 		/>
 	);

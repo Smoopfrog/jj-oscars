@@ -25,7 +25,7 @@ const Scores: React.FC<IScoresProps> = ({ username, year }) => {
 			title="Score"
 			value={
 				data
-					? `${data?.correct_guesses} - ${data?.opponent_correct_guesses}`
+					? `${data.correct_guesses} - ${data.opponent_correct_guesses}`
 					: null
 			}
 			isLoading={isLoading}

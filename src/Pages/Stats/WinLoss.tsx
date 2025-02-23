@@ -23,7 +23,7 @@ const WinLoss: React.FC<IWinLossProps> = ({ username }) => {
 	return (
 		<StatisticsCard
 			title="W/L"
-			value={`${data?.user_wins} - ${data?.opponent_wins}`}
+			value={data ? `${data.user_wins} - ${data.opponent_wins}` : null}
 			isLoading={isLoading}
 		/>
 	);
