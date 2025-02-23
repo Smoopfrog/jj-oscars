@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import WatchListStats from "./WatchListStats";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 import WatchlistForm from "./WatchlistForm";
@@ -8,9 +8,16 @@ import ErrorMessage from "../../Components/Error/ErrorMessage";
 import { useGetRequest } from "../../hooks/useGetRequest";
 import urls from "../../api/endpoint";
 import { IWatchlist } from "../../types/api/Watchlist/WatchList";
+import dayjs from "dayjs";
 
 const Watchlist = () => {
-	const [year, setYear] = useState<number>(2025);
+	const location = useLocation();
+
+	const [year, setYear] = useState<number>(
+		location.hash ? parseInt(location.hash.slice(1)) : dayjs().year()
+	);
+	console.log(year);
+
 	const [watchedMoviesCount, setWatchedMoviesCount] = useState<number>(0);
 
 	const { name } = useParams();

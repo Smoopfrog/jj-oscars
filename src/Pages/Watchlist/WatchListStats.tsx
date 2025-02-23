@@ -10,6 +10,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { IWatchlist } from "../../types/api/Watchlist/WatchList";
 import { formatStatValue } from "../../utils/formatString";
 import { years } from "../../constants/Years";
+import YearSelect from "../../Components/Select/YearSelect";
 
 interface WatchListStatsProps {
 	/** The year of the watchlist */
@@ -45,44 +46,7 @@ const WatchListStats: React.FC<WatchListStatsProps> = ({
 			right={{ lg: "10%" }}
 		>
 			<Box display="flex" gap={1} justifyContent="flex-end">
-				<Select
-					labelId="year-select-label"
-					id="year-select"
-					value={year}
-					variant="standard"
-					onChange={(e: SelectChangeEvent<number>) =>
-						setYear(e.target.value as number)
-					}
-					sx={{
-						color: "#E0E0E0",
-						padding: 0,
-						fontSize: 34,
-						"&:hover": {
-							color: "rgb(199, 159, 39)",
-							"& .MuiSelect-icon": {
-								color: "rgb(199, 159, 39)",
-							},
-						},
-						"& .MuiSelect-select": {
-							padding: 0,
-						},
-						"& .MuiSelect-icon": {
-							color: "#E0E0E0", // Change arrow color here
-						},
-						"&:before": {
-							display: "none", // Change underline color here
-						},
-						"&:after": {
-							display: "none", // Change underline color when focused
-						},
-					}}
-				>
-					{years.map((year) => (
-						<MenuItem value={year} key={year}>
-							{year}
-						</MenuItem>
-					))}
-				</Select>
+				<YearSelect year={year} setYear={setYear} />
 			</Box>
 
 			{data.length > 0 && (
