@@ -16,7 +16,14 @@ const winCount = (data: IWinnerAPI[] | null, name: "jordan" | "jeff") => {
 };
 
 const BattleTableHeader: React.FC<IBattleTableHeaderProps> = ({ data }) => (
-	<TableHead sx={{ backgroundColor: "rgb(199, 159, 39)" }}>
+	<TableHead
+		sx={{
+			backgroundColor: "rgb(199, 159, 39)",
+			position: "sticky",
+			top: 0,
+			zIndex: 1,
+		}}
+	>
 		<TableRow>
 			<TableCell>
 				<Typography fontWeight="bold">Category</Typography>

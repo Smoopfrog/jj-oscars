@@ -27,10 +27,10 @@ const NominatedMovie = ({ movie, categories }: INominatedMovieProps) => {
 					flexDirection={{ xs: "column", md: "row" }}
 					gap={{ xs: 0, md: 1 }}
 				>
-					<Typography fontSize={12} color="rgb(46, 46, 46)" fontWeight="bold">
+					<Typography fontSize={12} color="#E0E0E0" fontWeight="bold">
 						{category.category}
 					</Typography>
-					<Typography fontSize={12} color="rgb(46, 46, 46)">
+					<Typography fontSize={12} color="#E0E0E0">
 						{category.nominee}
 					</Typography>
 				</Box>

@@ -16,6 +16,8 @@ const BattleTable = ({ year }: { year: number }) => {
 			sx={{
 				width: { xs: "100%", md: "80%", lg: "60%" },
 				padding: 0,
+				height: "100%",
+				overflow: "auto",
 			}}
 			component={Card}
 		>

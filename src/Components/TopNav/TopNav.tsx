@@ -17,8 +17,7 @@ const TopNav = () => {
 			width={"100%"}
 			position={"relative"}
 			height={48}
-			borderBottom={1}
-			borderColor={"rgb(46, 46, 46, 0.2)"}
+			minHeight={48}
 			display={"flex"}
 			justifyContent={"space-between"}
 			alignItems={"center"}

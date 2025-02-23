@@ -13,19 +13,19 @@ const Nominee = ({ nominee }: INomineeProps) => {
 			control={
 				<Radio
 					sx={{
-						color: "rgb(46, 46, 46, 0.8)",
+						color: "#E0E0E0",
 						"&.Mui-checked": {
-							color: "rgb(46, 46, 46, 0.8)",
+							color: "#E0E0E0",
 						},
 					}}
 				/>
 			}
 			label={
 				<Box>
-					<Typography sx={{ fontSize: 16, color: "rgb(46, 46, 46)" }}>
+					<Typography sx={{ fontSize: 16, color: "#E0E0E0" }}>
 						{nominee.title}
 					</Typography>
-					<Typography sx={{ fontSize: 12, color: "rgb(46, 46, 46)" }}>
+					<Typography sx={{ fontSize: 12, color: "#E0E0E0" }}>
 						{nominee.subtitle}
 					</Typography>
 				</Box>

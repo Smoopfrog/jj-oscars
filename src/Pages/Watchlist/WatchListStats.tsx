@@ -49,20 +49,31 @@ const WatchListStats: React.FC<WatchListStatsProps> = ({
 					labelId="year-select-label"
 					id="year-select"
 					value={year}
-					label={
-						<Typography variant="h4" fontSize={34}>
-							{year}
-						</Typography>
-					}
 					variant="standard"
 					onChange={(e: SelectChangeEvent<number>) =>
 						setYear(e.target.value as number)
 					}
 					sx={{
+						color: "#E0E0E0",
 						padding: 0,
 						fontSize: 34,
+						"&:hover": {
+							color: "rgb(199, 159, 39)",
+							"& .MuiSelect-icon": {
+								color: "rgb(199, 159, 39)",
+							},
+						},
 						"& .MuiSelect-select": {
 							padding: 0,
+						},
+						"& .MuiSelect-icon": {
+							color: "#E0E0E0", // Change arrow color here
+						},
+						"&:before": {
+							display: "none", // Change underline color here
+						},
+						"&:after": {
+							display: "none", // Change underline color when focused
 						},
 					}}
 				>
@@ -82,8 +93,8 @@ const WatchListStats: React.FC<WatchListStatsProps> = ({
 							fontSize="large"
 						/>
 					)}
-					<Typography color="rgb(46,46,46, 0.8)" variant="h4">
-						{formatStatValue(watchedMoviesCount, data.length)}
+					<Typography color="#E0E0E0" variant="h4">
+						{formatStatValue(watchedMoviesCount, data.length, false)}
 					</Typography>
 				</Box>
 			)}

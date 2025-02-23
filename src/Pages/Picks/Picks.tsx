@@ -21,7 +21,7 @@ const Picks = () => {
 	});
 
 	return (
-		<Box mt={3} mb={5}>
+		<Box height="calc(100vh - 80px)">
 			{!isLoading ? (
 				data ? (
 					<PicksForm name={name} categories={data} />

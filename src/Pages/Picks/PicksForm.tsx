@@ -38,6 +38,8 @@ const PicksForm: React.FC<IPicksForm> = ({ name, categories }) => {
 					gap={2}
 					alignItems="center"
 					mx={{ xs: 2, md: 0 }}
+					maxHeight="calc(100vh - 80px)"
+					overflow="auto"
 				>
 					<Box display="flex" flexDirection="column" gap={3}>
 						{categories.map((category: ICategory, i: number) => (

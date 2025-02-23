@@ -36,8 +36,9 @@ const Watchlist = () => {
 				gap={2}
 				alignItems="center"
 				position="relative"
-				mt={3}
 				mx={{ xs: 2, md: 0 }}
+				maxHeight="calc(100vh - 80px)"
+				overflow="auto"
 			>
 				<WatchListStats
 					year={year}

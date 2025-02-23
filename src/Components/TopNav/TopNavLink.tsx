@@ -11,7 +11,7 @@ const TopNavLink: React.FC<ITopNavLinkProps> = ({ to, text }) => {
 	return (
 		<Link to={to} style={{ textDecoration: "none" }}>
 			<Typography
-				color="#696969"
+				color="#E0E0E0"
 				fontSize={20}
 				sx={{
 					"&:hover": { color: "rgb(199, 159, 39)" },

@@ -47,7 +47,13 @@ const WatchlistForm: React.FC<IWatchlistForm> = ({
 	return (
 		<Formik initialValues={initialValues} onSubmit={() => {}}>
 			{({ values, setFieldValue }) => (
-				<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						gap: 2,
+					}}
+				>
 					{data.map(({ id, title, nominations }, i) => (
 						<FormControlLabel
 							key={i}
@@ -55,7 +61,11 @@ const WatchlistForm: React.FC<IWatchlistForm> = ({
 								<Checkbox
 									color="default"
 									checked={!!values[title]}
-									sx={{ pointerEvents: "auto", py: 0.5 }}
+									sx={{
+										pointerEvents: "auto",
+										py: 0.5,
+										color: "#E0E0E0",
+									}}
 									onChange={(e) => {
 										setFieldValue(title, e.target.checked);
 										handleCheckboxChange(id, e);

@@ -15,7 +15,7 @@ const ErrorMessage = ({ message, ...props }: IErrorMessageProps) => {
 	);
 
 	return (
-		<Typography textAlign="center" color="#696969" fontSize={20} {...props}>
+		<Typography textAlign="center" color="#E0E0E0" fontSize={20} {...props}>
 			{message || defaultMessage}
 		</Typography>
 	);
