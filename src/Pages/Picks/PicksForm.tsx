@@ -7,6 +7,7 @@ import { Box, capitalize } from "@mui/material";
 import ScrollToError from "../../Components/Error/ScrollToError";
 import { usePostRequest } from "../../hooks/usePostRequest";
 import urls from "../../api/endpoint";
+import { useNavigate } from "react-router-dom";
 
 interface IPicksForm {
 	/** The name of the user */
@@ -16,6 +17,7 @@ interface IPicksForm {
 }
 
 const PicksForm: React.FC<IPicksForm> = ({ name, categories }) => {
+	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const onSubmit = async (values: any) => {
@@ -27,6 +29,7 @@ const PicksForm: React.FC<IPicksForm> = ({ name, categories }) => {
 
 		if (res.status === 201) {
 			alert(`Successfully saved ${capitalize(name)}'s picks!`);
+			navigate(`/user/${name}/battle`);
 		} else {
 			alert("Something didn't work, I dont know. Sorry.");
 		}
