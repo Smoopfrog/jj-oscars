@@ -74,13 +74,6 @@ class MovieWatched(db.Model):
         'movies.id'), nullable=False)
 
 
-class Score(db.Model):
-    __tablename__ = 'scores'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), nullable=False, index=True)
-    correct_guesses = db.Column(db.Integer, default=0)
-
-
 @app.route('/')
 def home():
     return "Oscars and stuff!"
@@ -319,9 +312,53 @@ def get_winners_and_user_predictions(nominee_year, username1, username2):
     return jsonify(results)
 
 
-# 🎉 Winner
-@app.route('/api/stats/winner/', methods=['GET'])
-def get_winner():
+# 🎉 Win-Loss
+@app.route('/api/stats/win-loss/', methods=['GET'])
+def get_win_loss():
+    username = request.args.get('username')
+    opponent = request.args.get('opponent')
+
+    # Fetch years where both users made predictions
+    years_with_predictions = db.session.query(Prediction.nominee_year).filter(
+        Prediction.username.in_([username, opponent])
+    ).distinct().all()
+
+    # Extract years from the query result
+    years = [year[0] for year in years_with_predictions]
+
+    win_loss_data = {
+        "user_wins": 0,
+        "opponent_wins": 0
+    }
+
+    for year in years:
+        # Fetch correct guesses for the main user
+        main_user_correct_guesses = Prediction.query.join(Nominee).filter(
+            (Prediction.nominee_year == year) if year is not None else True,
+            Prediction.username == username,
+            Nominee.winner.is_(True),
+        ).count()
+
+        # Fetch correct guesses for the opponent
+        opponent_correct_guesses = Prediction.query.join(Nominee).filter(
+            (Prediction.nominee_year == year) if year is not None else True,
+            Prediction.username == opponent,
+            Nominee.winner.is_(True),
+        ).count()
+
+        winner = opponent if opponent_correct_guesses > main_user_correct_guesses else "tie" if opponent_correct_guesses == main_user_correct_guesses else username
+
+        if winner == username:
+            win_loss_data["user_wins"] += 1
+        elif winner == opponent:
+            win_loss_data["opponent_wins"] += 1
+
+    return jsonify(win_loss_data)
+
+
+# 🎉 Score
+@app.route('/api/stats/score/', methods=['GET'])
+def get_score():
     username = request.args.get('username')
     opponent = request.args.get('opponent')
     year = request.args.get('year', type=int)
@@ -383,10 +420,11 @@ def get_user_guess_accuracy():
     username = request.args.get('username')
     year = request.args.get('year', type=int)
 
+    # Fetch correct guesses for the main user
     total_correct_guesses = Prediction.query.join(Nominee).filter(
         (Prediction.nominee_year == year) if year is not None else True,
         Prediction.username == username,
-        Nominee.winner is True,
+        Nominee.winner.is_(True),
     ).count()
 
     distinct_category_counts = {}

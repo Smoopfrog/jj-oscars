@@ -1,8 +1,9 @@
 const urls = {
 	stats: {
-		winner: "/stats/winner",
 		watchedCount: "/stats/watched_count",
 		guessAccuracy: "/stats/guess-accuracy",
+		winLoss: "/stats/win-loss",
+		score: "/stats/score",
 	},
 	watchlist: "/watchlist",
 	predictions: "/predictions",

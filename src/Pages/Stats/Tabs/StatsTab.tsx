@@ -1,12 +1,10 @@
 import React from "react";
-import StatisticsCard from "../../../Components/Statistics/StatisticsCard";
-import { Box, CircularProgress, Typography } from "@mui/material";
-import { useGetStats } from "../../../hooks/stats/useGetStats";
-import LoadingSpinner from "../../../Components/loading/LoadingSpinner";
+import { Box } from "@mui/material";
 import WatchedCount from "../WatchedCount";
-import { formatStatValue } from "../../../utils/formatString";
 import GuessAccuracy from "../GuessAccuracy";
 import Winner from "../Winner";
+import WinLoss from "../WinLoss";
+import Scores from "../Scores";
 
 interface IStatsTabProps {
 	/** The username of the user */
@@ -18,20 +16,12 @@ interface IStatsTabProps {
 const StatsTab: React.FC<IStatsTabProps> = ({ name, year }) => {
 	return (
 		<Box display="flex" flexDirection="column" gap={1} p={2}>
-			{/* {year ? (
-						<StatisticsCard
-							title="Winner"
-							value={data?.winner}
-							isLoading={isLoading}
-						/>
-					) : (
-						<StatisticsCard
-							title="W/L"
-							value={formatStatValue(data?.correct_guesses, data?.nominations)}
-							isLoading={isLoading}
-						/>
-					)} */}
-			{year && <Winner username={name} year={year} />}
+			{year ? (
+				<Winner username={name} year={year} />
+			) : (
+				<WinLoss username={name} />
+			)}
+			<Scores username={name} year={year} />
 			<GuessAccuracy username={name} year={year} />
 			<WatchedCount username={name} year={year} />
 		</Box>

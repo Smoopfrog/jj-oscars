@@ -1,18 +1,17 @@
 import React from "react";
-import StatisticsCard from "../../Components/Statistics/StatisticsCard";
 import { useGetRequest } from "../../hooks/useGetRequest";
-import { capitalize, formatWinnerValue } from "../../utils/formatString";
-import urls from "../../api/endpoint";
 import { IScore } from "../../types/api/Stats/Score";
+import urls from "../../api/endpoint";
+import StatisticsCard from "../../Components/Statistics/StatisticsCard";
 
-interface IWinnerProps {
+interface IScoresProps {
 	/** The username of the user */
 	username: string;
-	/** The year of the watched count */
+	/** The year of the scores */
 	year?: number;
 }
 
-const Winner: React.FC<IWinnerProps> = ({ username, year }) => {
+const Scores: React.FC<IScoresProps> = ({ username, year }) => {
 	const params = {
 		username,
 		opponent: username === "jeff" ? "jordan" : "jeff",
@@ -23,11 +22,15 @@ const Winner: React.FC<IWinnerProps> = ({ username, year }) => {
 
 	return (
 		<StatisticsCard
-			title="Winner"
-			value={data ? capitalize(data.winner) : null}
+			title="Score"
+			value={
+				data
+					? `${data?.correct_guesses} - ${data?.opponent_correct_guesses}`
+					: null
+			}
 			isLoading={isLoading}
 		/>
 	);
 };
 
-export default Winner;
+export default Scores;

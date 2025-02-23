@@ -21,9 +21,13 @@ const StatisticsCard: React.FC<IStatisticsCardProps> = ({
 		<Typography variant="h1" fontSize={24}>
 			{title}
 		</Typography>
-		<Typography variant="h1" fontSize={24} fontWeight={400}>
-			{value || "Error"}
-		</Typography>
+		{isLoading ? (
+			<CircularProgress sx={{ color: "rgb(199, 159, 39)" }} size={18} />
+		) : (
+			<Typography variant="h1" fontSize={24} fontWeight={400}>
+				{value || "Error"}
+			</Typography>
+		)}
 	</Box>
 );
 
