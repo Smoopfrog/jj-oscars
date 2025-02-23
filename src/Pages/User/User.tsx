@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 
 const User = () => {
 	return (
-		<Box>
+		<Box display="flex" flexDirection="column">
 			<TopNav />
 			<Outlet />
 		</Box>

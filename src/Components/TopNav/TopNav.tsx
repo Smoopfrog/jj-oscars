@@ -3,7 +3,6 @@ import React from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import oscarLogo from "../../Images/oscar-logo.png";
 import { capitalize } from "../../utils/formatString";
-import Countdown from "../Countdown/Countdown";
 import TopNavLink from "./TopNavLink";
 
 const TopNav = () => {
@@ -49,7 +48,7 @@ const TopNav = () => {
 				flex={1}
 			>
 				<TopNavLink to={`/user/${name}/battle`} text="Battle" />
-				<TopNavLink to={`/user/${name}/guesses`} text="Picks" />
+				<TopNavLink to={`/user/${name}/picks`} text="Picks" />
 				<TopNavLink to={`/user/${name}/watchlist`} text="Watchlist" />
 			</Box>
 		</Box>

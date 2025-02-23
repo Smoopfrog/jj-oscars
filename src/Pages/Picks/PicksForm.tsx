@@ -7,14 +7,14 @@ import { postPredictions } from "../../hooks/predictions/postPredictions";
 import { Box } from "@mui/material";
 import ScrollToError from "../../Components/Error/ScrollToError";
 
-interface IGuessesForm {
+interface IPicksForm {
 	/** The name of the user */
 	name: string;
 	/** The categories to display */
 	categories: ICategory[];
 }
 
-const GuessesForm = ({ name, categories }: IGuessesForm) => {
+const PicksForm: React.FC<IPicksForm> = ({ name, categories }) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const onSubmit = async (values: any) => {
@@ -58,4 +58,4 @@ const GuessesForm = ({ name, categories }: IGuessesForm) => {
 	);
 };
 
-export default GuessesForm;
+export default PicksForm;

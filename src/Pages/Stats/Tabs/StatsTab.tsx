@@ -6,6 +6,7 @@ import LoadingSpinner from "../../../Components/loading/LoadingSpinner";
 import WatchedCount from "../WatchedCount";
 import { formatStatValue } from "../../../utils/formatString";
 import GuessAccuracy from "../GuessAccuracy";
+import Winner from "../Winner";
 
 interface IStatsTabProps {
 	/** The username of the user */
@@ -30,6 +31,7 @@ const StatsTab: React.FC<IStatsTabProps> = ({ name, year }) => {
 							isLoading={isLoading}
 						/>
 					)} */}
+			{year && <Winner username={name} year={year} />}
 			<GuessAccuracy username={name} year={year} />
 			<WatchedCount username={name} year={year} />
 		</Box>

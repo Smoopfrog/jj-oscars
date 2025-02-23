@@ -7,3 +7,9 @@ export const formatStatValue = (value: number | undefined, total: number | undef
 
 	return `${value}/${total} (${((value / total) * 100).toFixed(2)}%)`;
 };
+
+export const formatWinnerValue = (winner: string, opponentCorrectGuesses: number, correctGuesses: number) => {
+
+
+	return `${capitalize(winner)} (${correctGuesses}-${opponentCorrectGuesses})`;
+};

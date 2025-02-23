@@ -20,6 +20,7 @@ const Battle = () => {
 			alignItems={"center"}
 			gap={2}
 			mb={5}
+			mt={3}
 		>
 			<Box
 				display={"flex"}

@@ -3,7 +3,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 
 interface IStatisticsCardProps {
 	title: string;
-	value: string | number | null;
+	value: string | number | null | undefined;
 	isLoading?: boolean;
 }
 
