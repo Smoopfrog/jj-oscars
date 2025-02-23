@@ -96,10 +96,16 @@ def send_text():
 
 
 # 🎯 Predictions
-@app.route('/api/<username>/predictions/', methods=['POST'])
-def post_predictions(username):
-    predictions = request.json
-    for category_id, nominee_id in predictions.items():
+@app.route('/api/predictions/', methods=['POST'])
+def post_predictions():
+    username = request.json.get('username')
+    predictions = request.json.get('predictions')
+
+    # Convert the dictionary to a list of tuples
+    predictions_list = [(int(category_id), nominee_id)
+                        for category_id, nominee_id in predictions.items()]
+
+    for category_id, nominee_id in predictions_list:
         pred = Prediction.query.filter_by(
             username=username, category_id=category_id).first()
         if pred:

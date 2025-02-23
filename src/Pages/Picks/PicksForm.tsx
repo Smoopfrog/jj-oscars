@@ -3,9 +3,10 @@ import { ICategory } from "../../types/Category";
 import { Form, Formik } from "formik";
 import Button from "../../Components/Buttons/Button";
 import Category from "../../Components/Category/Catergory";
-import { postPredictions } from "../../hooks/predictions/postPredictions";
-import { Box } from "@mui/material";
+import { Box, capitalize } from "@mui/material";
 import ScrollToError from "../../Components/Error/ScrollToError";
+import { usePostRequest } from "../../hooks/usePostRequest";
+import urls from "../../api/endpoint";
 
 interface IPicksForm {
 	/** The name of the user */
@@ -19,7 +20,17 @@ const PicksForm: React.FC<IPicksForm> = ({ name, categories }) => {
 
 	const onSubmit = async (values: any) => {
 		setIsLoading(true);
-		postPredictions(name, values);
+		const res = await usePostRequest(urls.predictions, {
+			username: name,
+			predictions: values,
+		});
+
+		if (res.status === 201) {
+			alert(`Successfully saved ${capitalize(name)}'s picks!`);
+		} else {
+			alert("Something didn't work, I dont know. Sorry.");
+		}
+
 		setIsLoading(false);
 	};
 
