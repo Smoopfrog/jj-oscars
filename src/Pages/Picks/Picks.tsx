@@ -2,9 +2,8 @@ import React from "react";
 import Box from "@mui/material/Box";
 import { Navigate, useParams } from "react-router-dom";
 import { useGetPredictions } from "../../hooks/predictions/useGetPredictions";
-import GuessesForm from "./PicksForm";
+import PicksForm from "./PicksForm";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
-import { Typography } from "@mui/material";
 import ErrorMessage from "../../Components/Error/ErrorMessage";
 
 const Picks = () => {
@@ -20,7 +19,7 @@ const Picks = () => {
 		<Box mt={3} mb={5}>
 			{!isLoading ? (
 				data ? (
-					<GuessesForm name={name} categories={data} />
+					<PicksForm name={name} categories={data} />
 				) : (
 					<ErrorMessage />
 				)

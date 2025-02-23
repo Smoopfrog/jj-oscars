@@ -1,7 +1,8 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useState } from "react";
 import TabPanel from "../../../Components/Tabs/TabPanel";
 import StatsTab from "./StatsTab";
+import Tabs from "../../../Components/Tabs/Tabs";
 
 interface IStatsTabsProps {
 	name: string;
@@ -17,48 +18,10 @@ const StatsTabs: React.FC<IStatsTabsProps> = ({ name }) => {
 	return (
 		<Box>
 			<Tabs
-				value={tabValue}
-				onChange={handleChange}
-				aria-label="Oscar Battle Stats"
-				sx={{
-					textTransform: "none",
-					border: "1px solid black",
-					borderLeft: "none",
-					borderRight: "none",
-				}}
-				TabIndicatorProps={{
-					style: {
-						display: "none",
-					},
-				}}
-			>
-				<Tab
-					label="All Time"
-					sx={{
-						textTransform: "none",
-						color: "black",
-						"&.Mui-selected": {
-							color: "rgb(199, 159, 39)",
-						},
-						"&:hover": {
-							color: "rgb(199, 159, 39, 0.5)",
-						},
-					}}
-				/>
-				<Tab
-					label="2025"
-					sx={{
-						color: "black",
-						"&.Mui-selected": {
-							color: "rgb(199, 159, 39)",
-						},
-						"&:hover": {
-							color: "rgb(199, 159, 39, 0.5)",
-						},
-					}}
-				/>
-			</Tabs>
-
+				tabs={["All Time", "2025"]}
+				tabValue={tabValue}
+				handleChange={handleChange}
+			/>
 			<TabPanel value={tabValue} index={0}>
 				<StatsTab name={name} />
 			</TabPanel>
