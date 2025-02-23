@@ -8,3 +8,4 @@ export interface INominee {
 	/** If the movie is the winner */
 	winner?: boolean;
 }
+

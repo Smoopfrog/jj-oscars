@@ -1,12 +1,11 @@
 import React from "react";
 import BattleTableItem from "./BattleTableItem";
 import { TableBody, TableCell, TableRow } from "@mui/material";
-import { IWinnerAPI } from "../../hooks/winners/getWinners";
+import { IBattle } from "../../types/api/Battle";
 import ErrorMessage from "../../Components/Error/ErrorMessage";
-import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 
 interface IBattleTableBodyProps {
-	data: IWinnerAPI[] | null;
+	data: IBattle[] | null;
 }
 
 const BattleTableBody: React.FC<IBattleTableBodyProps> = ({ data }) => {

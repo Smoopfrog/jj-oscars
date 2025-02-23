@@ -1,19 +1,11 @@
 import React from "react";
 import { TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import { IWinnerAPI } from "../../hooks/winners/getWinners";
+import { IBattle } from "../../types/api/Battle";
+import { winCount } from "../../utils/formatString";
 
 interface IBattleTableHeaderProps {
-	data: IWinnerAPI[] | null;
+	data: IBattle[] | null;
 }
-
-const winCount = (data: IWinnerAPI[] | null, name: "jordan" | "jeff") => {
-	if (!data) return 0;
-
-	return data.filter(
-		(category: IWinnerAPI) =>
-			category.winner && category.winner === category[name]
-	).length;
-};
 
 const BattleTableHeader: React.FC<IBattleTableHeaderProps> = ({ data }) => (
 	<TableHead

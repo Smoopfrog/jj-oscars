@@ -16,7 +16,6 @@ const Watchlist = () => {
 	const [year, setYear] = useState<number>(
 		location.hash ? parseInt(location.hash.slice(1)) : dayjs().year()
 	);
-	console.log(year);
 
 	const [watchedMoviesCount, setWatchedMoviesCount] = useState<number>(0);
 

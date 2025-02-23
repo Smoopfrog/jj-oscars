@@ -260,15 +260,19 @@ def update_watch_status():
 
 
 # 🎉 Get Category Winners and User Predictions for specific users
-@app.route('/api/winners/<int:nominee_year>/<username1>/<username2>/', methods=['GET'])
-def get_winners_and_user_predictions(nominee_year, username1, username2):
+@app.route('/api/winners/', methods=['GET'])
+def get_winners_and_user_predictions():
+    year = request.args.get('year', type=int)
+    user = request.args.get('username')
+    opponent = request.args.get('opponent')
+
     # Fetch all categories for the given year
     categories = db.session.query(Category).all()
     results = []  # Initialize an array to hold the results
 
     for category in categories:
         winner = db.session.query(Nominee).filter_by(
-            category_id=category.id, nominee_year=nominee_year, winner=True).first()
+            category_id=category.id, nominee_year=year, winner=True).first()
 
         # Determine the winner's name based on the category's title_source
         if winner:
@@ -281,10 +285,10 @@ def get_winners_and_user_predictions(nominee_year, username1, username2):
             winner_name = None
 
         # Fetch predictions for the specified users
-        user_preds = {username: None for username in [username1, username2]}
-        for username in [username1, username2]:
+        user_preds = {user: None, opponent: None}
+        for username in [user, opponent]:
             user_prediction = db.session.query(Prediction).filter_by(
-                username=username, nominee_year=nominee_year, category_id=category.id).first()
+                username=username, nominee_year=year, category_id=category.id).first()
             nominee_id = user_prediction.nominee_id if user_prediction else None
 
             # Get the movie name associated with the nominee
@@ -305,8 +309,8 @@ def get_winners_and_user_predictions(nominee_year, username1, username2):
             "id": category.id,
             "name": category.name,
             "winner": winner_name,
-            username1: user_preds[username1],
-            username2: user_preds[username2]
+            user: user_preds[user],
+            opponent: user_preds[opponent]
         })
 
     return jsonify(results)

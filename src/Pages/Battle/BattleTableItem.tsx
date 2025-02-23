@@ -1,13 +1,13 @@
 import React from "react";
 import { Typography, TableCell, TableRow } from "@mui/material";
-import { IWinnerAPI } from "../../hooks/winners/getWinners";
 import { Navigate, useParams } from "react-router-dom";
+import { IBattle } from "../../types/api/Battle";
 
 interface BattleTableItemProps {
 	/** The index of the item in the table */
 	index: number;
 	/** The category to display */
-	category: IWinnerAPI;
+	category: IBattle;
 }
 
 const getColor = (winner: string | null, prediction: string | null) => {

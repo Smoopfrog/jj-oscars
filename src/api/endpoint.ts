@@ -5,8 +5,9 @@ const urls = {
 		winLoss: "/stats/win-loss",
 		score: "/stats/score",
 	},
-	watchlist: "/watchlist",
+	winners: "/winners",
 	predictions: "/predictions",
+	watchlist: "/watchlist",
 };
 
 export default urls;

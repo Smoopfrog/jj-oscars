@@ -1,7 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { Navigate, useParams } from "react-router-dom";
-import { useGetPredictions } from "../../hooks/predictions/useGetPredictions";
 import PicksForm from "./PicksForm";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 import ErrorMessage from "../../Components/Error/ErrorMessage";
