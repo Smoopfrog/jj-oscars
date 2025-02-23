@@ -29,7 +29,14 @@ const Stats = () => {
 				backgroundAttachment: "fixed",
 			}}
 		>
-			<Card sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+			<Card
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					gap: 2,
+					alignItems: "center",
+				}}
+			>
 				<Countdown name={name} />
 				<StatsTabs name={name} />
 			</Card>

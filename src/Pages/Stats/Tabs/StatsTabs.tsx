@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import TabPanel from "../../../Components/Tabs/TabPanel";
 import StatsTab from "./StatsTab";
 import Tabs from "../../../Components/Tabs/Tabs";
+import { yearsString } from "../../../constants/Years";
 
 interface IStatsTabsProps {
 	name: string;
@@ -15,15 +16,17 @@ const StatsTabs: React.FC<IStatsTabsProps> = ({ name }) => {
 		setTabValue(newValue);
 	};
 
-	const years: string[] = ["2025", "2024", "2023", "2022", "2021", "2020"];
-
 	return (
 		<Box>
-			<Tabs tabs={years} tabValue={tabValue} handleChange={handleChange} />
+			<Tabs
+				tabs={["All Time", ...yearsString]}
+				tabValue={tabValue}
+				handleChange={handleChange}
+			/>
 			<TabPanel value={tabValue} index={0}>
 				<StatsTab name={name} />
 			</TabPanel>
-			{years.map((year, index) => (
+			{yearsString.map((year, index) => (
 				<TabPanel value={tabValue} index={index + 1} key={year}>
 					<StatsTab name={name} year={Number(year)} />
 				</TabPanel>

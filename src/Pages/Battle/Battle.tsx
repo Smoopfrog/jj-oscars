@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import BattleTable from "./BattleTable";
+import { years } from "../../constants/Years";
 
 const Battle = () => {
 	const [year, setYear] = useState<number>(dayjs().year());
@@ -49,8 +50,11 @@ const Battle = () => {
 						},
 					}}
 				>
-					<MenuItem value={2025}>2025</MenuItem>
-					<MenuItem value={2024}>2024</MenuItem>
+					{years.map((year) => (
+						<MenuItem value={year} key={year}>
+							{year}
+						</MenuItem>
+					))}
 				</Select>
 			</Box>
 			<BattleTable year={year} />

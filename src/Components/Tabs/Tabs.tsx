@@ -12,11 +12,19 @@ const Tabs: React.FC<ITabsProps> = ({ tabs, tabValue, handleChange }) => {
 		<MuiTabs
 			value={tabValue}
 			onChange={handleChange}
+			variant="scrollable"
+			scrollButtons
+			allowScrollButtonsMobile
 			sx={{
+				width: { xs: "100%", md: 500 },
+				maxWidth: { xs: 380, md: 500 },
 				textTransform: "none",
 				border: "1px solid black",
 				borderLeft: "none",
 				borderRight: "none",
+				"& .MuiButtonBase-root.Mui-disabled": {
+					opacity: 0.4,
+				},
 			}}
 			TabIndicatorProps={{
 				style: {
@@ -29,6 +37,7 @@ const Tabs: React.FC<ITabsProps> = ({ tabs, tabValue, handleChange }) => {
 					key={index}
 					label={tab}
 					sx={{
+						minWidth: 70,
 						textTransform: "none",
 						color: "black",
 						"&.Mui-selected": {
