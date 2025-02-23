@@ -4,6 +4,7 @@ const urls = {
 		watchedCount: "/stats/watched_count",
 		guessAccuracy: "/stats/guess-accuracy",
 	},
+	watchlist: "/watchlist",
 };
 
 export default urls;

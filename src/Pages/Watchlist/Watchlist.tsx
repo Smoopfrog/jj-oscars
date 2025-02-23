@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, MenuItem, Select, Typography } from "@mui/material";
 import { Navigate, useParams } from "react-router-dom";
-import { useGetWatchlist } from "../../hooks/watchlist/useGetWatchlist";
+import {
+	useGetWatchlist,
+	WatchlistData,
+} from "../../hooks/watchlist/useGetWatchlist";
 import WatchListStats from "./WatchListStats";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 import WatchlistForm from "./WatchlistForm";
 import ErrorMessage from "../../Components/Error/ErrorMessage";
+import { useGetRequest } from "../../hooks/useGetRequest";
+import urls from "../../api/endpoint";
+import Tabs from "../../Components/Tabs/Tabs";
 
 export interface IMovieCategory {
 	category: string;
@@ -13,6 +19,7 @@ export interface IMovieCategory {
 }
 
 const Watchlist = () => {
+	const [year, setYear] = useState<number>(2025);
 	const [watchedMoviesCount, setWatchedMoviesCount] = useState<number>(0);
 
 	const { name } = useParams();
@@ -21,38 +28,48 @@ const Watchlist = () => {
 		return <Navigate to="/" />;
 	}
 
-	const { data, isLoading } = useGetWatchlist(name as string);
+	const { data, isLoading } = useGetRequest<WatchlistData[]>(
+		urls.watchlist,
+		{
+			username: name,
+			year,
+		},
+		[year]
+	);
 
-	return (
-		<Box>
-			{!isLoading ? (
-				data ? (
-					<Box
-						display="flex"
-						flexDirection="column"
-						gap={2}
-						alignItems="center"
-						position="relative"
-						mx={{ xs: 2, md: 0 }}
-					>
-						<WatchListStats
-							data={data}
-							watchedMoviesCount={watchedMoviesCount}
-							setWatchedMoviesCount={setWatchedMoviesCount}
-						/>
-						<WatchlistForm
-							data={data}
-							name={name}
-							setWatchedMoviesCount={setWatchedMoviesCount}
-						/>
-					</Box>
+	return !isLoading ? (
+		data ? (
+			<Box
+				display="flex"
+				flexDirection="column"
+				gap={2}
+				alignItems="center"
+				position="relative"
+				mt={3}
+				mx={{ xs: 2, md: 0 }}
+			>
+				<WatchListStats
+					year={year}
+					setYear={setYear}
+					data={data}
+					watchedMoviesCount={watchedMoviesCount}
+					setWatchedMoviesCount={setWatchedMoviesCount}
+				/>
+				{data.length > 0 ? (
+					<WatchlistForm
+						data={data}
+						name={name}
+						setWatchedMoviesCount={setWatchedMoviesCount}
+					/>
 				) : (
-					<ErrorMessage />
-				)
-			) : (
-				<LoadingSpinner />
-			)}
-		</Box>
+					<ErrorMessage message="No movies found" />
+				)}
+			</Box>
+		) : (
+			<ErrorMessage />
+		)
+	) : (
+		<LoadingSpinner />
 	);
 };
 

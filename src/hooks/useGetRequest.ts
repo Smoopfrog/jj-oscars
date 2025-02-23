@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import axiosInstance from '../api/axiosInstance';
 
-export const useGetRequest = <T>(url: string, params: any) => {
+export const useGetRequest = <T>(url: string, params?: any, deps?: any[]) => {
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-        
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -24,7 +24,7 @@ export const useGetRequest = <T>(url: string, params: any) => {
         };
 
         fetchData();
-    }, []);
+    }, [...(deps || [])]);
 
     return { data, error, isLoading };
 };

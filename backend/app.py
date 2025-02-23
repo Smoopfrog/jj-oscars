@@ -156,12 +156,12 @@ def get_predictions(username):
     return jsonify(structured_predictions)
 
 
-def get_watchlist(username):
+def get_watchlist(username, year):
     user_watchlist = []
 
     # Query to get movies, their categories, nominees, and watch status
     query = text('''
-        SELECT m.id AS movie_id, m.title, c.name AS category, n.name AS nominee,
+        SELECT m.id AS movie_id, m.title, c.name AS category, n.name AS nominee, n.nominee_year,
                CASE WHEN mw.id IS NOT NULL THEN true ELSE false END AS viewed
         FROM movies m
         JOIN nominees n ON n.movie_id = m.id
@@ -170,7 +170,8 @@ def get_watchlist(username):
         ORDER BY m.title, c.name
     ''')
 
-    results = db.session.execute(query, {'username': username}).fetchall()
+    results = db.session.execute(
+        query, {'username': username}).fetchall()
 
     # Convert results to a list of dictionaries
     results_dict = [
@@ -179,7 +180,8 @@ def get_watchlist(username):
             "title": row[1],
             "category": row[2],
             "nominee": row[3],
-            "viewed": row[4] if row[4] is not None else False
+            "nominee_year": row[4],
+            "viewed": row[5] if row[5] is not None else False
         }
         for row in results
     ]
@@ -187,30 +189,32 @@ def get_watchlist(username):
     # Build the user_watchlist array
     movie_titles = set()  # To track unique movie titles
     for row in results_dict:
-        movie_title = row["title"]
-        # Normalize title for sorting by removing "the " prefix
-        normalized_title = movie_title[4:] if movie_title.lower(
-        ).startswith("the ") else movie_title
-        if normalized_title not in movie_titles:
-            movie_titles.add(normalized_title)
-            user_watchlist.append({
-                "id": row["movie_id"],
-                "title": movie_title,
-                "nominations": [{
-                    "category": row["category"],
-                    "nominee": row["nominee"]
-                }],
-                "viewed": row["viewed"]
-            })
-        else:
-            # Find the existing movie entry and append the nomination
-            for movie in user_watchlist:
-                if movie["title"] == movie_title:
-                    movie["nominations"].append({
+        # Check if the nominee year matches the specified year
+        if row["nominee_year"] == year:
+            movie_title = row["title"]
+            # Normalize title for sorting by removing "the " prefix
+            normalized_title = movie_title[4:] if movie_title.lower(
+            ).startswith("the ") else movie_title
+            if normalized_title not in movie_titles:
+                movie_titles.add(normalized_title)
+                user_watchlist.append({
+                    "id": row["movie_id"],
+                    "title": movie_title,
+                    "nominations": [{
                         "category": row["category"],
                         "nominee": row["nominee"]
-                    })
-                    break
+                    }],
+                    "viewed": row["viewed"]
+                })
+            else:
+                # Find the existing movie entry and append the nomination
+                for movie in user_watchlist:
+                    if movie["title"] == movie_title:
+                        movie["nominations"].append({
+                            "category": row["category"],
+                            "nominee": row["nominee"]
+                        })
+                        break
 
     # Sort user_watchlist alphabetically, ignoring "the"
     user_watchlist.sort(key=lambda x: x["title"][4:] if x["title"].lower(
@@ -219,10 +223,12 @@ def get_watchlist(username):
     return jsonify(user_watchlist)
 
 
-@app.route('/api/<username>/watchlist/', methods=['GET'])
-def get_user_watchlist(username):
+@app.route('/api/watchlist/', methods=['GET'])
+def get_user_watchlist():
     try:
-        return get_watchlist(username)
+        username = request.args.get('username')
+        year = request.args.get('year', type=int)
+        return get_watchlist(username, year)
     except Exception as e:
         app.logger.error(f"Failed to get watchlist: {e}")
         return jsonify({"error": "Failed to retrieve watchlist"}), 500
