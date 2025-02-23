@@ -119,8 +119,10 @@ def post_predictions(username):
     return jsonify({"message": "Predictions saved successfully!"}), 201
 
 
-@app.route('/api/<username>/predictions/', methods=['GET'])
-def get_predictions(username):
+@app.route('/api/predictions', methods=['GET'])
+def get_predictions():
+    username = request.args.get('username')
+
     # Fetch all categories and their nominees for the year 2025 with eager loading
     categories = db.session.query(Category).options(
         db.joinedload(Category.nominees)).all()
@@ -235,9 +237,10 @@ def get_user_watchlist():
 
 
 # 🎬 Update Movie Watched Status
-@app.route('/api/<username>/watchlist/update/', methods=['POST'])
-def update_watch_status(username):
+@app.route('/api/watchlist/update/', methods=['POST'])
+def update_watch_status():
     data = request.json
+    username = data.get('username')
     movie_id = data.get('movie_id')
     viewed = data.get('viewed')
 

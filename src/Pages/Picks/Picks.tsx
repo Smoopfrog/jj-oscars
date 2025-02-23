@@ -5,6 +5,9 @@ import { useGetPredictions } from "../../hooks/predictions/useGetPredictions";
 import PicksForm from "./PicksForm";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 import ErrorMessage from "../../Components/Error/ErrorMessage";
+import urls from "../../api/endpoint";
+import { useGetRequest } from "../../hooks/useGetRequest";
+import { ICategory } from "../../types/Category";
 
 const Picks = () => {
 	const { name } = useParams();
@@ -13,7 +16,9 @@ const Picks = () => {
 		return <Navigate to="/" />;
 	}
 
-	const { data, isLoading } = useGetPredictions(name as string);
+	const { data, isLoading } = useGetRequest<ICategory[]>(urls.predictions, {
+		username: name,
+	});
 
 	return (
 		<Box mt={3} mb={5}>

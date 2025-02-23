@@ -5,6 +5,7 @@ const urls = {
 		guessAccuracy: "/stats/guess-accuracy",
 	},
 	watchlist: "/watchlist",
+	predictions: "/predictions",
 };
 
 export default urls;

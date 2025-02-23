@@ -1,9 +1,8 @@
 import { putWatchlist as putWatchlistService } from "../../api/service/watchlistService";
 
-export const putWatchlist = async (name: string, values: any) => {
+export const putWatchlist = async (values: any) => {
     try {
-        await putWatchlistService(name, values);
-        alert(`Watched ${Object.keys(values)[0]}`);
+        await putWatchlistService( values);
     } catch (err) {
         console.log(err);
     }

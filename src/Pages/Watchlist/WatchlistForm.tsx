@@ -2,13 +2,13 @@ import { Checkbox } from "@mui/material";
 import { Box, FormControlLabel } from "@mui/material";
 import { Formik } from "formik";
 import React, { useMemo } from "react";
-import { WatchlistData } from "../../hooks/watchlist/useGetWatchlist";
+import { IWatchlist } from "../../types/api/Watchlist/WatchList";
 import NominatedMovie from "./NominatedMovie";
 import { putWatchlist } from "../../api/service/watchlistService";
 
 interface IWatchlistForm {
 	/** User watchlist data */
-	data: WatchlistData[];
+	data: IWatchlist[];
 	/** User name */
 	name: string;
 	/** Set watched movies count */
@@ -23,7 +23,7 @@ const WatchlistForm: React.FC<IWatchlistForm> = ({
 	// Memoize initialValues and check if data exists
 	const initialValues = useMemo(() => {
 		if (data) {
-			return data.reduce((acc: any, movie: WatchlistData) => {
+			return data.reduce((acc: any, movie: IWatchlist) => {
 				acc[movie.title] = movie.viewed;
 				return acc;
 			}, {});
@@ -37,7 +37,8 @@ const WatchlistForm: React.FC<IWatchlistForm> = ({
 		setWatchedMoviesCount((prev: number) =>
 			event.target.checked ? prev + 1 : prev - 1
 		);
-		putWatchlist(name as string, {
+		putWatchlist({
+			username: name,
 			movie_id: movie_id,
 			viewed: event.target.checked,
 		});

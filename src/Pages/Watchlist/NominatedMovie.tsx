@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import type { IMovieCategory } from "./Watchlist";
+import { INomination } from "../../types/api/Watchlist/Nomination";
 
 interface INominatedMovieProps {
 	/** The movie title */
 	movie: string;
 	/** The categories the movie is nominated in */
-	categories: IMovieCategory[];
+	categories: INomination[];
 }
 
 const NominatedMovie = ({ movie, categories }: INominatedMovieProps) => {

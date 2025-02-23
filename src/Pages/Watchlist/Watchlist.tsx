@@ -1,22 +1,13 @@
 import React, { useState } from "react";
-import { Box, MenuItem, Select, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { Navigate, useParams } from "react-router-dom";
-import {
-	useGetWatchlist,
-	WatchlistData,
-} from "../../hooks/watchlist/useGetWatchlist";
 import WatchListStats from "./WatchListStats";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 import WatchlistForm from "./WatchlistForm";
 import ErrorMessage from "../../Components/Error/ErrorMessage";
 import { useGetRequest } from "../../hooks/useGetRequest";
 import urls from "../../api/endpoint";
-import Tabs from "../../Components/Tabs/Tabs";
-
-export interface IMovieCategory {
-	category: string;
-	nominee: string;
-}
+import { IWatchlist } from "../../types/api/Watchlist/WatchList";
 
 const Watchlist = () => {
 	const [year, setYear] = useState<number>(2025);
@@ -28,7 +19,7 @@ const Watchlist = () => {
 		return <Navigate to="/" />;
 	}
 
-	const { data, isLoading } = useGetRequest<WatchlistData[]>(
+	const { data, isLoading } = useGetRequest<IWatchlist[]>(
 		urls.watchlist,
 		{
 			username: name,
