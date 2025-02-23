@@ -5,6 +5,7 @@ from sqlalchemy import text
 from dotenv import load_dotenv
 import os
 import logging
+import requests
 
 # Load environment variables
 load_dotenv()
@@ -307,39 +308,53 @@ def get_winners_and_user_predictions(nominee_year, username1, username2):
     return jsonify(results)
 
 
-# 🎉 Get User Stats and Winner for a Specific Year
-@app.route('/api/stats/<username>/', methods=['GET'])
-@app.route('/api/stats/<username>/<int:nominee_year>/', methods=['GET'])
-def get_user_stats_and_winner(username, nominee_year=None):
+# 🎉 Get Watched Count
+@app.route('/api/stats/watched_count/', methods=['GET'])
+def get_watched_count():
+    username = request.args.get('username')
+    year = request.args.get('year', type=int)
+
     # Fetch watched movies for the specific year if nominee_year is provided
     watched_movies = MovieWatched.query.join(Movie).filter(
         MovieWatched.username == username,
         # Conditional filter
-        (Movie.nomination_year == nominee_year) if nominee_year is not None else True
+        (Movie.nomination_year == year) if year is not None else True
     ).count()
 
     # If nominee_year is provided, count total watched movies for that year
     total_movies = Movie.query.filter(
         # Conditional filter
-        (Movie.nomination_year == nominee_year) if nominee_year is not None else True
+        (Movie.nomination_year == year) if year is not None else True
     ).count()
 
+    return jsonify({
+        "watched_movies": watched_movies,
+        "total_movies": total_movies
+    })
+
+
+# 🎉 Get User Guess Accuracy for a Specific Year
+@app.route('/api/stats/guess-accuracy/', methods=['GET'])
+def get_user_stats_and_winner():
+    username = request.args.get('username')
+    year = request.args.get('year', type=int)
+
     total_correct_guesses = Prediction.query.join(Nominee).filter(
-        (Prediction.nominee_year == nominee_year) if nominee_year is not None else True,
+        (Prediction.nominee_year == year) if year is not None else True,
         Prediction.username == username,
-        Nominee.winner == True,
+        Nominee.winner is True,
     ).count()
 
     distinct_category_counts = {}
 
     # Check if nominee_year is provided
-    if nominee_year is None:
+    if year is None:
         # Get the minimum and maximum nominee years from the Nominee table
         start_year = db.session.query(
             db.func.min(Nominee.nominee_year)).scalar()
         end_year = db.session.query(db.func.max(Nominee.nominee_year)).scalar()
     else:
-        start_year = end_year = nominee_year  # Use the provided nominee_year for both
+        start_year = end_year = year  # Use the provided nominee_year for both
 
     # Loop through the nominee years
     for year in range(start_year, end_year + 1):
@@ -354,9 +369,7 @@ def get_user_stats_and_winner(username, nominee_year=None):
     total_categories = sum(distinct_category_counts.values())
 
     return jsonify({
-        "watched_movies": watched_movies,
-        "total_movies": total_movies,
-        "total_correct_guesses": total_correct_guesses,
+        "correct_guesses": total_correct_guesses,
         "total_categories": total_categories
     })
 

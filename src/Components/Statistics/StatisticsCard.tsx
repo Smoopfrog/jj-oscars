@@ -22,7 +22,7 @@ const StatisticsCard: React.FC<IStatisticsCardProps> = ({
 			{title}
 		</Typography>
 		<Typography variant="h1" fontSize={24} fontWeight={400}>
-			{value || "-"}
+			{value || "Error"}
 		</Typography>
 	</Box>
 );
