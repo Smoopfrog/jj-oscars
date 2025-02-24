@@ -282,6 +282,11 @@ def get_winners_and_user_predictions():
     results = []  # Initialize an array to hold the results
 
     for category in categories:
+        # Check if the category has nominees for the specified year
+        # Skip categories without nominees for the year
+        if not category.nominees or not any(nominee.nominee_year == year for nominee in category.nominees):
+            continue
+
         winner = db.session.query(Nominee).filter_by(
             category_id=category.id, nominee_year=year, winner=True).first()
 
