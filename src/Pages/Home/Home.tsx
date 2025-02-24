@@ -16,8 +16,8 @@ const Home = () => {
 			sx={{
 				backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
 	url(${jordan})`,
-				backgroundSize: { xs: "contain", md: "cover" },
-				backgroundRepeat: { xs: "repeat", md: "no-repeat" },
+				backgroundSize: { xs: "contain", sm: "cover" },
+				backgroundRepeat: { xs: "repeat", sm: "no-repeat" },
 				backgroundAttachment: "fixed",
 			}}
 		>
