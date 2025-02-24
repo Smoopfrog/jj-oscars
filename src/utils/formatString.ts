@@ -1,4 +1,4 @@
-import { IBattle } from "../types/api/Battle";
+import { IResult } from "../types/api/Result";
 
 export const capitalize = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -17,11 +17,11 @@ export const formatWinnerValue = (winner: string, opponentCorrectGuesses: number
 };
 
 
-export const winCount = (data: IBattle[] | null, name: "jordan" | "jeff") => {
+export const winCount = (data: IResult[] | null, name: "jordan" | "jeff") => {
 	if (!data) return 0;
 
 	return data.filter(
-		(category: IBattle) =>
+		(category: IResult) =>
 			category.winner && category.winner === category[name]
 	).length;
 };

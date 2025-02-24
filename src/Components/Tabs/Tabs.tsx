@@ -25,6 +25,9 @@ const Tabs: React.FC<ITabsProps> = ({ tabs, tabValue, handleChange }) => {
 				"& .MuiButtonBase-root.Mui-disabled": {
 					opacity: 0.4,
 				},
+				"& .MuiTabs-flexContainer": {
+					justifyContent: "space-between",
+				},
 			}}
 			TabIndicatorProps={{
 				style: {

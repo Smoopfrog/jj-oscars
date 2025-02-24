@@ -1,13 +1,13 @@
 import React from "react";
 import { TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import { IBattle } from "../../types/api/Battle";
+import { IResult } from "../../types/api/Result";
 import { winCount } from "../../utils/formatString";
 
-interface IBattleTableHeaderProps {
-	data: IBattle[] | null;
+interface IResultsTableHeaderProps {
+	data: IResult[] | null;
 }
 
-const BattleTableHeader: React.FC<IBattleTableHeaderProps> = ({ data }) => (
+const ResultsTableHeader: React.FC<IResultsTableHeaderProps> = ({ data }) => (
 	<TableHead
 		sx={{
 			backgroundColor: "rgb(199, 159, 39)",
@@ -37,4 +37,4 @@ const BattleTableHeader: React.FC<IBattleTableHeaderProps> = ({ data }) => (
 	</TableHead>
 );
 
-export default BattleTableHeader;
+export default ResultsTableHeader;

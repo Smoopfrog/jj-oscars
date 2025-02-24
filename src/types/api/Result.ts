@@ -1,5 +1,5 @@
 
-export interface IBattle {
+export interface IResult {
     /** The id of the category */
 	id: number;
 	/** The name of the category */

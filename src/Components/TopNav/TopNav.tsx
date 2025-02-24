@@ -46,7 +46,7 @@ const TopNav = () => {
 				gap={2}
 				flex={1}
 			>
-				<TopNavLink to={`/user/${name}/battle`} text="Battle" />
+				<TopNavLink to={`/user/${name}/results`} text="Results" />
 				<TopNavLink to={`/user/${name}/picks`} text="Picks" />
 				<TopNavLink to={`/user/${name}/watchlist`} text="Watchlist" />
 			</Box>

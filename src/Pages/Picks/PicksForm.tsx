@@ -32,7 +32,7 @@ const PicksForm: React.FC<IPicksForm> = ({ name, categories, year }) => {
 
 		if (res.status === 201) {
 			alert(`Successfully saved ${capitalize(name)}'s picks!`);
-			navigate(`/user/${name}/battle`);
+			navigate(`/user/${name}/results`);
 		} else {
 			alert("Something didn't work, I dont know. Sorry.");
 		}

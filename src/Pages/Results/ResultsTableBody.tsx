@@ -1,19 +1,19 @@
 import React from "react";
-import BattleTableItem from "./BattleTableItem";
+import ResultsTableItem from "./ResultsTableItem";
 import { TableBody, TableCell, TableRow } from "@mui/material";
-import { IBattle } from "../../types/api/Battle";
+import { IResult } from "../../types/api/Result";
 import ErrorMessage from "../../Components/Error/ErrorMessage";
 
-interface IBattleTableBodyProps {
-	data: IBattle[] | null;
+interface IResultsTableBodyProps {
+	data: IResult[] | null;
 }
 
-const BattleTableBody: React.FC<IBattleTableBodyProps> = ({ data }) => {
+const ResultsTableBody: React.FC<IResultsTableBodyProps> = ({ data }) => {
 	return (
 		<TableBody>
 			{data ? (
 				data.map((category, i) => (
-					<BattleTableItem key={category.id} index={i} category={category} />
+					<ResultsTableItem key={category.id} index={i} category={category} />
 				))
 			) : (
 				<TableRow>
@@ -26,4 +26,4 @@ const BattleTableBody: React.FC<IBattleTableBodyProps> = ({ data }) => {
 	);
 };
 
-export default BattleTableBody;
+export default ResultsTableBody;

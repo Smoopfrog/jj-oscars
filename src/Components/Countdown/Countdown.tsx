@@ -36,7 +36,7 @@ const Countdown: React.FC<ICountdownProps> = ({ name }) => {
 	}, []);
 
 	return (
-		<Link to={`/user/${name}/battle`} style={{ textDecoration: "none" }}>
+		<Link to={`/user/${name}/results`} style={{ textDecoration: "none" }}>
 			<Box
 				display="flex"
 				gap={1}

@@ -1,15 +1,20 @@
 import React from "react";
 import { Table, TableContainer } from "@mui/material";
 import Card from "../../Components/Cards/Card";
-import TableHeader from "./BattleTableHeader";
-import BattleTableBody from "./BattleTableBody";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 import { useGetRequest } from "../../hooks/useGetRequest";
 import urls from "../../api/endpoint";
-import { IBattle } from "../../types/api/Battle";
+import { IResult } from "../../types/api/Result";
+import ResultsTableHeader from "./ResultsTableHeader";
+import ResultsTableBody from "./ResultsTableBody";
 
-const BattleTable = ({ year }: { year: number }) => {
-	const { data, isLoading } = useGetRequest<IBattle[]>(
+interface IResultsTableProps {
+	/** The year to display results for */
+	year: number;
+}
+
+const ResultsTable: React.FC<IResultsTableProps> = ({ year }) => {
+	const { data, isLoading } = useGetRequest<IResult[]>(
 		urls.winners,
 		{
 			year,
@@ -31,12 +36,12 @@ const BattleTable = ({ year }: { year: number }) => {
 			}}
 			component={Card}
 		>
-			<Table aria-label="battle-table">
-				<TableHeader data={data} />
-				<BattleTableBody data={data} />
+			<Table aria-label="results-table">
+				<ResultsTableHeader data={data} />
+				<ResultsTableBody data={data} />
 			</Table>
 		</TableContainer>
 	);
 };
 
-export default BattleTable;
+export default ResultsTable;

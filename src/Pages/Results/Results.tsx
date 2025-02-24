@@ -7,12 +7,13 @@ import {
 	Typography,
 } from "@mui/material";
 import dayjs from "dayjs";
-import BattleTable from "./BattleTable";
+import BattleTable from "./ResultsTable";
 import { years } from "../../constants/Years";
 import { useLocation, useNavigate } from "react-router-dom";
 import YearSelect from "../../Components/Select/YearSelect";
+import ResultsTable from "./ResultsTable";
 
-const Battle = () => {
+const Results = () => {
 	const location = useLocation();
 
 	const [year, setYear] = useState<number>(
@@ -34,9 +35,9 @@ const Battle = () => {
 				</Typography>
 				<YearSelect year={year} setYear={setYear} />
 			</Box>
-			<BattleTable year={year} />
+			<ResultsTable year={year} />
 		</Box>
 	);
 };
 
-export default Battle;
+export default Results;

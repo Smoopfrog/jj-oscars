@@ -1,13 +1,13 @@
 import React from "react";
 import { Typography, TableCell, TableRow } from "@mui/material";
 import { Navigate, useParams } from "react-router-dom";
-import { IBattle } from "../../types/api/Battle";
+import { IResult } from "../../types/api/Result";
 
-interface BattleTableItemProps {
+interface IResultsTableItemProps {
 	/** The index of the item in the table */
 	index: number;
 	/** The category to display */
-	category: IBattle;
+	category: IResult;
 }
 
 const getColor = (winner: string | null, prediction: string | null) => {
@@ -15,7 +15,7 @@ const getColor = (winner: string | null, prediction: string | null) => {
 	return winner === prediction ? "success" : "error";
 };
 
-const BattleTableItem: React.FC<BattleTableItemProps> = ({
+const ResultsTableItem: React.FC<IResultsTableItemProps> = ({
 	index,
 	category,
 }) => {
@@ -59,4 +59,4 @@ const BattleTableItem: React.FC<BattleTableItemProps> = ({
 	);
 };
 
-export default BattleTableItem;
+export default ResultsTableItem;
