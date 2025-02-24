@@ -1,4 +1,5 @@
 const urls = {
+	sendText: "/send-text",
 	stats: {
 		watchedCount: "/stats/watched_count",
 		guessAccuracy: "/stats/guess-accuracy",

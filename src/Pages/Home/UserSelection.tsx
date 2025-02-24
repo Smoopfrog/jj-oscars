@@ -5,6 +5,8 @@ import Button from "../../Components/Buttons/Button";
 import FuckYouModal from "./FuckYouModal";
 import { konamiCodeArray } from "../../constants/homeConstants";
 import { handleKeyPress } from "../../utils/homeUtils";
+import axiosInstance from "../../api/axiosInstance";
+import urls from "../../api/endpoint";
 
 const UserSelection = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,6 +49,10 @@ const UserSelection = () => {
 				<Button
 					sx={{ width: "30%" }}
 					onClick={() => {
+						axiosInstance
+							.post(urls.sendText)
+							.then((res) => console.log("Text response:", res.data))
+							.catch((err) => console.error("Error sending text:", err));
 						navigate("/user/jordan");
 					}}
 					children="Jordan"
@@ -56,15 +62,15 @@ const UserSelection = () => {
 						width: "30%",
 					}}
 					onClick={() => {
-						setIsModalOpen(true);
+						navigate("/user/jeff");
 					}}
 					children="Jeff"
 				/>
 			</Box>
-			<FuckYouModal
+			{/* <FuckYouModal
 				isOpen={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
-			/>
+			/> */}
 		</Box>
 	);
 };

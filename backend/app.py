@@ -87,7 +87,7 @@ def send_text():
             'https://textbelt.com/text',
             data={
                 'phone': os.getenv('PHONE_NUMBER'),
-                'message': 'Jordan is such a scumbag!',
+                'message': 'Jordan logged in!',
                 'key': os.getenv('TEXT_BELT_KEY')
             }
         )
