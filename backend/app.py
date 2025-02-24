@@ -271,9 +271,9 @@ def update_watch_status():
     return jsonify({"movie_id": movie_id, "viewed": viewed}), 200
 
 
-# 🎉 Get Category Winners and User Predictions for specific users
-@app.route('/api/winners/', methods=['GET'])
-def get_winners_and_user_predictions():
+# 🎉 Get Results
+@app.route('/api/results/', methods=['GET'])
+def get_results():
     year = request.args.get('year', type=int)
     user = request.args.get('username')
     opponent = request.args.get('opponent')

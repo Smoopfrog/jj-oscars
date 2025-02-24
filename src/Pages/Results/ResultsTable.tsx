@@ -15,7 +15,7 @@ interface IResultsTableProps {
 
 const ResultsTable: React.FC<IResultsTableProps> = ({ year }) => {
 	const { data, isLoading } = useGetRequest<IResult[]>(
-		urls.winners,
+		urls.results,
 		{
 			year,
 			username: "jordan",

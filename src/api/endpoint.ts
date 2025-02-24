@@ -5,7 +5,7 @@ const urls = {
 		winLoss: "/stats/win-loss",
 		score: "/stats/score",
 	},
-	winners: "/winners",
+	results: "/results",
 	predictions: "/predictions",
 	watchlist: "/watchlist",
 };
