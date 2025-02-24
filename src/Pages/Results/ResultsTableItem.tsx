@@ -2,6 +2,7 @@ import React from "react";
 import { Typography, TableCell, TableRow } from "@mui/material";
 import { Navigate, useParams } from "react-router-dom";
 import { IResult } from "../../types/api/Result";
+import dayjs from "dayjs";
 
 interface IResultsTableItemProps {
 	/** The index of the item in the table */
@@ -25,6 +26,8 @@ const ResultsTableItem: React.FC<IResultsTableItemProps> = ({
 		return <Navigate to="/" />;
 	}
 
+	const targetDate = dayjs("2025-03-02T16:00:00-08:00");
+
 	return (
 		<TableRow
 			sx={
@@ -44,7 +47,7 @@ const ResultsTableItem: React.FC<IResultsTableItemProps> = ({
 					align="right"
 					color={getColor(category.winner, category.jordan)}
 				>
-					{(name === "jordan" && category.jordan) || "-"}
+					{category.jordan || "-"}
 				</Typography>
 			</TableCell>
 			<TableCell>
@@ -52,7 +55,7 @@ const ResultsTableItem: React.FC<IResultsTableItemProps> = ({
 					align="right"
 					color={getColor(category.winner, category.jeff)}
 				>
-					{(name === "jeff" && category.jeff) || "-"}
+					{category.jeff || "-"}
 				</Typography>
 			</TableCell>
 		</TableRow>
