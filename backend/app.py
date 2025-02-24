@@ -451,21 +451,30 @@ def get_user_guess_accuracy():
 
     # Check if nominee_year is provided
     if year is None:
+        # Get the years where the user has made predictions only if year is not provided
+        user_years = db.session.query(Prediction.nominee_year).filter(
+            Prediction.username == username
+        ).distinct().all()
+        user_years = [year[0]
+                      for year in user_years]  # Extract years from tuples
+
         # Get the minimum and maximum nominee years from the Nominee table
         start_year = db.session.query(
             db.func.min(Nominee.nominee_year)).scalar()
         end_year = db.session.query(db.func.max(Nominee.nominee_year)).scalar()
     else:
         start_year = end_year = year  # Use the provided nominee_year for both
+        user_years = [year]
 
     # Loop through the nominee years
     for year in range(start_year, end_year + 1):
-        unique_category_ids = db.session.query(Nominee.category_id).filter(
-            Nominee.nominee_year == year
-        ).distinct().all()
+        if year in user_years:  # Only consider years where the user has predictions
+            unique_category_ids = db.session.query(Nominee.category_id).filter(
+                Nominee.nominee_year == year
+            ).distinct().all()
 
-        # Store the count of distinct category IDs for the year
-        distinct_category_counts[year] = len(unique_category_ids)
+            # Store the count of distinct category IDs for the year
+            distinct_category_counts[year] = len(unique_category_ids)
 
     # Now you can sum up the counts if needed
     total_categories = sum(distinct_category_counts.values())
