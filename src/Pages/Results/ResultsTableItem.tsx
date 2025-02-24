@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, TableCell, TableRow } from "@mui/material";
 import { Navigate, useParams } from "react-router-dom";
 import { IResult } from "../../types/api/Result";
-import dayjs from "dayjs";
+import { getResultColor } from "../../utils/fontUtils";
 
 interface IResultsTableItemProps {
 	/** The index of the item in the table */
@@ -10,11 +10,6 @@ interface IResultsTableItemProps {
 	/** The category to display */
 	category: IResult;
 }
-
-const getColor = (winner: string | null, prediction: string | null) => {
-	if (!winner || !prediction) return "";
-	return winner === prediction ? "success" : "error";
-};
 
 const ResultsTableItem: React.FC<IResultsTableItemProps> = ({
 	index,
@@ -25,8 +20,6 @@ const ResultsTableItem: React.FC<IResultsTableItemProps> = ({
 	if (!name) {
 		return <Navigate to="/" />;
 	}
-
-	const targetDate = dayjs("2025-03-02T16:00:00-08:00");
 
 	return (
 		<TableRow
@@ -45,7 +38,7 @@ const ResultsTableItem: React.FC<IResultsTableItemProps> = ({
 			<TableCell>
 				<Typography
 					align="right"
-					color={getColor(category.winner, category.jordan)}
+					color={getResultColor(category.winner, category.jordan)}
 				>
 					{category.jordan || "-"}
 				</Typography>
@@ -53,7 +46,7 @@ const ResultsTableItem: React.FC<IResultsTableItemProps> = ({
 			<TableCell>
 				<Typography
 					align="right"
-					color={getColor(category.winner, category.jeff)}
+					color={getResultColor(category.winner, category.jeff)}
 				>
 					{category.jeff || "-"}
 				</Typography>

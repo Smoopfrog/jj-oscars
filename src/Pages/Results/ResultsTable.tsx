@@ -1,12 +1,9 @@
 import React from "react";
-import { Table, TableContainer } from "@mui/material";
-import Card from "../../Components/Cards/Card";
 import LoadingSpinner from "../../Components/loading/LoadingSpinner";
 import { useGetRequest } from "../../hooks/useGetRequest";
 import urls from "../../api/endpoint";
 import { IResult } from "../../types/api/Result";
-import ResultsTableHeader from "./ResultsTableHeader";
-import ResultsTableBody from "./ResultsTableBody";
+import ResponsiveResultTable from "./ResponsiveResultTable";
 
 interface IResultsTableProps {
 	/** The year to display results for */
@@ -24,24 +21,7 @@ const ResultsTable: React.FC<IResultsTableProps> = ({ year }) => {
 		[year]
 	);
 
-	return isLoading ? (
-		<LoadingSpinner />
-	) : (
-		<TableContainer
-			sx={{
-				width: { xs: "100%", md: "80%", lg: "60%" },
-				padding: 0,
-				height: "100%",
-				overflow: "auto",
-			}}
-			component={Card}
-		>
-			<Table aria-label="results-table">
-				<ResultsTableHeader data={data} />
-				<ResultsTableBody data={data} />
-			</Table>
-		</TableContainer>
-	);
+	return isLoading ? <LoadingSpinner /> : <ResponsiveResultTable data={data} />;
 };
 
 export default ResultsTable;
