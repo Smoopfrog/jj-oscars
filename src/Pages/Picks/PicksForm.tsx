@@ -14,9 +14,11 @@ interface IPicksForm {
 	name: string;
 	/** The categories to display */
 	categories: ICategory[];
+	/** The year to display */
+	year: number;
 }
 
-const PicksForm: React.FC<IPicksForm> = ({ name, categories }) => {
+const PicksForm: React.FC<IPicksForm> = ({ name, categories, year }) => {
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -25,6 +27,7 @@ const PicksForm: React.FC<IPicksForm> = ({ name, categories }) => {
 		const res = await usePostRequest(urls.predictions, {
 			username: name,
 			predictions: values,
+			year,
 		});
 
 		if (res.status === 201) {

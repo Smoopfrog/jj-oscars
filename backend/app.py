@@ -100,6 +100,8 @@ def send_text():
 def post_predictions():
     username = request.json.get('username')
     predictions = request.json.get('predictions')
+    year = request.json.get('year')
+    print(year)
 
     # Convert the dictionary to a list of tuples
     predictions_list = [(int(category_id), nominee_id)
@@ -107,12 +109,12 @@ def post_predictions():
 
     for category_id, nominee_id in predictions_list:
         pred = Prediction.query.filter_by(
-            username=username, category_id=category_id).first()
+            username=username, category_id=category_id, nominee_year=year).first()
         if pred:
             pred.nominee_id = nominee_id
         else:
             new_pred = Prediction(
-                username=username, category_id=category_id, nominee_id=nominee_id)
+                username=username, category_id=category_id, nominee_id=nominee_id, nominee_year=year)
             db.session.add(new_pred)
     db.session.commit()
     return jsonify({"message": "Predictions saved successfully!"}), 201
@@ -121,6 +123,7 @@ def post_predictions():
 @app.route('/api/predictions', methods=['GET'])
 def get_predictions():
     username = request.args.get('username')
+    year = request.args.get('year', type=int, default=2025)
 
     # Fetch all categories and their nominees for the year 2025 with eager loading
     categories = db.session.query(Category).options(
@@ -142,17 +145,19 @@ def get_predictions():
                 "title": Movie.get_title_by_id(nominee.movie_id) if category.title_source == 'movie' else nominee.name,
                 "subtitle": nominee.name if category.title_source == 'movie' else Movie.get_title_by_id(nominee.movie_id),
             }
-            # Filter for nominees of the year 2025
-            for nominee in category.nominees if nominee.nominee_year == 2025
+            # Filter for nominees of the year 2025 and default to 2025 if no year is provided
+            for nominee in category.nominees if nominee.nominee_year == year
         ]
-        # Get the user's prediction for this category
-        prediction = user_prediction_dict.get(category.id)
-        structured_predictions.append({
-            "id": category.id,
-            "title": category.name,
-            "nominees": nominees,
-            "prediction": prediction
-        })
+        # Only append the category if there are nominees
+        if nominees:  # Check if nominees list is not empty
+            # Get the user's prediction for this category
+            prediction = user_prediction_dict.get(category.id)
+            structured_predictions.append({
+                "id": category.id,
+                "title": category.name,
+                "nominees": nominees,
+                "prediction": prediction
+            })
 
     return jsonify(structured_predictions)
 

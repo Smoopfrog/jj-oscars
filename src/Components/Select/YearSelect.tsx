@@ -10,9 +10,15 @@ interface IYearSelectProps {
 	year: number;
 	/** The function to set the year */
 	setYear: (year: number) => void;
+	/** Whether to hide the year select */
+	hide?: boolean;
 }
 
-const YearSelect: React.FC<IYearSelectProps> = ({ year, setYear }) => {
+const YearSelect: React.FC<IYearSelectProps> = ({
+	year,
+	setYear,
+	hide = false,
+}) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -30,6 +36,7 @@ const YearSelect: React.FC<IYearSelectProps> = ({ year, setYear }) => {
 				setYear(e.target.value as number);
 			}}
 			sx={{
+				display: hide ? "none" : "inline-block",
 				color: "#E0E0E0",
 				padding: 0,
 				fontSize: 34,
