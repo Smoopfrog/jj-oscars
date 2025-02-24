@@ -13,8 +13,8 @@ const User = () => {
 			sx={{
 				backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
 		url(${jordan})`,
-				backgroundSize: "cover",
-				backgroundRepeat: "no-repeat",
+				backgroundSize: { xs: "contain", md: "cover" },
+				backgroundRepeat: { xs: "repeat", md: "no-repeat" },
 				backgroundAttachment: "fixed",
 			}}
 		>
