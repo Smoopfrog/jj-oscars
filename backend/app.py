@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import os
 import logging
 import requests
+from datetime import datetime
 
 # Load environment variables
 load_dotenv()
@@ -415,17 +416,21 @@ def get_watched_count():
     username = request.args.get('username')
     year = request.args.get('year', type=int)
 
+    current_year = datetime.now().year  # Get the current year
+
     # Fetch watched movies for the specific year if nominee_year is provided
     watched_movies = MovieWatched.query.join(Movie).filter(
         MovieWatched.username == username,
         # Conditional filter
-        (Movie.nomination_year == year) if year is not None else True
+        (Movie.nomination_year == year) if year is not None else (
+            Movie.nomination_year >= 2022) & (Movie.nomination_year <= current_year)
     ).count()
 
     # If nominee_year is provided, count total watched movies for that year
     total_movies = Movie.query.filter(
         # Conditional filter
-        (Movie.nomination_year == year) if year is not None else True
+        (Movie.nomination_year == year) if year is not None else (
+            Movie.nomination_year >= 2022) & (Movie.nomination_year <= current_year)
     ).count()
 
     return jsonify({
