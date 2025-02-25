@@ -46,7 +46,11 @@ const WatchListStats: React.FC<WatchListStatsProps> = ({
 			right={{ lg: "10%" }}
 		>
 			<Box display="flex" gap={1} justifyContent="flex-end">
-				<YearSelect year={year} setYear={setYear} />
+				<YearSelect
+					year={year}
+					setYear={setYear}
+					watchlistYears={[...years, 2021, 2020, 2019]}
+				/>
 			</Box>
 
 			{data.length > 0 && (

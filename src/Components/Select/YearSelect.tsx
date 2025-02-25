@@ -12,12 +12,15 @@ interface IYearSelectProps {
 	setYear: (year: number) => void;
 	/** Whether to hide the year select */
 	hide?: boolean;
+	/** The years to display in the watchlist */
+	watchlistYears?: number[];
 }
 
 const YearSelect: React.FC<IYearSelectProps> = ({
 	year,
 	setYear,
 	hide = false,
+	watchlistYears,
 }) => {
 	const navigate = useNavigate();
 
@@ -60,11 +63,17 @@ const YearSelect: React.FC<IYearSelectProps> = ({
 				},
 			}}
 		>
-			{years.map((year) => (
-				<MenuItem value={year} key={year}>
-					{year}
-				</MenuItem>
-			))}
+			{watchlistYears
+				? watchlistYears.map((year) => (
+						<MenuItem value={year} key={year}>
+							{year}
+						</MenuItem>
+				  ))
+				: years.map((year) => (
+						<MenuItem value={year} key={year}>
+							{year}
+						</MenuItem>
+				  ))}
 		</Select>
 	);
 };
