@@ -3,6 +3,7 @@ import React from "react";
 import OscarsLogo from "../../Images/OscarsLogo.png";
 import UserSelection from "./UserSelection";
 import jordan from "../../Images/jordan.jpg";
+import dayjs from "dayjs";
 
 const Home = () => {
 	return (
@@ -48,7 +49,7 @@ const Home = () => {
 						mb: 0,
 					}}
 				>
-					Oscar Battle 2025
+					Oscar Battle {dayjs().year()}
 				</Typography>
 				<Typography
 					variant="h2"
@@ -61,7 +62,7 @@ const Home = () => {
 						mb: 1,
 					}}
 				>
-					50 movies, 23 categories, and a year of bragging rights. May the more
+					50 movies, 24 categories, and a year of bragging rights. May the more
 					sophisticated, pretentious cinephile win.
 				</Typography>
 				<UserSelection />
