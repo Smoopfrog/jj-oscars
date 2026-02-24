@@ -12,7 +12,7 @@ interface ICountdownProps {
 }
 
 const Countdown: React.FC<ICountdownProps> = ({ name }) => {
-	const targetDate = dayjs("2025-03-02T16:00:00-08:00");
+	const targetDate = dayjs("2026-03-15T16:00:00-08:00");
 	const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
 	function calculateTimeLeft() {
