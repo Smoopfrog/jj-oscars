@@ -25,12 +25,12 @@ const ResultsTableHeader: React.FC<IResultsTableHeaderProps> = ({ data }) => (
 			</TableCell>
 			<TableCell align="right">
 				<Typography fontWeight="bold">
-					Jordan {winCount(data, "jordan")}/23
+					Jordan {winCount(data, "jordan")}/24
 				</Typography>
 			</TableCell>
 			<TableCell align="right">
 				<Typography fontWeight="bold">
-					Jeff {winCount(data, "jeff")}/23
+					Jeff {winCount(data, "jeff")}/24
 				</Typography>
 			</TableCell>
 		</TableRow>

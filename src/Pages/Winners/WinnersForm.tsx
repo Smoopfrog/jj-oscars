@@ -10,15 +10,13 @@ interface IWinnersForm {
 	categories: ICategory[];
 	/** The year to display */
 	year: number;
-	/** Called after a winner is saved (e.g. to refetch data) */
-	onWinnerSaved?: () => void;
 }
 
-const WinnersForm: React.FC<IWinnersForm> = ({ categories, year, onWinnerSaved }) => {
-	const saveWinner = async (categoryId: number, nomineeId: number) => {
+const WinnersForm: React.FC<IWinnersForm> = ({ categories, year }) => {
+	const saveWinner = async (categoryId: number, nomineeId: number | null) => {
 		const res = await axiosInstance.put(urls.winnersUpdate, {
 			year,
-			winners: { [categoryId]: nomineeId },
+			winners: { [String(categoryId)]: nomineeId },
 		});
 		if (res.status !== 200) {
 			throw new Error("Save failed");
@@ -44,7 +42,6 @@ const WinnersForm: React.FC<IWinnersForm> = ({ categories, year, onWinnerSaved }
 						nominees={category.nominees}
 						selectedValue={category.prediction ?? null}
 						onSave={saveWinner}
-						onSaved={onWinnerSaved}
 					/>
 				))}
 			</Box>

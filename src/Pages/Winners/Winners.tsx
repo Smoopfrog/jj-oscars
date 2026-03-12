@@ -15,15 +15,12 @@ import oscarLogo from "../../Images/oscar-logo.png";
 
 const Winners = () => {
 	const [year, setYear] = useState<number>(dayjs().year());
-	const [refreshTrigger, setRefreshTrigger] = useState(0);
 
 	const { data, isLoading } = useGetRequest<ICategory[]>(
 		urls.winners,
 		{ year },
-		[year, refreshTrigger]
+		[year]
 	);
-
-	const handleWinnerSaved = () => setRefreshTrigger((t) => t + 1);
 
 	return (
 		<Box
@@ -76,7 +73,7 @@ const Winners = () => {
 			</Box>
 			{!isLoading ? (
 				data ? (
-					<WinnersForm categories={data} year={year} onWinnerSaved={handleWinnerSaved} />
+					<WinnersForm categories={data} year={year} />
 				) : (
 					<ErrorMessage />
 				)

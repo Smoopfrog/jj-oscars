@@ -4,12 +4,22 @@ import { INominee } from "../../types/Nominee";
 
 interface INomineeProps {
 	nominee: INominee;
+	/** When true and onClearClick provided, clicking clears the selection */
+	isSelected?: boolean;
+	onClearClick?: () => void;
 }
 
-const Nominee = ({ nominee }: INomineeProps) => {
+const Nominee = ({ nominee, isSelected, onClearClick }: INomineeProps) => {
+	const handleClick = () => {
+		if (isSelected && onClearClick) {
+			onClearClick();
+		}
+	};
+
 	return (
 		<FormControlLabel
 			value={nominee.id}
+			onClick={handleClick}
 			control={
 				<Radio
 					sx={{

@@ -313,10 +313,7 @@ def set_winners():
         return jsonify({"error": "Year is required"}), 400
 
     for category_id_str, nominee_id in winners.items():
-        if nominee_id is None or nominee_id == '':
-            continue
         category_id = int(category_id_str)
-        nominee_id = int(nominee_id)
 
         # Clear existing winner for this category/year
         Nominee.query.filter_by(
@@ -325,14 +322,16 @@ def set_winners():
             winner=True
         ).update({"winner": False})
 
-        # Set new winner
-        nominee = Nominee.query.filter_by(
-            id=nominee_id,
-            category_id=category_id,
-            nominee_year=year
-        ).first()
-        if nominee:
-            nominee.winner = True
+        # Set new winner (skip if clearing)
+        if nominee_id is not None and nominee_id != '':
+            nominee_id = int(nominee_id)
+            nominee = Nominee.query.filter_by(
+                id=nominee_id,
+                category_id=category_id,
+                nominee_year=year
+            ).first()
+            if nominee:
+                nominee.winner = True
 
     db.session.commit()
     return jsonify({"message": "Winners saved successfully!"}), 200

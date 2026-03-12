@@ -19,10 +19,8 @@ interface IWinnersCategoryProps {
 	nominees: INominee[];
 	/** The currently selected winner id */
 	selectedValue: number | null;
-	/** Called when a winner is saved successfully */
-	onSaved?: () => void;
-	/** Called to save the winner (categoryId, nomineeId) */
-	onSave: (categoryId: number, nomineeId: number) => Promise<void>;
+	/** Called to save the winner (categoryId, nomineeId or null to clear) */
+	onSave: (categoryId: number, nomineeId: number | null) => Promise<void>;
 }
 
 const WinnersCategory: React.FC<IWinnersCategoryProps> = ({
@@ -31,20 +29,16 @@ const WinnersCategory: React.FC<IWinnersCategoryProps> = ({
 	nominees,
 	selectedValue,
 	onSave,
-	onSaved,
 }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [localValue, setLocalValue] = useState<string>(String(selectedValue ?? ""));
 
-	const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		const nomineeId = Number((e.target as HTMLInputElement).value);
-		setLocalValue(String(nomineeId));
+	const save = async (nomineeId: number | null) => {
 		setIsSaving(true);
 		try {
 			await onSave(id, nomineeId);
-			onSaved?.();
+			setLocalValue(nomineeId !== null ? String(nomineeId) : "");
 		} catch {
-			// Revert on error
 			setLocalValue(String(selectedValue ?? ""));
 			alert("Something went wrong. Please try again.");
 		} finally {
@@ -52,7 +46,13 @@ const WinnersCategory: React.FC<IWinnersCategoryProps> = ({
 		}
 	};
 
-	// Sync local value when selectedValue changes (e.g. after refetch)
+	const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const nomineeId = Number((e.target as HTMLInputElement).value);
+		setLocalValue(String(nomineeId));
+		await save(nomineeId);
+	};
+
+	// Sync local value when selectedValue changes (e.g. initial load or year change)
 	React.useEffect(() => {
 		setLocalValue(String(selectedValue ?? ""));
 	}, [selectedValue]);
@@ -99,7 +99,12 @@ const WinnersCategory: React.FC<IWinnersCategoryProps> = ({
 					sx={{ display: "flex", flexDirection: "column", gap: 1 }}
 				>
 					{nominees.map((nominee, i) => (
-						<Nominee nominee={nominee} key={i} />
+						<Nominee
+							nominee={nominee}
+							key={i}
+							isSelected={Number(localValue) === nominee.id}
+							onClearClick={() => save(null)}
+						/>
 					))}
 				</RadioGroup>
 			</FormControl>
