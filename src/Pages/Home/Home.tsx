@@ -67,18 +67,6 @@ const Home = () => {
 					sophisticated, pretentious cinephile win.
 				</Typography>
 				<UserSelection />
-				<Link
-					component={RouterLink}
-					to="/winners"
-					sx={{
-						mt: 2,
-						color: "rgba(255,255,255,0.6)",
-						fontSize: "0.875rem",
-						"&:hover": { color: "rgba(255,255,255,0.9)" },
-					}}
-				>
-					Select Winners
-				</Link>
 			</Box>
 		</Box>
 	);
