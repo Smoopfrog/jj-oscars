@@ -1,5 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import OscarsLogo from "../../Images/OscarsLogo.png";
 import UserSelection from "./UserSelection";
 import jordan from "../../Images/jordan.jpg";
@@ -66,6 +67,18 @@ const Home = () => {
 					sophisticated, pretentious cinephile win.
 				</Typography>
 				<UserSelection />
+				<Link
+					component={RouterLink}
+					to="/winners"
+					sx={{
+						mt: 2,
+						color: "rgba(255,255,255,0.6)",
+						fontSize: "0.875rem",
+						"&:hover": { color: "rgba(255,255,255,0.9)" },
+					}}
+				>
+					Select Winners
+				</Link>
 			</Box>
 		</Box>
 	);

@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import User from "./Pages/User/User";
 import Stats from "./Pages/Stats/Stats";
+import Winners from "./Pages/Winners/Winners";
 import Results from "./Pages/Results/Results";
 import Picks from "./Pages/Picks/Picks";
 import Watchlist from "./Pages/Watchlist/Watchlist";
@@ -18,6 +19,7 @@ root.render(
 	<BrowserRouter>
 		<Routes>
 			<Route index element={<Home />} />
+			<Route path="/winners" element={<Winners />} />
 			<Route path="/user/:name" element={<User />}>
 				<Route index element={<Stats />} />
 				<Route path="results" element={<Results />} />

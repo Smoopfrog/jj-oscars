@@ -1,5 +1,7 @@
 const urls = {
 	sendText: "/send-text",
+	winners: "/winners",
+	winnersUpdate: "/winners/",
 	stats: {
 		watchedCount: "/stats/watched_count",
 		guessAccuracy: "/stats/guess-accuracy",

@@ -17,12 +17,15 @@ interface ICategoryProps {
 	title: string;
 	/** The nominees for the category */
 	nominees: INominee[];
+	/** Whether selection is required (default: true for Picks) */
+	required?: boolean;
 }
 
-const Category: React.FC<ICategoryProps> = ({ id, title, nominees }) => {
+const Category: React.FC<ICategoryProps> = ({ id, title, nominees, required = true }) => {
 	const [field, meta] = useField({
 		name: id,
 		validate: (value: string) => {
+			if (!required) return undefined;
 			let error;
 			if (!value) {
 				error = "You missed this one dumb dumb!";

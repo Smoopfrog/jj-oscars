@@ -271,6 +271,73 @@ def update_watch_status():
     return jsonify({"movie_id": movie_id, "viewed": viewed}), 200
 
 
+# 🏆 Get Winners (for admin selection)
+@app.route('/api/winners', methods=['GET'])
+def get_winners():
+    year = request.args.get('year', type=int, default=2026)
+
+    categories = db.session.query(Category).options(
+        db.joinedload(Category.nominees)).all()
+
+    structured = []
+    for category in sorted(categories, key=lambda c: c.name):
+        nominees = [
+            {
+                "id": nominee.id,
+                "title": Movie.get_title_by_id(nominee.movie_id) if category.title_source == 'movie' else nominee.name,
+                "subtitle": nominee.name if category.title_source == 'movie' else Movie.get_title_by_id(nominee.movie_id),
+                "winner": nominee.winner
+            }
+            for nominee in category.nominees if nominee.nominee_year == year
+        ]
+        if nominees:
+            winner_id = next((n["id"] for n in nominees if n.get("winner")), None)
+            structured.append({
+                "id": category.id,
+                "title": category.name,
+                "nominees": nominees,
+                "prediction": winner_id
+            })
+
+    return jsonify(structured)
+
+
+# 🏆 Set Winners (admin)
+@app.route('/api/winners/', methods=['PUT'])
+def set_winners():
+    data = request.json
+    year = data.get('year')
+    winners = data.get('winners', {})
+
+    if not year:
+        return jsonify({"error": "Year is required"}), 400
+
+    for category_id_str, nominee_id in winners.items():
+        if nominee_id is None or nominee_id == '':
+            continue
+        category_id = int(category_id_str)
+        nominee_id = int(nominee_id)
+
+        # Clear existing winner for this category/year
+        Nominee.query.filter_by(
+            category_id=category_id,
+            nominee_year=year,
+            winner=True
+        ).update({"winner": False})
+
+        # Set new winner
+        nominee = Nominee.query.filter_by(
+            id=nominee_id,
+            category_id=category_id,
+            nominee_year=year
+        ).first()
+        if nominee:
+            nominee.winner = True
+
+    db.session.commit()
+    return jsonify({"message": "Winners saved successfully!"}), 200
+
+
 # 🎉 Get Results
 @app.route('/api/results/', methods=['GET'])
 def get_results():
